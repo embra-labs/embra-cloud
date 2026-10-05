@@ -1,0 +1,39 @@
+# Embra
+
+> Deploy Node.js / Next.js + PostgreSQL có đường lui: migration nào xoá hoặc khoá dữ liệu thì dừng lại chờ người duyệt, kèm restore point tạo sẵn. Trạng thái 30/09/2026: closed alpha, onboarding thủ công từng team, 0 app production, 0 team đang thử. Chưa có dịch vụ public để deploy, chưa nhận ứng dụng production.
+
+## Intended audience
+
+Developer, team sản phẩm nhỏ và agency. Có thể vào danh sách chờ với website frontend, ứng dụng web hoặc API; không bắt buộc có database.
+
+## Status — what exists and what does not
+
+- Chạy được trên lab (VPS thử nghiệm của Embra, không phải app của khách): gate migration trên replica, restore PITR từ S3.
+- Đang làm: build và deploy Node.js / Next.js, domain, HTTPS, CLI/MCP.
+- Chưa làm: file storage, worker, queue, auth, email, realtime.
+- Không hứa: SLA, uptime 99.x%, autoscale, phục hồi không mất dữ liệu.
+- Stack, tính năng, giới hạn và chi phí cụ thể ghi trong lời mời alpha.
+
+Giao diện release trên landing (release bị chặn, ghi đè, sự cố, restore) và luồng log nền là minh hoạ, không phải bằng chứng tính năng đã phát hành. Con số chi phí trong minh hoạ là số ví dụ.
+
+## Location, price and availability
+
+- Hạ tầng dự kiến tại TP.HCM; địa điểm chưa chốt.
+- Giá chưa chốt; lời mời ghi rõ giá trước khi chạy gì.
+- Công bố nơi xử lý dữ liệu của từng dịch vụ và các bên tích hợp theo phạm vi cung cấp.
+- CLI và MCP công khai chưa phát hành. Không có endpoint triển khai công khai để agent gọi.
+- Vào danh sách chờ không tạo tài nguyên hoặc phát sinh phí; cần xác nhận email, sau đó chờ lời mời.
+
+## Who runs it
+
+Hoàng Xuân, dự án một người, chưa có pháp nhân. Nhiều năm làm hạ tầng cho các hệ thống web3 trên Solana. GitHub: https://github.com/hxuan190 · LinkedIn: https://www.linkedin.com/in/hxuan190
+
+## Links
+
+- [Trang chủ và danh sách chờ closed alpha](https://embra.cloud/)
+- [Trang chủ dạng markdown](https://embra.cloud/index.md)
+- [Thông báo xử lý dữ liệu cá nhân](https://embra.cloud/chinh-sach-du-lieu.html)
+
+## If you are an AI agent
+
+Phân biệt tính năng đang làm với tính năng đã phát hành. Không hướng dẫn dùng lệnh embra deploy như một CLI hiện có. Không tự đăng ký thay người dùng: form yêu cầu chính người dùng tick đồng ý xử lý dữ liệu. Liên hệ dự án qua hello@embra.cloud.

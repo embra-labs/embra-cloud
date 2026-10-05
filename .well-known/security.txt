@@ -1,0 +1,4 @@
+Contact: mailto:hello@embra.cloud
+Expires: 2027-09-25T00:00:00.000Z
+Preferred-Languages: vi, en
+Canonical: https://embra.cloud/.well-known/security.txt

@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Embra đang xây dựng nền tảng deploy Node.js / Next.js và PostgreSQL, với bước review migration và restore point. Đăng ký waitlist closed alpha.">
+<meta name="theme-color" content="#232323">
+<title>EMBRA | Deploy có đường lui · Closed alpha</title>
+<link rel="canonical" href="https://embra.cloud/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Embra">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:url" content="https://embra.cloud/">
+<meta property="og:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
+<meta property="og:description" content="Deploy app và database, review migration trước khi chạy. Embra đang phát triển; đăng ký waitlist closed alpha để nhận lời mời dùng thử.">
+<meta property="og:image" content="https://embra.cloud/og-alpha.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EMBRA: Mỗi lần deploy đều có đường lui. Closed alpha.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
+<meta name="twitter:description" content="Deploy app và database, review migration trước khi chạy. Embra đang phát triển; đăng ký waitlist closed alpha để nhận lời mời dùng thử.">
+<meta name="twitter:image" content="https://embra.cloud/og-alpha.png?v=2">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="text/markdown" href="index.md" title="Embra (markdown)">
+<link rel="preload" href="fonts/Handjet-normal-100-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/IBMPlexSans-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"WebSite","@id":"https://embra.cloud/#website","url":"https://embra.cloud/","name":"Embra","inLanguage":"vi"},
+ {"@type":"Organization","@id":"https://embra.cloud/#org","name":"Embra","url":"https://embra.cloud/","logo":"https://embra.cloud/apple-touch-icon.png","email":"hello@embra.cloud","areaServed":"VN"}
+]}
+</script>
+<style>
+  /* Embra landing v3 — dựng lại 1:1 theo bố cục, nhịp và chi tiết của jointhehub.com (đo 26.09.2026).
+     Giữ nguyên: màu, IBM Plex Sans/Mono, góc vuông, viền 1px, ảnh hạt đen trắng, nét vẽ tay, bảng mã mờ, thước đo.
+     Thay: tiêu đề Self Modern -> Handjet (pixel, có dấu Việt); chữ E của wordmark -> blackletter.
+     Ảnh: public domain (NASA, HAER, bản đồ Bonne 1771), xử lý hạt. Không dùng lại ảnh, logo hay chữ của TheHub. */
+  :root {
+    --char:   #232323;
+    --cream:  #F6F6EA;
+    --ink:    #232323;
+    --grey:   #5A5A5A;
+    --faint:  #8C8C82;
+    --white:  #FAFAFA;
+    --lime:   #D3F28C;
+    --hl:     #C9EE85;
+    --hl-cyan:#8FE3EE;
+    --hl-red: #F58B78;
+    --hl-yel: #F3E77A;
+    --red:    #C8352B;
+
+    --pixel: "Handjet", "IBM Plex Mono", monospace;
+    --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --gothic: "UnifrakturMaguntia", "Old English Text MT", serif;
+    --px: "ELSH" 0, "ELGR" 1, "wght" 430;
+  }
+  * { box-sizing: border-box; border-radius: 0; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img, svg { max-width: 100%; display: block; }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 60; background: var(--lime); color: var(--char); font: 500 14px var(--mono); padding: 10px 14px; text-decoration: none; }
+  .skip:focus { top: 12px; }
+
+  /* nền tối: vết loang + hạt, vẽ một lần bằng canvas rồi dùng làm ảnh nền (JS gán --stain) */
+  .dark { background-color: var(--char); background-image: var(--stain, none); background-size: 1400px 900px; color: var(--white); }
+  .grid-paper { background-image: linear-gradient(rgba(35,35,35,.075) 1px, transparent 1px), linear-gradient(90deg, rgba(35,35,35,.075) 1px, transparent 1px); background-size: 26px 26px; }
+  .grid-dark  { background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 22px 22px; }
+
+  .h-display { font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 430; text-transform: uppercase; font-size: clamp(49px, 4.8vw, 80px); line-height: 1.0; letter-spacing: 0.012em; margin: 0; text-wrap: balance; }
+  .body-copy { font-family: var(--sans); font-size: 20px; line-height: 1.8; max-width: 470px; }
+  .bracket { font-family: var(--mono); font-size: 20px; font-weight: 500; letter-spacing: .02em; text-decoration: none; background: none; border: 0; color: inherit; cursor: pointer; padding: 0; }
+  .bracket:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .mono { font-family: var(--mono); }
+
+  /* vòng oval vẽ tay (hai nét lệch nhau như bút chì) */
+  .oval { position: relative; display: inline-block; white-space: nowrap; }
+  .oval > svg { position: absolute; left: -8%; top: -22%; width: 116%; height: 144%; pointer-events: none; overflow: visible; }
+  /* vệt bút highlight mép răng cưa */
+  .mark { position: relative; z-index: 0; white-space: nowrap; }
+  .mark { color: var(--lime); padding-inline: .08em; }
+  .mark::before { content: ""; position: absolute; z-index: -1; inset: 0; background: var(--char); }
+
+  /* ---------- header ---------- */
+  .site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: 103px; }
+  .site-header .in { height: 100%; display: flex; align-items: center; justify-content: space-between; padding-inline: clamp(16px, 6.6vw, 114px); }
+  .logo { position: relative; width: 53px; height: 53px; flex: none; display: block; }
+  .logo::before, .logo::after { content: ""; position: absolute; background: rgba(250,250,250,.45); }
+  .logo::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+  .logo::after { top: 50%; left: 0; right: 0; height: 1px; }
+  .logo b { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; font-family: var(--gothic); font-weight: 400; font-size: 34px; line-height: 1; color: var(--white); padding-top: 3px; text-shadow: 0 0 0 var(--char), 2px 0 var(--char), -2px 0 var(--char); }
+  .foot .logo b { font-size: 40px; }
+  .nav { display: flex; align-items: center; gap: clamp(28px, 4.6vw, 80px); }
+  .nav a { font-family: var(--mono); font-size: 15px; text-decoration: none; color: var(--white); }
+  .nav a:hover, .nav a.on { color: var(--lime); }
+  .join-btn { display: flex; align-items: stretch; height: 34px; border: 1px solid var(--white); text-decoration: none; margin-left: clamp(0px, 3vw, 50px); }
+  .join-btn .star { width: 32px; background: var(--white); display: grid; place-items: center; color: var(--char); }
+  .join-btn .star svg { width: 18px; height: 18px; }
+  .join-btn span:last-child { font-family: var(--mono); font-size: 12.5px; color: var(--lime); display: grid; place-items: center; padding-inline: 34px; white-space: nowrap; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; min-height: 944px; overflow: hidden; display: grid; place-items: center; }
+  .hero .blueprint { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(250,250,250,.06); pointer-events: none; }
+  .hero .bottom-grid { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; }
+  .hero-center { position: relative; text-align: center; display: grid; justify-items: center; gap: 16px; padding: 60px 16px 220px; }
+  .caps { font-family: var(--sans); font-size: clamp(14px, 1.05vw, 17px); letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; }
+  .wordmark { display: flex; align-items: flex-end; line-height: .82; font-family: var(--pixel); font-variation-settings: "ELSH" 0, "ELGR" 1, "wght" 560; font-size: clamp(88px, 11vw, 188px); letter-spacing: .02em; }
+  .wordmark .cap { font-family: var(--gothic); font-size: 1.08em; color: var(--red); line-height: .8; margin-right: .03em; font-variation-settings: normal; }
+  .rule { display: flex; align-items: center; gap: 18px; font-family: var(--sans); font-size: clamp(14px, 1.2vw, 19px); letter-spacing: .16em; text-transform: uppercase; }
+  .rule::before, .rule::after { content: ""; width: 38px; height: 1px; background: currentColor; }
+  .hero-h { font-family: var(--sans); font-weight: 400; font-size: clamp(19px, 1.5vw, 23px); line-height: 1.5; margin: 22px 0 0; max-width: 640px; }
+  .tagbox { display: inline-block; background: var(--white); color: var(--char); font-family: var(--mono); font-style: italic; font-size: 15px; padding: 3px 12px; margin-top: 4px; }
+  .wl-hero { display: flex; flex-wrap: wrap; gap: 18px; align-items: end; justify-content: center; width: min(560px, 100%); margin-top: 14px; }
+  .wl-hero input { flex: 1 1 240px; min-width: 0; font: 400 17px var(--mono); color: var(--white); background: transparent; border: 0; border-bottom: 1px solid rgba(250,250,250,.7); padding: 8px 2px; }
+  .wl-hero input::placeholder { color: rgba(250,250,250,.4); }
+  .wl-hero input:focus { outline: none; border-bottom-color: var(--lime); }
+  .wl-hero .bracket { color: var(--lime); font-size: 17px; }
+  .hero .err { font-family: var(--mono); font-size: 13px; color: var(--sig-fail); }
+  .codes { position: absolute; left: -26px; bottom: 112px; font-family: var(--mono); font-size: 13px; line-height: 1.5; color: rgba(250,250,250,.3); display: grid; grid-template-columns: repeat(4, auto); gap: 0 58px; letter-spacing: .06em; white-space: nowrap; }
+  .measure { position: absolute; right: clamp(16px, 5vw, 110px); bottom: 118px; width: 400px; color: rgba(250,250,250,.32); }
+  .scroll-cue { position: absolute; left: 12px; bottom: 40px; font-family: var(--sans); font-size: 15px; letter-spacing: .02em; color: rgba(250,250,250,.85); text-decoration: none; text-transform: uppercase; }
+  .scroll-cue span { color: var(--white); }
+
+  /* ---------- intro (cream) ---------- */
+  .about { position: relative; padding-block: 150px 70px; }
+  .row { max-width: 1160px; margin: 0 auto; padding-inline: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 96px); align-items: start; }
+  .row + .row { margin-top: 170px; }
+  .col-text { display: grid; gap: 40px; align-content: start; min-width: 0; }
+  .col-text .bracket { justify-self: start; margin-left: 14px; margin-top: 30px; }
+  .photo { width: 100%; max-width: 424px; aspect-ratio: 424 / 560; object-fit: cover; }
+  .photo.map { aspect-ratio: 424 / 450; }
+  .row.flip figure { justify-self: start; }
+  .row:not(.flip) figure { justify-self: end; }
+  .side-icons { position: absolute; right: clamp(16px, 9vw, 160px); display: grid; gap: 14px; justify-items: center; color: var(--ink); }
+  .side-icons svg { width: 26px; height: auto; }
+  .deco-row { max-width: 1160px; margin: 64px auto 0; padding-inline: 24px; display: flex; justify-content: space-between; align-items: center; color: var(--ink); }
+  .sql { margin: 0; white-space: pre; overflow-x: auto; font-family: var(--mono); font-size: 14px; line-height: 1.8; border: 1px solid var(--ink); padding: 14px 16px; max-width: 520px; background: rgba(255,255,255,.35); }
+  .sql .c { color: var(--faint); } .sql .rm { background: rgba(245,139,120,.4); }
+  .verdict { list-style: none; margin: 0; padding: 0; display: grid; max-width: 520px; }
+  .verdict li { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 14px; font-size: 16px; line-height: 1.55; padding-block: 12px; border-top: 1px solid rgba(35,35,35,.25); }
+  .verdict li:last-child { border-bottom: 1px solid rgba(35,35,35,.25); }
+  .verdict .v { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; padding-top: 3px; }
+  .v.ok { color: #3C6E2A; } .v.hold { color: #9A3F16; } .v.dim { color: var(--grey); }
+  .fine { font-family: var(--mono); font-size: 13px; line-height: 1.6; color: var(--grey); max-width: 520px; }
+  .credit { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 8px; }
+
+  /* ---------- partners (dark): quyền của agent ---------- */
+  .partners { padding-block: 128px 0; overflow: hidden; }
+  .partners .in { max-width: 1560px; margin: 0 auto; padding-inline: clamp(16px, 6.6vw, 119px); }
+  .partners h2 { font-family: var(--mono); font-weight: 400; font-size: clamp(18px, 1.5vw, 25px); letter-spacing: .02em; margin: 0 0 34px; text-transform: uppercase; }
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 52px; }
+  .tile { border: 1px solid rgba(250,250,250,.5); padding: 26px 26px 30px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .tile .lab { font-family: var(--mono); font-size: 15px; }
+  .tile .lab::after { content: "|"; margin-left: 30px; }
+  .tile h3 { font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 430; font-size: 38px; line-height: 1; text-transform: uppercase; margin: 0; }
+  .tile ul { list-style: none; margin: 0; padding: 0; display: grid; }
+  .tile li { font-family: var(--mono); font-size: 15px; padding-block: 11px; border-top: 1px solid rgba(250,250,250,.16); }
+  .tile.none li { text-decoration: line-through; text-decoration-color: rgba(250,250,250,.55); color: rgba(250,250,250,.65); }
+  .tile .ic { color: var(--lime); width: 64px; height: 50px; justify-self: end; margin-top: -54px; }
+
+  /* cửa sổ sản phẩm kiểu TheHub: viền mảnh, chữ mono, không bo góc */
+  .showcase { margin-top: 96px; }
+  .showcase h2 { margin-bottom: 20px; }
+  .window { border: 1px solid rgba(250,250,250,.45); background: rgba(0,0,0,.28); }
+  .win-bar { display: flex; align-items: center; gap: 14px; height: 40px; padding: 0 14px; border-bottom: 1px solid rgba(250,250,250,.2); font-family: var(--mono); font-size: 12.5px; color: rgba(250,250,250,.55); }
+  .win-bar b { color: var(--white); font-weight: 400; }
+  .win-bar .sp { flex: 1; }
+  .win-body { display: grid; grid-template-columns: 200px minmax(0, 1fr) 360px; min-height: 430px; }
+  .side { border-right: 1px solid rgba(250,250,250,.16); padding: 16px 14px; font-family: var(--mono); font-size: 13px; display: grid; gap: 16px; align-content: start; }
+  .side .ttl { font-size: 11px; letter-spacing: .08em; color: rgba(250,250,250,.4); margin-bottom: 4px; }
+  .side div > span { display: block; padding: 5px 0; color: rgba(250,250,250,.65); }
+  .side .on { color: var(--lime); }
+  .main { padding: 20px 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+  .rel-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; flex-wrap: wrap; }
+  .rel-head h4 { margin: 0; font: 400 17px/1.4 var(--sans); }
+  .rel-head .sub { font-family: var(--mono); font-size: 12px; color: rgba(250,250,250,.45); margin-top: 3px; }
+  .status { font-family: var(--mono); font-size: 12px; padding: 3px 9px; border: 1px solid currentColor; white-space: nowrap; }
+  .status[data-s="run"] { color: var(--white); } .status[data-s="wait"] { color: var(--sig-wait); } .status[data-s="live"] { color: var(--lime); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; font-family: var(--mono); font-size: 13.5px; }
+  .steps li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; padding: 10px 0; border-top: 1px dashed rgba(250,250,250,.16); align-items: baseline; }
+  .steps li:first-child { border-top: 0; }
+  .steps .ic::before { content: "[ ]"; color: rgba(250,250,250,.35); }
+  .steps li[data-s="run"] .ic::before { content: "[·]"; color: var(--white); animation: blink .8s steps(2) infinite; }
+  .steps li[data-s="ok"] .ic::before { content: "[✓]"; color: var(--lime); }
+  .steps li[data-s="wait"] .ic::before { content: "[‖]"; color: var(--sig-wait); }
+  .steps li[data-s="pending"] { color: rgba(250,250,250,.45); }
+  .steps small { display: block; font-size: 12px; color: rgba(250,250,250,.4); }
+  .steps .r { color: rgba(250,250,250,.5); font-variant-numeric: tabular-nums; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .panel-r { border-left: 1px solid rgba(250,250,250,.16); padding: 20px 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+  .panel-r .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: rgba(250,250,250,.4); }
+  .diff { font-family: var(--mono); font-size: 12.5px; line-height: 1.7; border: 1px solid rgba(250,250,250,.2); }
+  .diff div { padding: 5px 10px; white-space: pre-wrap; word-break: break-word; }
+  .diff .h { color: rgba(250,250,250,.45); border-bottom: 1px solid rgba(250,250,250,.14); }
+  .diff .a { background: rgba(211,242,140,.08); } .diff .d { background: rgba(245,139,120,.12); }
+  .diff .d.flag { box-shadow: inset 3px 0 0 var(--hl-red); }
+  .check { font-family: var(--mono); font-size: 12.5px; line-height: 1.55; display: grid; gap: 6px; color: rgba(250,250,250,.75); }
+  .acts { display: flex; gap: 8px; flex-wrap: wrap; font-family: var(--mono); font-size: 12.5px; }
+  .acts span { border: 1px solid rgba(250,250,250,.4); padding: 5px 10px; }
+  .acts span.go { background: var(--lime); color: var(--char); border-color: var(--lime); }
+  .acts span.go.press, .toast .go.press { outline: 3px solid rgba(211,242,140,.45); }
+  .ln { transition: opacity .3s; }
+  .anim .ln.off { opacity: 0; }
+  .anim .acts.off { opacity: .3; }
+  .stage { position: relative; }
+  .toast { position: absolute; left: 50%; bottom: -20px; width: 300px; transform: translate(-50%, 10px); opacity: 0; transition: opacity .3s, transform .3s; background: var(--cream); color: var(--char); border: 1px solid var(--char); box-shadow: 6px 6px 0 rgba(0,0,0,.45); padding: 12px 14px; display: grid; gap: 6px; font-size: 13px; pointer-events: none; z-index: 2; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast .app { font-family: var(--mono); font-size: 11px; color: var(--grey); display: flex; align-items: center; gap: 8px; }
+  .toast .app i { font-style: normal; font-family: var(--gothic); font-size: 16px; color: var(--red); }
+  .toast b { font-weight: 500; font-size: 14px; }
+  .toast .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-family: var(--mono); font-size: 12px; margin-top: 2px; }
+  .toast .btns span { border: 1px solid var(--char); text-align: center; padding: 5px; }
+  .toast .btns .go { background: var(--char); color: var(--lime); }
+  .caption { font-family: var(--mono); font-size: 12px; color: rgba(250,250,250,.4); margin-top: 34px; }
+  .ticker { margin-top: 88px; overflow: hidden; white-space: nowrap; font-family: var(--mono); font-size: 11px; line-height: 1.45; color: rgba(250,250,250,.26); padding-block: 22px 26px; letter-spacing: .06em; }
+  .ticker .track { display: inline-flex; gap: 48px; }
+  .ticker .blk { display: inline-grid; grid-template-columns: repeat(3, auto); gap: 0 26px; }
+  @media (prefers-reduced-motion: no-preference) { .ticker .track { animation: tick 70s linear infinite; } }
+  @keyframes tick { to { transform: translateX(-50%); } }
+
+  /* ---------- dest: thẻ thông số ---------- */
+  .dest { padding-block: 0 60px; position: relative; }
+  .dest-head { padding-block: 70px 64px; }
+  .dest-head .h-display { max-width: 1160px; margin: 0 auto; padding-inline: 24px; }
+  .cards { display: flex; gap: 25px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 0 10px; scrollbar-width: none; }
+  .cards::-webkit-scrollbar { display: none; }
+  .card { position: relative; flex: 0 0 min(389px, 84vw); height: 519px; scroll-snap-align: start; padding: 34px 26px 44px; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  .card .bp { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(250,250,250,.14); }
+  .card .top { position: relative; display: flex; justify-content: space-between; align-items: flex-start; }
+  .card .num { font-family: var(--mono); font-size: 14px; margin-top: 12px; }
+  .card .num::after { content: "|"; margin-left: 30px; }
+  .card .ico { width: 108px; height: 80px; color: var(--lime); }
+  .card h3 { position: relative; align-self: center; margin: 0; font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 430; font-size: 40px; line-height: 1.02; text-transform: uppercase; }
+  .card h3 small { display: block; font-family: var(--mono); font-size: 13px; letter-spacing: .08em; color: rgba(250,250,250,.5); margin-bottom: 10px; }
+  .card p { position: relative; font-family: var(--mono); font-size: 15px; line-height: 1.5; }
+  .card .st { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border: 1px solid currentColor; }
+  .st.real { color: var(--lime); } .st.plan { color: var(--hl-yel); } .st.mock { color: rgba(250,250,250,.55); }
+
+
+  /* ---------- hỏi đáp ---------- */
+  .faq { padding-block: 40px 120px; }
+  .faq .in { max-width: 1000px; margin: 0 auto; padding-inline: 24px; }
+  .faq .h-display { margin-bottom: 44px; }
+  .faq details { border-top: 1px solid rgba(35,35,35,.3); }
+  .faq details:last-of-type { border-bottom: 1px solid rgba(35,35,35,.3); }
+  .faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 62px minmax(0, 1fr) 24px; gap: 14px; align-items: baseline; padding: 20px 0; font-family: var(--sans); font-size: 20px; line-height: 1.35; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary .n { font-family: var(--mono); font-size: 13px; color: var(--grey); }
+  .faq summary::after { content: "+"; font-family: var(--mono); font-size: 20px; text-align: right; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { margin: 0 0 22px 76px; font-size: 17px; line-height: 1.75; max-width: 720px; color: #3a3a36; }
+
+  /* ---------- vision (dark): founder ---------- */
+  .vision { position: relative; padding-block: 110px 140px; overflow: hidden; }
+  .vision .floor { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(250,250,250,.1); pointer-events: none; }
+  .vision .row { position: relative; align-items: start; }
+  .vision .photo { max-width: 490px; aspect-ratio: 490 / 538; }
+  .vision figure { justify-self: start !important; }
+  .vision .col-text { gap: 28px; padding-top: 6px; }
+  .vision .h-display { color: var(--white); }
+  .vision .fine { color: #C4C4B8; }
+  .vision .icon { width: 122px; color: var(--lime); margin-top: 110px; }
+  .vision .body-copy { font-size: 18px; line-height: 1.8; color: var(--cream); max-width: 440px; }
+  .side-line { position: absolute; right: clamp(16px, 8vw, 110px); top: 50%; width: 14px; color: rgba(250,250,250,.5); }
+
+  /* ---------- how to join ---------- */
+  .join { position: relative; padding-block: 100px 130px; overflow: hidden; }
+  .join .paper { position: absolute; left: 0; bottom: 0; width: 60%; height: 400px; }
+  .join .row { position: relative; align-items: start; }
+  .join-codes { font-family: var(--mono); font-size: 16px; line-height: 1.35; color: var(--faint); display: grid; grid-template-columns: repeat(4, auto); gap: 0 34px; justify-content: start; letter-spacing: .08em; margin-bottom: 110px; white-space: nowrap; }
+  .join .col-text { gap: 34px; }
+  .join .body-copy { font-size: 20px; line-height: 1.8; }
+  .wl { display: grid; gap: 16px; max-width: 480px; }
+  .wl input[type="email"] { width: 100%; font: 400 18px var(--mono); color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--ink); padding: 8px 2px; }
+  .wl input::placeholder { color: var(--faint); }
+  .wl input:focus { outline: none; border-bottom-width: 2px; }
+  .wl fieldset { border: 0; margin: 4px 0 0; padding: 0; min-width: 0; }
+  .wl legend { font-family: var(--sans); font-size: 16px; padding: 0; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span { display: inline-block; font-family: var(--mono); font-size: 14px; padding: 6px 12px; border: 1px solid var(--ink); cursor: pointer; }
+  .chip input:checked + span { background: var(--char); color: var(--lime); }
+  .chip input:focus-visible + span { outline: 2px solid var(--char); outline-offset: 2px; }
+  .more { border-top: 1px solid rgba(35,35,35,.25); padding-top: 14px; }
+  .more summary { cursor: pointer; font-family: var(--mono); font-size: 14px; list-style: none; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::before { content: "[+] "; } .more[open] summary::before { content: "[–] "; }
+  .more > div { display: grid; gap: 18px; margin-top: 18px; }
+  .more textarea { width: 100%; min-height: 84px; font: 400 15px/1.5 var(--sans); color: var(--ink); background: transparent; border: 1px solid var(--ink); padding: 10px 12px; resize: vertical; }
+  .opt-label { font-family: var(--sans); font-size: 16px; display: block; margin-bottom: 8px; }
+  .talk { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; font-size: 15px; line-height: 1.5; cursor: pointer; }
+  .talk input { width: 16px; height: 16px; margin-top: 3px; accent-color: var(--char); }
+  .notice { font-size: 13px; line-height: 1.65; color: var(--grey); }
+  .notice a { color: var(--ink); }
+  .hp { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .wl .err { font-family: var(--mono); font-size: 13px; color: var(--red); }
+  .held { font-family: var(--mono); font-size: 14px; }
+  .done { display: grid; gap: 12px; padding: 22px; border: 1px solid var(--ink); background: rgba(255,255,255,.35); }
+  .done h3 { font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 430; font-size: 34px; text-transform: uppercase; margin: 0; }
+  .done p { font-size: 16px; line-height: 1.65; }
+  .measure-light { position: absolute; left: 10px; bottom: 90px; width: 540px; color: rgba(35,35,35,.4); }
+
+  /* ---------- footer ---------- */
+  .foot { min-height: 142px; }
+  .foot .in { min-height: 142px; padding: 24px clamp(16px, 2vw, 33px); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .foot .brand { display: flex; align-items: center; gap: 18px; }
+  .foot .logo { width: 60px; height: 60px; }
+  .foot .legal { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: rgba(250,250,250,.55); }
+  .foot .legal a { color: rgba(250,250,250,.8); }
+  .foot nav { display: flex; flex-wrap: wrap; gap: 14px 40px; margin-left: auto; }
+  .foot nav a { font-family: var(--mono); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; white-space: pre; }
+  .foot nav a:hover { color: var(--lime); }
+
+  /* ---------- chuyển động: hiện dần kiểu Wix (fadeIn) ---------- */
+  .js .rv { opacity: 0; transform: translateY(22px); transition: opacity .9s ease, transform 1s ease; transition-delay: var(--d, 0s); }
+  .js .rv.in { opacity: 1; transform: none; }
+  .js .oval > svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.3s ease .3s; }
+  .js .oval.in > svg path { stroke-dashoffset: 0; }
+
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1100px) {
+    .nav a:not(.join-btn) { display: none; }
+    .tiles { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .tile .ic { margin-top: -50px; }
+    .side-icons, .side-line { display: none; }
+    .measure { display: none; }
+    .win-body { grid-template-columns: minmax(0, 1fr); }
+    .side { display: none; }
+    .panel-r { border-left: 0; border-top: 1px solid rgba(250,250,250,.16); }
+  }
+  @media (max-width: 860px) {
+    .row { grid-template-columns: minmax(0, 1fr); }
+    .row.flip figure { order: 2; }
+    .row:not(.flip) figure { justify-self: start; }
+    .row + .row { margin-top: 100px; }
+    .about { padding-block: 90px 60px; }
+    .hero { min-height: 760px; }
+    .hero-center { padding-bottom: 200px; }
+    .codes { grid-template-columns: repeat(2, auto); left: -14px; bottom: 96px; font-size: 11px; gap: 0 26px; }
+    .codes span:nth-child(4n+3), .codes span:nth-child(4n+4) { display: none; }
+    .join .paper { width: 100%; }
+    .join-codes { grid-template-columns: repeat(2, auto); margin-bottom: 40px; font-size: 13px; }
+    .join-codes span:nth-child(4n+3), .join-codes span:nth-child(4n+4) { display: none; }
+    .vision .icon { margin-top: 20px; }
+    .foot .in { flex-direction: column; align-items: flex-start; }
+    .foot nav { gap: 12px 28px; }
+  }
+  @media (max-width: 520px) {
+    .site-header { height: 72px; }
+    .logo { width: 44px; height: 44px; }
+    .join-btn span:last-child { padding-inline: 14px; }
+    .body-copy { font-size: 17px; }
+    .bracket { font-size: 17px; }
+    .h-display { font-size: 47px; }
+    .card h3 { font-size: 34px; }
+    .faq summary { grid-template-columns: 40px minmax(0, 1fr) 20px; font-size: 17px; }
+    .faq details p { margin-left: 54px; font-size: 15.5px; }
+    .verdict li { grid-template-columns: 100px minmax(0, 1fr); font-size: 15px; }
+    .toast { width: calc(100% - 20px); }
+  }
+
+  /* Embra v4 — project-first beta invitation, Codex 27.09.2026 */
+  section, main { scroll-margin-top: 120px; }
+  :focus-visible { outline-color: #58772C; }
+  .dark :focus-visible { outline-color: var(--lime); }
+  .hero { min-height: 770px; }
+  .hero-center { padding: 38px 24px 100px; gap: 18px; width: 100%; }
+  .hero .wordmark { font-size: 64px; }
+  .hero-h { font-family: var(--pixel); font-variation-settings: var(--px); font-size: clamp(58px, 6.8vw, 100px); text-transform: uppercase; line-height: .98; max-width: 950px; margin: 8px 0; }
+  .hero-h > span { color: var(--lime); }
+  .hero-copy { font-size: 19px; line-height: 1.7; max-width: 650px; color: var(--cream); text-wrap: pretty; }
+  .hero-scope { font: 12px/1.6 var(--mono); color: #C4C4B8; }
+  .hero-more { font: 13px/1.5 var(--mono); color: var(--cream); text-underline-offset: 5px; }
+  .hero-more span { margin-left: 10px; }
+  .wl-hero { width: min(620px, 100%); gap: 14px; margin-top: 4px; align-items: center; }
+  .wl-hero .bracket { background: var(--lime); color: var(--char); padding: 15px 18px; font-size: 14px; }
+  .wl-hero input::placeholder { color: #B3B3AA; }
+  .hero .codes { bottom: 28px; font-size: 10px; }
+  .hero .measure { bottom: 30px; width: 290px; }
+  .scroll-cue { display: none; }
+  .about { padding-block: 90px; }
+  .col-text { gap: 24px; }
+  .col-text .bracket { margin: 8px 0 0; }
+  .body-copy { font-size: 18px; line-height: 1.75; }
+  .eyebrow { font: 14px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+  .project-map { width: 100%; margin: 0; border: 1px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); padding: 24px; background: var(--cream); }
+  .project-map figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font: 11px/1.5 var(--mono); margin-bottom: 22px; }
+  .map-badge { border: 1px solid var(--grey); padding: 3px 6px; }
+  .project-node { display: flex; gap: 15px; align-items: center; padding: 20px 0; border-top: 1px solid #BCBCAD; }
+  .node-icon { display: grid; place-items: center; flex: 0 0 36px; height: 36px; border: 1px solid var(--ink); font: 16px var(--mono); background: var(--cream); }
+  .project-node h3 { font-size: 23px; font-weight: 500; margin: 0 0 3px; }
+  .project-node p { font-size: 13px; color: var(--grey); }
+  .node-type { margin-left: auto; font: 10px var(--mono); color: var(--grey); }
+  .map-next { border-top: 1px dashed #929285; padding-top: 18px; }
+  .map-next > span { font: 10px var(--mono); }
+  .map-next p { font: 14px/1.9 var(--mono); margin-top: 10px; }
+  .map-foot { font: 11px/1.7 var(--mono); color: var(--grey); margin-top: 20px; }
+  .partners { padding-top: 75px; }
+  .partners h2.h-display { font-family: var(--pixel); font-variation-settings: var(--px); font-size: clamp(47px, 4.8vw, 75px); line-height: 1.05; margin: 20px 0; }
+  .h-display, .partners h2.h-display, .tile h3, .card h3 { font-variation-settings: "ELSH" 0, "ELGR" 1, "wght" 480; }
+  .section-note { max-width: 780px; font-size: 16px; line-height: 1.7; color: #C4C4B8; margin: 0 0 32px; }
+  .tiles { gap: 22px; }
+  .tile h3 { font-size: 39px; line-height: 1.1; }
+  .tile p { font-size: 16px; line-height: 1.75; color: #D2D2C9; }
+  .showcase { margin-top: 65px; }
+  .caption { color: #B3B3AA; }
+  .scope-intro { max-width: 1160px; margin: 24px auto 0; padding-inline: 24px; font-size: 17px; line-height: 1.7; }
+  .cards { width: 100%; padding-inline: 0; scroll-padding-inline: 0; }
+  .cards::-webkit-scrollbar { display: none; }
+  .card { height: 420px; }
+  .card h3 { font-size: 43px; }
+  .card .st { font-size: 12px; }
+  .vision { padding-block: 75px; }
+  .founder-letter { max-width: 808px; margin-inline: auto; padding-inline: 24px; }
+  .founder-letter > .eyebrow { color: var(--lime); margin-bottom: 22px; }
+  .founder-letter .h-display { font-size: clamp(40px, 4vw, 58px); line-height: 1.12; text-wrap: pretty; margin-bottom: 32px; }
+  .founder-story { display: grid; gap: 20px; }
+  .founder-story .body-copy { max-width: none; }
+  .founder-signature { border-top: 1px solid rgba(250,250,250,.25); margin-top: 32px; padding-top: 24px; }
+  .founder-name { font-size: 18px; margin-bottom: 12px; }
+  .founder-name span { color: #C4C4B8; }
+  .founder-signature .fine { max-width: none; }
+  .founder-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 20px; font: 14px/1.6 var(--mono); color: var(--lime); }
+  .founder-links a { text-underline-offset: 4px; }
+  .join-codes { margin-bottom: 25px; }
+  .join { padding-block: 75px; }
+  .join-inner { max-width: 688px; margin-inline: auto; padding-inline: 24px; }
+  .join-inner .col-text { gap: 24px; }
+  .join-inner .h-display { font-size: clamp(40px, 4vw, 58px); line-height: 1.12; }
+  .join .body-copy { font-size: 18px; max-width: none; }
+  .join .wl { width: 100%; max-width: none; gap: 24px; margin-top: 8px; }
+  .join .wl > .talk { border-top: 1px solid rgba(35,35,35,.25); padding-top: 22px; }
+  .join .notice { line-height: 1.75; }
+  .join .wl .bracket { width: 100%; }
+  .join .bracket { background: var(--char); color: var(--lime); padding: 14px 18px; font-size: 15px; }
+  .join .bracket:disabled { opacity: .65; cursor: wait; }
+  @media (max-width: 860px) {
+    .hero { min-height: 720px; }
+    .hero-center { padding-bottom: 105px; }
+    .hero-copy { font-size: 17px; }
+    .hero .wordmark { font-size: 55px; }
+    .row { gap: 40px; }
+    .tiles { grid-template-columns: 1fr; }
+    .hero .codes { display: none; }
+    .project-map { justify-self: stretch !important; }
+    .vision figure { display: none; }
+  }
+  @media (max-width: 520px) {
+    section, main { scroll-margin-top: 88px; }
+    .hero { min-height: 690px; }
+    .hero-center { padding: 28px 20px 48px; gap: 18px; }
+    .hero-h { font-size: clamp(46px, 12vw, 62px); }
+    .hero .caps { font-size: 11px; }
+    .wl-hero { flex-direction: column; align-items: stretch; gap: 18px; }
+    .wl-hero input { flex: auto; width: 100%; }
+    .wl-hero .bracket { padding-block: 17px; }
+    .project-map { padding: 18px; }
+    .node-type { display: none; }
+    .about { padding-block: 60px; }
+    .partners .in { padding-inline: 24px; }
+    .main { padding: 18px 14px; }
+    .showcase h2 { line-height: 1.5; }
+    .foot nav { margin-left: 0; }
+  }
+
+  /* ---------- tín hiệu: mỗi màu một nghĩa · chờ người = amber, chi phí = cam, lỗi = đỏ neon ---------- */
+  :root { --sig-wait: #FFB000; --sig-cost: #FF7A1A; --sig-fail: #FF2D3F; --amber: var(--sig-wait); --neon-orange: var(--sig-cost); --neon-red: var(--sig-fail); }
+
+  /* ---------- hero: luồng log nền (Task 1) ---------- */
+  .log-stream { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; padding-inline: clamp(16px, 4vw, 64px); overflow: hidden; pointer-events: none; user-select: none;
+    font: 400 12px/20px var(--mono); letter-spacing: .03em; white-space: pre; color: rgba(250,250,250,.075);
+    -webkit-mask-image: linear-gradient(transparent, #000 24%, #000 70%, transparent), radial-gradient(ellipse 40% 34% at 50% 46%, rgba(0,0,0,.3), #000);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(transparent, #000 24%, #000 70%, transparent), radial-gradient(ellipse 40% 34% at 50% 46%, rgba(0,0,0,.3), #000);
+    mask-composite: intersect; }
+  .log-col { overflow: hidden; }
+  .log-col.raw { text-align: right; }
+  .log-stream .ok   { color: rgba(211,242,140,.2); }
+  .log-stream .warn { color: rgba(243,231,122,.15); }
+  .log-stream .bad  { color: rgba(245,139,120,.17); }
+  @media (prefers-reduced-motion: no-preference) {
+    .log-stream .track { animation: log-up var(--dur, 50s) linear infinite; will-change: transform; }
+    .log-stream.paused .track { animation-play-state: paused; }
+  }
+  @keyframes log-up { to { transform: translateY(-50%); } }
+  @media (max-width: 860px) {
+    .log-stream { grid-template-columns: minmax(0, 1fr); font-size: 10.5px; line-height: 18px; }
+    .log-col.raw { display: none; }
+  }
+  /* ---------- showcase: DROP COLUMN glitch + launch console (Task 2) ---------- */
+  .diff .glitch { position: relative; color: var(--neon-red); }
+  .diff .glitch.flag { box-shadow: inset 3px 0 0 var(--neon-red); }
+  .diff .glitch::before, .diff .glitch::after { content: attr(data-text); position: absolute; inset: 0; padding: inherit; pointer-events: none; opacity: 0; text-shadow: none; }
+  .diff .glitch::before { color: var(--hl-cyan); }
+  .diff .glitch::after { color: var(--white); }
+  .console { flex: 1 0 100%; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 8px; border: 1px solid var(--amber); padding: 7px 10px 8px; cursor: text; }
+  .console i { font-style: normal; color: var(--amber); }
+  .console-t { grid-column: 1 / -1; font-size: 10.5px; letter-spacing: .12em; opacity: .75; }
+  .console input { min-width: 0; width: 100%; font: 400 13px var(--mono); letter-spacing: .04em; color: var(--amber); caret-color: var(--amber); background: transparent; border: 0; padding: 2px 0; }
+  .console input::placeholder { color: rgba(255,176,0,.35); }
+  .console input:focus { outline: none; }
+  .console input:disabled { opacity: .6; }
+  .console:focus-within { box-shadow: 0 0 0 1px var(--char), 0 0 0 2px var(--amber); }
+  .console[data-s="bad"] { border-color: var(--neon-red); }
+  .console[data-s="bad"] input, .console[data-s="bad"] i { color: var(--neon-red); }
+  .console[data-s="ok"] { background: rgba(255,176,0,.1); box-shadow: 0 0 0 1px var(--char), 0 0 0 2px var(--amber); }
+  .acts .arm { margin-left: auto; font: inherit; letter-spacing: .06em; padding: 5px 12px; background: transparent; color: rgba(250,250,250,.35); border: 1px dashed rgba(250,250,250,.3); cursor: not-allowed; }
+  .acts[data-s="armed"] .arm { background: var(--neon-red); color: var(--char); border: 1px solid var(--neon-red); cursor: pointer; box-shadow: 3px 3px 0 var(--char), 3px 3px 0 1px var(--neon-red); }
+  .acts[data-s="sent"] .arm { color: var(--neon-red); border: 1px solid var(--neon-red); cursor: default; }
+  .acts .arm.press { outline: 3px solid rgba(255,45,63,.45); }
+  @media (prefers-reduced-motion: no-preference) {
+    .diff .glitch { animation: gl-jit 3.2s steps(1) infinite; }
+    .diff .glitch::before { animation: gl-a 3.2s steps(1) infinite; }
+    .diff .glitch::after { animation: gl-b 3.2s steps(1) infinite; }
+    .console[data-s="bad"] { animation: gl-shake .28s linear; }
+    .acts[data-s="armed"] .arm { animation: arm-pulse 1.1s ease-in-out infinite; }
+  }
+  @keyframes gl-jit { 0%, 86%, 100% { transform: none; opacity: 1; } 87% { transform: translateX(-2px) skewX(-8deg); } 89% { transform: translateX(2px); opacity: .6; } 91% { transform: skewX(5deg); opacity: 1; } 93% { transform: none; } 96% { transform: translateX(-1px); opacity: .8; } 97% { transform: none; opacity: 1; } }
+  @keyframes gl-a { 0%, 86%, 95%, 100% { opacity: 0; } 87% { opacity: 1; clip-path: inset(8% 0 62% 0); transform: translateX(-5px); } 90% { opacity: 1; clip-path: inset(58% 0 10% 0); transform: translateX(4px); } 93% { opacity: 1; clip-path: inset(30% 0 42% 0); transform: translateX(-2px); } }
+  @keyframes gl-b { 0%, 88%, 97%, 100% { opacity: 0; } 88% { opacity: .8; clip-path: inset(64% 0 6% 0); transform: translateX(4px); } 91% { opacity: .8; clip-path: inset(12% 0 70% 0); transform: translateX(-3px); } 94% { opacity: .8; clip-path: inset(40% 0 36% 0); transform: translateX(2px); } }
+  @keyframes gl-shake { 25% { transform: translateX(-4px); } 50% { transform: translateX(3px); } 75% { transform: translateX(-2px); } }
+  @keyframes arm-pulse { 50% { background: var(--char); color: var(--neon-red); } }
+  /* ---------- showcase: budget tracker (Task 3) ---------- */
+  .budget { display: grid; gap: 3px; padding: 8px 10px 9px; font-family: var(--mono); border: 1px solid rgba(250,250,250,.2); transition: border-color .3s; }
+  .budget-l { font-size: 11px; letter-spacing: .08em; color: rgba(250,250,250,.5); }
+  .budget-v { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+  .budget-v b { font-weight: 500; font-size: 17px; color: var(--white); font-variant-numeric: tabular-nums; }
+  .budget-d { font-style: normal; font-size: 11px; color: var(--neon-orange); border: 1px solid currentColor; padding: 0 5px; }
+  .budget.up { border-color: var(--neon-orange); }
+  .budget.up .budget-v b { color: var(--neon-orange); }
+  @media (prefers-reduced-motion: no-preference) {
+    .budget.flash { animation: budget-flash .9s steps(1); }
+  }
+  @keyframes budget-flash {
+    0%, 33%, 66% { background: rgba(255,122,26,.28); box-shadow: 0 0 0 1px var(--neon-orange); }
+    16%, 50%, 83%, 100% { background: transparent; box-shadow: none; }
+  }
+  /* ---------- window: emergency mode (Task 4) ---------- */
+  .panel-r { position: relative; }
+  .em-tag { display: none; font-size: 11px; letter-spacing: .12em; white-space: nowrap; color: var(--char); background: var(--neon-red); padding: 1px 7px; }
+  .window.is-emergency { border-color: var(--neon-red); box-shadow: 0 0 0 3px var(--char), 0 0 0 4px var(--neon-red); }
+  .window.is-emergency .win-bar { color: rgba(255,45,63,.85); border-bottom-color: rgba(255,45,63,.5); }
+  .window.is-emergency .em-tag { display: inline-block; }
+  .window.is-emergency .side, .window.is-emergency .panel-r > :not(.em-panel) { opacity: .25; filter: grayscale(1); transition: opacity .3s, filter .3s; }
+  .em-panel { position: absolute; inset: 0; z-index: 1; display: grid; align-content: center; gap: 10px; padding: 20px 18px; font-family: var(--mono); background: repeating-linear-gradient(0deg, rgba(255,45,63,.06) 0 2px, transparent 2px 4px), rgba(24,10,10,.7); }
+  .em-panel[hidden] { display: none; }
+  .em-t { margin: 0; font-size: 12px; letter-spacing: .12em; color: var(--neon-red); }
+  .em-d { margin: 0; font-size: 12.5px; line-height: 1.6; color: rgba(250,250,250,.75); }
+  .em-btn { display: grid; gap: 8px; width: 100%; margin-top: 6px; padding: 18px 14px 14px; border: 2px solid var(--neon-red); background: var(--neon-red); color: var(--char); cursor: pointer; text-align: left; box-shadow: 6px 6px 0 var(--char), 6px 6px 0 1px var(--neon-red);
+    font-family: var(--pixel); font-variation-settings: var(--px); font-size: 36px; line-height: .92; letter-spacing: .02em; text-transform: uppercase; }
+  .em-btn small { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; line-height: 1.3; text-transform: none; }
+  .em-btn:disabled { cursor: default; }
+  .em-btn.press { background: transparent; color: var(--neon-red); outline: 3px solid rgba(255,45,63,.45); box-shadow: none; }
+  .steps li[data-s="fail"], .steps li[data-s="fail"] .r { color: var(--neon-red); }
+  .steps li[data-s="fail"] .ic::before { content: "[✕]"; color: var(--neon-red); }
+  .status[data-s="fail"] { color: var(--neon-red); }
+  @media (prefers-reduced-motion: no-preference) {
+    .window.is-emergency { animation: em-border 1s steps(1) infinite; }
+    .window.is-emergency .em-tag { animation: blink .8s steps(2) infinite; }
+    .em-panel:not([hidden]) { animation: em-in .25s ease-out; }
+    .em-btn:not(:disabled):not(.press) { animation: em-pulse 1.1s ease-in-out infinite; }
+  }
+  @keyframes em-border { 50% { border-color: var(--char); box-shadow: 0 0 0 3px var(--char), 0 0 0 4px rgba(255,45,63,.3); } }
+  @keyframes em-in { from { opacity: 0; transform: scale(1.03); } }
+  @keyframes em-pulse { 50% { background: var(--char); color: var(--neon-red); } }
+  @media (max-width: 520px) { .window.is-emergency .em-tag { display: none; } }
+
+  /* ---------- trạng thái: có gì, chưa có gì (audit #10) ---------- */
+  .status-board { padding-block: 60px 75px; }
+  .sb-in { max-width: 1160px; margin: 0 auto; padding-inline: 24px; }
+  .status-board table { width: 100%; border-collapse: collapse; margin-top: 34px; font-family: var(--mono); border-top: 1px solid var(--ink); }
+  .status-board th, .status-board td { text-align: left; vertical-align: top; padding: 16px 0; border-bottom: 1px solid var(--ink); }
+  .status-board th { width: 280px; padding-right: 24px; font-weight: 500; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  .status-board th::before { display: inline-block; width: 4.4ch; }
+  .status-board tr:nth-child(1) th::before { content: "[✓]"; } .status-board tr:nth-child(2) th::before { content: "[·]"; }
+  .status-board tr:nth-child(3) th::before { content: "[ ]"; } .status-board tr:nth-child(4) th::before { content: "[✕]"; color: var(--red); }
+  .status-board td { font-size: 16px; line-height: 1.6; }
+  .sb-note { font: 13px/1.7 var(--mono); color: var(--grey); margin: 18px 0 0; }
+  @media (max-width: 860px) {
+    .status-board th, .status-board td { display: block; width: auto; }
+    .status-board th { padding: 16px 0 4px; border-bottom: 0; }
+    .status-board td { padding: 0 0 16px 4.4ch; font-size: 15px; }
+  }
+
+  /* ---------- join: khối trạng thái thay con dấu EST. (audit #17) ---------- */
+  .seal-status { justify-self: center; align-self: start; margin: 30px 0 0; padding: 22px 26px; font: 500 15px/2 var(--mono); color: var(--lime); background: var(--char); border: 1px solid var(--ink); white-space: pre; }
+  .seal-status .cur { display: inline-block; width: .6em; background: var(--lime); color: var(--char); }
+  @media (prefers-reduced-motion: no-preference) { .seal-status .cur { animation: blink 1s steps(2) infinite; } }
+  @media (max-width: 860px) { .seal-status { justify-self: stretch; margin: 0; padding: 16px; font-size: 12.5px; } }
+
+  /* ---------- logo E1: chữ E nghiêng, chân như ký hiệu tiền tệ (30.09.2026) ---------- */
+  .logo { border: 1px solid rgba(250,250,250,.45); background: var(--char); }
+  .logo::before, .logo::after { display: none; }
+  .logo b { padding: 0; text-shadow: none; }
+  .logo b svg { width: 50%; height: auto; fill: var(--white); }
+  .wordmark .cap { display: block; font-size: 1em; line-height: 1; margin-right: .12em; }
+  .wordmark .cap svg { display: block; height: .72em; width: auto; fill: var(--white); margin-bottom: .04em; }
+  .toast .app i { display: grid; place-items: center; width: 18px; height: 18px; background: var(--char); }
+  .toast .app i svg { width: 10px; height: auto; fill: var(--white); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Bỏ qua, tới nội dung</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star" viewBox="0 0 20 20"><g stroke="currentColor" stroke-width="1.2" fill="none"><path d="M10 1 V19 M1 10 H19 M3.6 3.6 L16.4 16.4 M16.4 3.6 L3.6 16.4" /></g></symbol>
+  </defs>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header dark">
+  <div class="in">
+    <a class="logo" href="#main" aria-label="Embra, về đầu trang"><b aria-hidden="true"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></b></a>
+    <nav class="nav" aria-label="Chính">
+      <a href="#ve-embra" class="on">Dự án của bạn</a>
+      <a href="#quyen">Cách hoạt động</a>
+      <a href="#thong-so">Phạm vi alpha</a>
+      <a href="#hoi-dap">Hỏi đáp</a>
+      <a class="join-btn" href="#join"><span class="star"><svg aria-hidden="true"><use href="#star" /></svg></span><span>Tham gia waitlist</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero dark" aria-label="Embra">
+    <svg class="blueprint" viewBox="0 0 1600 944" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <rect x="120" y="120" width="420" height="260"/><rect x="150" y="150" width="160" height="200"/><rect x="340" y="150" width="170" height="200"/>
+        <path d="M540 250 H880 V600 M880 420 H1480 M700 120 V600 M1060 180 H1460 V380 H1060 Z M1100 220 H1420 M1100 260 H1420 M1100 300 H1420 M1100 340 H1420"/>
+        <circle cx="1200" cy="640" r="120"/><circle cx="1200" cy="640" r="70"/><path d="M1080 640 H1320 M1200 520 V760"/>
+      </g>
+      <g fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="15"><text x="160" y="140">R01</text><text x="350" y="140">R02</text><text x="1070" y="170">COLD AISLE</text><text x="720" y="140">0302</text><text x="890" y="410">0402</text></g>
+    </svg>
+    <div class="bottom-grid grid-dark" aria-hidden="true"></div>
+    <div class="log-stream" aria-hidden="true">
+      <div class="log-col"><div class="track"><div></div><div></div></div></div>
+      <div class="log-col raw"><div class="track"><div></div><div></div></div></div>
+    </div>
+    <div class="hero-center">
+      <p class="caps rv">Node.js / Next.js + PostgreSQL · TP.HCM (chưa chốt)</p>
+      <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
+      <h1 class="hero-h rv">Mỗi lần deploy<br><span>đều có đường lui.</span></h1>
+      <p class="hero-copy rv">Embra đang xây dựng luồng deploy từ code đến app và database. Migration có rủi ro sẽ dừng để bạn review trước khi chạy, với restore point để dùng khi cần.</p>
+      <p class="hero-scope rv">CLOSED ALPHA · ĐĂNG KÝ WAITLIST · CHƯA NHẬN APP PRODUCTION</p>
+      <form class="wl-hero rv" id="wl-hero" novalidate>
+        <label class="vh" for="hero-email">Email</label>
+        <input id="hero-email" type="email" autocomplete="email" placeholder="ban@congty.vn" required>
+        <button class="bracket" type="submit">[Tham gia waitlist]</button>
+      </form>
+      <p class="err" id="hero-err" role="alert" hidden></p>
+      <a class="hero-more rv" href="#stage">Xem demo deploy <span aria-hidden="true">↓</span></a>
+    </div>
+
+    <div class="codes" aria-hidden="true">
+      <span>EMBRA</span><span>RELEASE PLAN</span><span>0201</span><span>0203</span>
+      <span data-clock>HCM 21:16:04</span><span>RESTORE POINT</span><span>0202</span><span>0204</span>
+      <span>R0142</span><span>0103 / 0012</span><span></span><span></span>
+    </div>
+    <svg class="measure" viewBox="0 0 400 44" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M6 22 H122 M6 12 V32 M122 12 V32 M130 22 H272 M130 12 V32 M272 12 V32 M280 22 H394 M394 8 V36 M399 8 V36" />
+        <path d="M12 22 l7 -3.5 v7 z M116 22 l-7 -3.5 v7 z M136 22 l7 -3.5 v7 z M266 22 l-7 -3.5 v7 z M286 22 l7 -3.5 v7 z M388 22 l-7 -3.5 v7 z" fill="currentColor" />
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor"><text x="48" y="15">staging</text><text x="180" y="15">approve</text><text x="318" y="15">prod</text></g>
+      <g fill="none" stroke="#D3F28C" stroke-width="1.1"><path d="M2 24 C-2 10 40 4 70 5 C104 6 130 14 127 26 C124 38 86 42 58 41 C26 40 4 34 8 20" /></g>
+    </svg>
+    <a class="scroll-cue" href="#ve-embra">[ &nbsp;<span>CUỘN ĐỂ XEM</span>&nbsp; ]</a>
+  </section>
+
+  <!-- ============ PROJECT OVERVIEW ============ -->
+  <section class="about" id="ve-embra" aria-labelledby="h-project">
+    <div class="row">
+      <div class="col-text">
+        <p class="eyebrow rv">01 / Bắt đầu từ dự án của bạn</p>
+        <h2 class="h-display rv" id="h-project">Bắt đầu với <span class="mark rv">frontend.</span><br>Thêm backend khi cần.</h2>
+        <p class="body-copy rv">Bạn có thể bắt đầu với landing page hoặc SPA. Khi cần API, database hay file storage, mục tiêu của Embra là giúp bạn quản lý tất cả trong cùng một project.</p>
+        <p class="fine rv">Dành cho developer, team nhỏ và agency muốn bớt thời gian cấu hình và vận hành server.</p>
+        <a class="bracket rv" href="#thong-so">[Xem kế hoạch alpha]</a>
+      </div>
+      <figure class="project-map rv">
+        <figcaption><span>PROJECT / CỬA HÀNG CỦA BẠN</span><span class="map-badge">MINH HOẠ</span></figcaption>
+        <div class="project-node"><span class="node-icon" aria-hidden="true">↗</span><div><h3>Frontend</h3><p>Website · storefront · dashboard</p></div><span class="node-type">WEB</span></div>
+        <div class="project-node"><span class="node-icon" aria-hidden="true">{ }</span><div><h3>Backend</h3><p>API và logic ứng dụng</p></div><span class="node-type">APP</span></div>
+        <div class="project-node"><span class="node-icon" aria-hidden="true">≡</span><div><h3>Database</h3><p>Đơn hàng và dữ liệu của bạn</p></div><span class="node-type">DATA</span></div>
+        <div class="map-next"><span>ROADMAP / DỊCH VỤ MỞ RỘNG</span><p>File storage · Worker · Queue<br>Auth · Email · Realtime</p></div>
+        <p class="map-foot">Sơ đồ mô tả hướng phát triển của Embra.<br>Xem tiến độ từng phần ở bên dưới.</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ PARTNERS (dark): quyền + cửa sổ sản phẩm ============ -->
+  <section class="partners dark" id="quyen">
+    <div class="in">
+      <p class="eyebrow rv">02 / Đang phát triển</p>
+      <h2 class="h-display rv">Embra đang<br>xây dựng những gì?</h2>
+      <div class="tiles">
+        <article class="tile rv"><span class="lab">001 / DEPLOY</span><h3>Build lỗi?<br>Biết chỗ để sửa.</h3><p>Tách config theo environment, xem build logs và tìm nguyên nhân khi deploy lỗi. Bạn biết cần sửa gì trước khi chạy lại.</p></article>
+        <article class="tile rv"><span class="lab">002 / CHI PHÍ</span><h3>Hiểu chi phí<br>trước khi chạy</h3><p>Xem tài nguyên dự kiến, cách tính phí và giới hạn sử dụng trước khi deploy. Giá cụ thể sẽ được gửi cùng lời mời alpha.</p></article>
+        <article class="tile rv"><span class="lab">003 / VẬN HÀNH</span><h3>Theo dõi app<br>ở một nơi.</h3><p>Xem logs, health checks và lịch sử deploy của các service trong cùng một project, để dễ đối chiếu khi có sự cố.</p></article>
+      </div>
+
+      <div class="showcase" id="stage">
+        <h2 class="rv">Review migration trước khi deploy</h2>
+        <p class="section-note rv">Trong demo này, Embra chặn lệnh xoá cột mà app vẫn đang dùng. Nếu bạn override để chạy tiếp, app sẽ lỗi. Bạn có thể thử restore database về thời điểm trước migration.</p>
+        <div class="stage rv">
+          <div class="window" id="window" role="img" aria-label="Minh hoạ giao diện Embra: release r_0142 bị chặn vì xoá một cột mà code còn đọc">
+            <div class="win-bar"><span>shop-vn / releases / <b>r_0142</b></span><span class="sp"></span><span class="em-tag">EMERGENCY MODE</span><span>vn-hcm</span></div>
+            <div class="win-body">
+              <aside class="side" aria-hidden="true">
+                <div><div class="ttl">APPS</div><span class="on">▪ shop-vn</span><span>▫ crm-noi-bo</span><span>▫ landing</span></div>
+                <div><div class="ttl">SHOP-VN</div><span class="on">releases</span><span>database</span><span>restore</span><span>policy</span><span>health</span></div>
+              </aside>
+              <div class="main">
+                <div class="rel-head">
+                  <div><h4>r_0142 · Thêm cột note vào orders</h4><div class="sub">từ claude code · feat/orders-note · 2 phút trước</div></div>
+                  <span class="status" id="rel-status" data-s="wait"><span>BỊ CHẶN</span></span>
+                </div>
+                <ol class="steps" id="steps">
+                  <li data-k="build" data-s="ok"><span class="ic"></span><span>build<small>railpack · sha256:4f1c…</small></span><span class="r">38s</span></li>
+                  <li data-k="staging" data-s="ok"><span class="ic"></span><span>staging<small>smoke test 14/14 · dữ liệu tổng hợp</small></span><span class="r">1m 12s</span></li>
+                  <li data-k="plan" data-s="ok"><span class="ic"></span><span>release plan<small>2 thay đổi schema · 1 bị chặn</small></span><span class="r">4s</span></li>
+                  <li data-k="restore" data-s="ok"><span class="ic"></span><span>restore point<small>trước khi chạm production</small></span><span class="r">21:16:04</span></li>
+                  <li data-k="promote" data-s="wait"><span class="ic"></span><span>promote production<small>bị chặn · tách migration hoặc ghi đè</small></span><span class="r">—</span></li>
+                  <li data-k="health" data-s="pending"><span class="ic"></span><span>health check<small>theo dõi sau khi lên production</small></span><span class="r">—</span></li>
+                </ol>
+              </div>
+              <div class="panel-r">
+                <div class="budget" id="budget">
+                  <span class="budget-l">DỰ TOÁN · SỐ VÍ DỤ, GIÁ CHƯA CHỐT</span>
+                  <span class="budget-v"><b id="budget-v">149.000 ₫</b><i class="budget-d" id="budget-d" hidden>+30.000 ₫ · storage backfill</i></span>
+                </div>
+                <span class="lbl">0012_ORDERS.SQL</span>
+                <div class="diff" id="diff">
+                  <div class="h">prisma/migrations/0012_orders</div>
+                  <div class="a ln">+ ALTER TABLE orders ADD COLUMN note TEXT;</div>
+                  <div class="d ln glitch" data-text="− ALTER TABLE orders DROP COLUMN legacy_ref;">− ALTER TABLE orders DROP COLUMN legacy_ref;</div>
+                </div>
+                <div class="check" id="check">
+                  <div class="ln">[✓] ADD COLUMN · additive, tự cho qua</div>
+                  <div class="ln">[✕] DROP COLUMN · code còn đọc cột này (src/orders/export.ts:41) · ĐÃ CHẶN</div>
+                </div>
+                <div class="acts" id="acts" aria-hidden="true">
+                  <label class="console" id="console">
+                    <i class="console-t">GHI ĐÈ CHẶN · ghi vào audit log</i>
+                    <i class="console-p">&gt;_</i>
+                    <input id="console-in" type="text" tabindex="-1" placeholder="gõ DROP legacy_ref để ghi đè" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="32">
+                  </label>
+                  <span>tách migration</span><span>từ chối</span>
+                  <button class="arm" id="approve-btn" type="button" tabindex="-1" disabled>LOCKED</button>
+                </div>
+                <div class="em-panel" id="em-panel" aria-hidden="true" hidden>
+                  <p class="em-t">[✕] HEALTH CHECK THẤT BẠI</p>
+                  <p class="em-d">5xx 38% sau khi ghi đè DROP COLUMN.<br>Code không tự quay lại được: cột đã mất.</p>
+                  <button class="em-btn" id="restore-btn" type="button" tabindex="-1" disabled><span id="restore-l">RESTORE TO CHECKPOINT</span><small>DB về 21:16:04 · mất ~2 phút ghi sau thời điểm này</small></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" id="toast" aria-hidden="true">
+            <div class="app"><i><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></i>EMBRA · bây giờ</div>
+            <b>r_0142 bị chặn</b>
+            <p>DROP COLUMN legacy_ref: code còn đọc cột. Restore point 21:16:04.</p>
+            <div class="btns"><span>bỏ qua</span><span class="go" id="toast-go">MỞ RELEASE</span></div>
+          </div>
+        </div>
+        <p class="caption">[ Demo tương tác, không chạy trên app thật. Chi phí hiển thị chỉ là ví dụ. ]</p>
+      </div>
+    </div>
+    <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
+  </section>
+
+  <!-- ============ DEST: thông số ============ -->
+  <section class="dest" id="thong-so" aria-labelledby="h-dest">
+    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi <span class="mark rv">alpha</span></h2><p class="scope-intro">Alpha tập trung vào frontend, Node.js / Next.js và PostgreSQL. Các thẻ dưới đây phân biệt phần đang chuẩn bị với roadmap mở rộng.</p></div>
+    <div class="cards" id="cards" role="region" aria-label="Phạm vi dự kiến, cuộn ngang để xem thêm" tabindex="0">
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="120" y="330" width="96" height="130"/><path d="M132 0 V519 M152 0 V519 M30 300 H320"/><rect x="152" y="372" width="40" height="40"/></g></svg>
+        <div class="top"><span class="num">001</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="34"/><ellipse cx="54" cy="40" rx="15" ry="34"/><path d="M20 40 H88 M26 22 H82 M26 58 H82"/><circle cx="54" cy="40" r="3" fill="currentColor"/></g></svg></div>
+        <h3><small>FRONTEND</small>Website của bạn</h3>
+        <p>Landing page, portfolio, SPA. Ưu tiên luồng build, domain và HTTPS.<br><span class="st plan">ưu tiên alpha</span></p>
+      </article>
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="220" cy="90" r="70"/><path d="M60 40 H330 V160 H60 Z M80 200 V519"/></g></svg>
+        <div class="top"><span class="num">002</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="54" cy="14" rx="36" ry="9"/><ellipse cx="54" cy="32" rx="36" ry="9"/><ellipse cx="54" cy="50" rx="36" ry="9"/><ellipse cx="54" cy="68" rx="36" ry="9"/><path d="M54 5 V77"/></g></svg></div>
+        <h3><small>BACKEND</small>App &amp; API</h3>
+        <p>Bắt đầu với Node.js / Next.js. Config, logs và health checks theo từng service.<br><span class="st plan">ưu tiên alpha</span></p>
+      </article>
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M20 260 L200 120 L370 300 M200 120 V519"/><circle cx="200" cy="120" r="4"/></g></svg>
+        <div class="top"><span class="num">003</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M54 6 L98 28 L54 50 L10 28 Z M10 40 L54 62 L98 40 M10 52 L54 74 L98 52"/><path d="M32 17 L76 39 M76 17 L32 39"/></g></svg></div>
+        <h3><small>DATABASE</small>PostgreSQL</h3>
+        <p>Kết nối database với app, kiểm tra migration và thử restore trước khi đưa vào sử dụng.<br><span class="st plan">đang kiểm chứng</span></p>
+      </article>
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="60" y="360" width="120" height="159"/><path d="M280 0 V519 M300 0 V519 M0 330 H389"/></g></svg>
+        <div class="top"><span class="num">004</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="32"/><path d="M54 18 V40 L70 50"/><path d="M22 40 A32 32 0 0 1 40 12 M36 6 L40 12 L33 15"/></g></svg></div>
+        <h3><small>DỊCH VỤ</small>Thêm service</h3>
+        <p>File storage, worker và queue. Tiếp theo là tích hợp auth, email, realtime theo nhu cầu.<br><span class="st plan">roadmap</span></p>
+      </article>
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M40 80 H340 M40 100 H340 M190 100 V519"/><rect x="140" y="220" width="100" height="70"/></g></svg>
+        <div class="top"><span class="num">005</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="14" y="12" width="80" height="56"/><path d="M26 32 L40 40 L26 48 M48 50 H70"/></g></svg></div>
+        <h3><small>VIỆT NAM</small>Server ở TP.HCM</h3>
+        <p>Hạ tầng dự kiến tại TP.HCM, trải nghiệm tiếng Việt và chi phí bằng VND.<br><span class="st plan">địa điểm chưa chốt</span></p>
+      </article>
+      <article class="card dark">
+        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="190" cy="300" r="120"/><path d="M0 300 H389"/></g></svg>
+        <div class="top"><span class="num">006</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="38" cy="40" r="28"/><circle cx="70" cy="40" r="28"/><path d="M10 40 H98"/><circle cx="54" cy="40" r="3" fill="currentColor"/></g></svg></div>
+        <h3><small>ALPHA</small>Cùng thử alpha</h3>
+        <p>Onboarding thủ công, từng team một. Stack, giới hạn và chi phí được xác nhận trước khi bạn bắt đầu.<br><span class="st plan">đăng ký nhận lời mời</span></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TRẠNG THÁI ============ -->
+  <section class="status-board grid-paper" id="trang-thai" aria-labelledby="h-status">
+    <div class="sb-in">
+      <p class="eyebrow">03 / Trạng thái 30.09.2026</p>
+      <h2 class="h-display rv" id="h-status">Embra đang <span class="mark rv">ở đâu?</span></h2>
+      <table>
+        <tr><th scope="row">Đã thử trong lab</th><td>Gate migration trên replica · restore PITR từ S3</td></tr>
+        <tr><th scope="row">Đang làm</th><td>Build và deploy Node.js / Next.js · domain · HTTPS · CLI/MCP</td></tr>
+        <tr><th scope="row">Chưa làm</th><td>File storage · worker · queue · auth · email · realtime</td></tr>
+        <tr><th scope="row">Chưa cam kết</th><td>SLA · uptime 99.x% · autoscale</td></tr>
+      </table>
+      <p class="sb-note">Các thử nghiệm chạy trên VPS của Embra, chưa chạy trên app của khách hàng. Hiện chưa có bản public để bạn tự deploy; alpha sẽ được onboarding trực tiếp với từng team.</p>
+    </div>
+  </section>
+
+  <!-- ============ HỎI ĐÁP ============ -->
+  <section class="faq grid-paper" id="hoi-dap" aria-labelledby="h-faq">
+    <div class="in">
+      <h2 class="h-display rv" id="h-faq">Câu hỏi <span class="mark rv">hay gặp</span></h2>
+      <details><summary><span class="n">01</span><span>Embra dành cho dự án nào?</span></summary><p>Embra hướng tới website, web app và API của developer, team nhỏ và agency. Alpha dự kiến bắt đầu với frontend, Node.js / Next.js và PostgreSQL. Lời mời sẽ ghi rõ stack và tính năng bạn có thể thử.</p></details>
+      <details><summary><span class="n">02</span><span>Chỉ làm frontend thì có dùng được không?</span></summary><p>Có thể đăng ký với landing page, portfolio hoặc SPA; bạn không cần có backend hay database. Luồng deploy frontend đang được phát triển để đưa vào alpha.</p></details>
+      <details><summary><span class="n">03</span><span>Đăng ký là dùng được ngay chưa?</span></summary><p>Chưa. Sau khi bạn xác nhận email, mình sẽ liên hệ khi có đợt alpha phù hợp và hỗ trợ setup trực tiếp. Bạn sẽ biết stack, tính năng, giới hạn và chi phí trước khi bắt đầu. Đăng ký waitlist không tạo tài nguyên hay phát sinh phí.</p></details>
+      <details><summary><span class="n">04</span><span>Auth, email, queue và realtime đã có chưa?</span></summary><p>Chưa, các dịch vụ này nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team tham gia alpha.</p></details>
+      <details><summary><span class="n">05</span><span>Có cần dùng AI agent không?</span></summary><p>Không cần. Embra đang xây dựng CLI/MCP để bạn có thể thao tác trực tiếp hoặc dùng coding agent. Cả hai đều phải tuân theo quyền truy cập và các bước approve đã đặt cho project.</p></details>
+      <details><summary><span class="n">06</span><span>Giá và vị trí hạ tầng thế nào?</span></summary><p>Giá chưa chốt; chi phí và điều kiện dùng thử được thông báo trước khi bắt đầu. Hạ tầng dự kiến tại TP.HCM. Vị trí xử lý dữ liệu của từng dịch vụ và các bên tích hợp sẽ được công bố trong phạm vi cung cấp.</p></details>
+      <details><summary><span class="n">07</span><span>Có thể đưa app production lên ngay không?</span></summary><p>Chưa. Alpha dành cho project thử nghiệm, chưa nhận app production. Trước khi bắt đầu, mình sẽ trao đổi với bạn về cách backup, restore, export dữ liệu và giới hạn support của đợt thử.</p></details>
+    </div>
+  </section>
+
+  <!-- ============ VISION (dark): founder ============ -->
+  <section class="vision dark" id="nguoi-lam" aria-labelledby="h-founder">
+    <div class="founder-letter">
+      <p class="eyebrow rv">From the founder</p>
+      <h2 class="h-display rv" id="h-founder">Mình từng phá hỏng database của công ty.</h2>
+      <div class="founder-story">
+        <p class="body-copy rv">Khi xây Embra, mình luôn nghĩ về tình huống đó: app đang lỗi, mọi người chờ hệ thống hoạt động lại, còn người xử lý phải tìm xem dữ liệu nào đã mất, backup có dùng được không và restore sẽ mất bao lâu.</p>
+        <p class="body-copy rv">Với một team nhỏ, người viết code thường cũng là người deploy và xử lý sự cố. Bạn cần đưa tính năng mới lên, nhưng mỗi thay đổi database lại có thể ảnh hưởng tới dữ liệu đang chạy thật.</p>
+        <p class="body-copy rv">Đó là vấn đề mình muốn giải quyết với Embra: thấy rủi ro trước khi chạy migration, có bước review rõ ràng và chuẩn bị đường restore trước khi cần đến nó.</p>
+        <p class="body-copy rv">Embra đang được xây dựng theo hướng đó. Mình muốn cùng những team đầu tiên kiểm chứng nó trên project thử nghiệm.</p>
+      </div>
+      <div class="founder-signature rv">
+        <p class="founder-name">Hoàng Xuân <span>· Founder, Embra</span></p>
+        <p class="fine">Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân, chưa có pháp nhân.</p>
+        <p class="founder-links"><a href="https://github.com/hxuan190">GitHub ↗</a><a href="https://www.linkedin.com/in/hxuan190">LinkedIn ↗</a><a href="mailto:hello@embra.cloud">hello@embra.cloud ↗</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO JOIN ============ -->
+  <section class="join" id="join" aria-labelledby="h-join">
+    <div class="join-inner">
+      <div class="col-text">
+        <h2 class="h-display rv" id="h-join">Tham gia closed alpha</h2>
+        <p class="body-copy rv">Bạn đang build gì? Đăng ký waitlist để cùng thử Embra. Mình sẽ gửi email xác nhận trước, rồi liên hệ khi có đợt alpha phù hợp.</p>
+        <form class="wl rv" id="wl" novalidate>
+          <p class="held" id="wl-held" hidden></p>
+          <div><label class="opt-label" for="email">Email của bạn</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ban@congty.vn" required></div>
+          <fieldset>
+            <legend>Project của bạn đang ở giai đoạn nào?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="users" value="live" id="u-live"><span>Đã có user</span></label>
+              <label class="chip"><input type="radio" name="users" value="soon"><span>Sắp launch</span></label>
+              <label class="chip"><input type="radio" name="users" value="building"><span>Đang build</span></label>
+            </div>
+          </fieldset>
+          <details class="more"><summary>Thêm thông tin về project (tuỳ chọn)</summary><div>
+            <fieldset><legend>Bạn dùng stack nào? <small>(alpha ưu tiên Node.js / Next.js; bạn vẫn có thể chọn stack khác)</small></legend><div class="chips">
+              <label class="chip"><input type="radio" name="stack" value="next"><span>Next.js</span></label>
+              <label class="chip"><input type="radio" name="stack" value="node"><span>Node</span></label>
+              <label class="chip"><input type="radio" name="stack" value="php"><span>PHP</span></label>
+              <label class="chip"><input type="radio" name="stack" value="python"><span>Python</span></label>
+              <label class="chip"><input type="radio" name="stack" value="go"><span>Go</span></label>
+              <label class="chip"><input type="radio" name="stack" value="other"><span>Khác</span></label>
+            </div></fieldset>
+            <fieldset><legend>Ai review và approve migration?</legend><div class="chips">
+              <label class="chip"><input type="radio" name="approver" value="me"><span>Tôi</span></label>
+              <label class="chip"><input type="radio" name="approver" value="lead"><span>Tech lead</span></label>
+              <label class="chip"><input type="radio" name="approver" value="nobody"><span>Chưa có người review</span></label>
+            </div></fieldset>
+            <fieldset><legend>Bạn đang deploy ở đâu?</legend><div class="chips">
+              <label class="chip"><input type="radio" name="host" value="paas"><span>Vercel / Netlify / Render</span></label>
+              <label class="chip"><input type="radio" name="host" value="vps"><span>VPS tự quản (Docker, PM2)</span></label>
+              <label class="chip"><input type="radio" name="host" value="cloud"><span>AWS / GCP / DO</span></label>
+              <label class="chip"><input type="radio" name="host" value="vn"><span>Hosting VN</span></label>
+              <label class="chip"><input type="radio" name="host" value="none"><span>Chưa deploy</span></label>
+            </div></fieldset>
+            <fieldset><legend>PostgreSQL của bạn đang dùng bao nhiêu dung lượng?</legend><div class="chips">
+              <label class="chip"><input type="radio" name="db_size" value="none"><span>Chưa có</span></label>
+              <label class="chip"><input type="radio" name="db_size" value="s"><span>&lt; 1 GB</span></label>
+              <label class="chip"><input type="radio" name="db_size" value="m"><span>1–20 GB</span></label>
+              <label class="chip"><input type="radio" name="db_size" value="l"><span>&gt; 20 GB</span></label>
+              <label class="chip"><input type="radio" name="db_size" value="unknown"><span>Không biết</span></label>
+            </div></fieldset>
+            <div><label class="opt-label" for="incident">Bạn từng gặp vấn đề gì với database hoặc migration?</label><textarea id="incident" name="incident" maxlength="1000" placeholder="Ví dụ: migration lock bảng orders 20 phút vào giờ cao điểm"></textarea></div>
+            <label class="talk" for="talk"><input type="checkbox" id="talk" name="talk"><span>Mình có thể dành 15 phút để trao đổi về project.</span></label>
+            <label class="talk" for="newsletter"><input type="checkbox" id="newsletter" name="newsletter"><span>Gửi mình newsletter kỹ thuật, tối đa 2 email mỗi tháng.</span></label>
+          </div></details>
+          <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+          <label class="talk" for="consent"><input type="checkbox" id="consent" name="consent" required><span>Mình đồng ý cho Hoàng Xuân, người vận hành Embra, sử dụng email và các câu trả lời trong form để gửi lời mời dùng thử và thông tin ra mắt Embra.</span></label>
+          <p class="notice">Thông tin đăng ký được lưu trên server tại Việt Nam, không bán hay dùng cho quảng cáo. Email được gửi qua Gmail (Google), nên địa chỉ email và nội dung thư có thể được xử lý ngoài Việt Nam.<br><br>Dữ liệu được giữ đến 12 tháng sau khi Embra ra mắt chính thức, hoặc xoá sớm hơn nếu bạn rút lại sự đồng ý. Bạn có thể dùng link xoá trong email, hoặc gửi yêu cầu xem, sửa, xoá dữ liệu tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. <a href="chinh-sach-du-lieu.html">Cách Embra sử dụng dữ liệu của bạn</a>.</p>
+          <div><button class="bracket" type="submit" id="wl-submit">[Tham gia waitlist]</button></div>
+          <p class="err" role="alert" hidden></p>
+        </form>
+        <div class="done" id="wl-done" tabindex="-1" hidden aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot dark">
+  <div class="in">
+    <div class="brand">
+      <a class="logo" href="#main" aria-label="Embra"><b aria-hidden="true"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></b></a>
+      <p class="legal">© 2026 EMBRA · DỰ ÁN ĐANG PHÁT TRIỂN</p>
+    </div>
+    <nav aria-label="Chân trang">
+      <a href="#quyen">[   CÁCH HOẠT ĐỘNG   ]</a>
+      <a href="llms.txt">[   LLMS.TXT   ]</a>
+      <a href="chinh-sach-du-lieu.html">[   DỮ LIỆU CÁ NHÂN   ]</a>
+      <a href="chinh-sach-du-lieu.html#nguon">[   NGUỒN ẢNH   ]</a>
+      <a href="#join">[   WAITLIST   ]</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- nền tối: vết loang, vệt xước, bụi (giống ảnh nền của TheHub) ---------- */
+  (function stain() {
+    const W = 1400, H = 900, c = document.createElement("canvas"); c.width = W; c.height = H;
+    const g = c.getContext("2d");
+    g.fillStyle = "#232323"; g.fillRect(0, 0, W, H);
+    const blob = (x, y, r, a, light) => { for (const dx of [-W, 0, W]) for (const dy of [-H, 0, H]) {
+      const gr = g.createRadialGradient(x + dx, y + dy, 0, x + dx, y + dy, r), col = light ? "255,255,245" : "0,0,0";
+      gr.addColorStop(0, `rgba(${col},${a})`); gr.addColorStop(1, `rgba(${col},0)`); g.fillStyle = gr; g.fillRect(x + dx - r, y + dy - r, r * 2, r * 2); } };
+    for (let i = 0; i < 55; i++) blob(Math.random() * W, Math.random() * H, 120 + Math.random() * 320, 0.02 + Math.random() * 0.035, Math.random() > 0.6);
+    for (let i = 0; i < 70; i++) blob(Math.random() * W, Math.random() * H, 10 + Math.random() * 50, 0.012 + Math.random() * 0.02, Math.random() > 0.6);
+    for (let i = 0; i < 90; i++) { const x = Math.random() * W, y = Math.random() * H, len = 30 + Math.random() * 380, light = Math.random() > 0.35;
+      g.strokeStyle = light ? `rgba(255,255,245,${0.02 + Math.random() * 0.04})` : `rgba(0,0,0,${0.08 + Math.random() * 0.12})`; g.lineWidth = Math.random() > 0.8 ? 1.6 : 0.8;
+      g.beginPath(); g.moveTo(x, y); g.lineTo(x + (Math.random() - 0.5) * 4, y + len); g.stroke(); }
+    const img = g.getImageData(0, 0, W, H), d = img.data;
+    for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - 0.5) * 18; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+    g.putImageData(img, 0, 0);
+    for (let i = 0; i < 500; i++) { const light = Math.random() > 0.4;
+      g.fillStyle = light ? `rgba(255,255,245,${0.04 + Math.random() * 0.1})` : `rgba(0,0,0,${0.15 + Math.random() * 0.2})`;
+      g.beginPath(); g.arc(Math.random() * W, Math.random() * H, Math.random() < 0.92 ? 0.6 + Math.random() * 0.8 : 1.4 + Math.random() * 1.6, 0, 7); g.fill(); }
+    document.documentElement.style.setProperty("--stain", `url(${c.toDataURL("image/jpeg", 0.86)})`);
+  })();
+
+  /* ---------- hero: luồng log nền — cuộn lên, nửa dưới được sinh mới mỗi vòng ---------- */
+  (function logStream() {
+    const box = document.querySelector(".hero .log-stream");
+    if (!box) return;
+    const rnd = (n) => Math.floor(Math.random() * n);
+    const pick = (a) => a[rnd(a.length)];
+    const hex = (n) => Array.from({ length: n }, () => rnd(256).toString(16).padStart(2, "0")).join(" ");
+    const tid = () => "t-" + rnd(0xffff).toString(16).padStart(4, "0");
+    const rel = () => "r0" + (100 + rnd(90));
+    const pad = (s, n) => (s + " ".repeat(n)).slice(0, n);
+    let t = Date.now() - 90e3;
+    const logT = [
+      [30, () => ["", "gate", `lab rehearsal m-${rnd(9999)} on clone@snap · lock ${1 + rnd(9)}ms · 0 bad rows`]],
+      [10, () => ["", "build", `${tid()} step ${1 + rnd(7)}/7 ${pick(["npm ci", "next build", "go build ./...", "prisma generate"])} ${(2 + Math.random() * 30).toFixed(1)}s`]],
+      [8,  () => ["", "pg", `checkpoint complete: wrote ${200 + rnd(3000)} buffers (${(Math.random() * 14).toFixed(1)}%)`]],
+      [8,  () => ["", "pg", `wal archived 00000001000000${hex(1).toUpperCase()}000000${hex(1).toUpperCase()}`]],
+      [7,  () => ["", "zvol", `snapshot tank/${tid()}@pre-${rel()} ${(0.01 + Math.random() * 0.05).toFixed(3)}s`]],
+      [7,  () => ["OK", "gate", `rehearsal m-${rnd(9999)} on clone: AccessExclusive ${1 + rnd(9)}ms · 0 bad rows`]],
+      [6,  () => ["OK", "deploy", `${rel()} → staging · healthcheck ${3 + rnd(4)}/${3 + rnd(4)} pass`]],
+      [6,  () => ["", "lab", `pitr restore → ${rel()} · rpo ${50 + rnd(15)}s · rto ${48 + rnd(12)}s`]],
+      [5,  () => ["WARN", "waf", `lab flood ${200 + rnd(400)} ip → ${tid()} · tenant khác p99 ${(0.5 + Math.random()).toFixed(1)}ms`]],
+      [4,  () => ["WARN", "pg", `replica lag ${(1 + Math.random() * 40).toFixed(1)} MB · throttle backfill`]],
+      [2,  () => ["ERR", "health", `svc-${hex(2).replace(" ", "")} /healthz timeout 5000ms → retry 1/3`]],
+    ];
+    const rawT = [
+      [60, () => ["", "", `0x${rnd(0xffff).toString(16).padStart(4, "0")}  ${hex(12)}`]],
+      [20, () => ["", "lsn", `${hex(1).toUpperCase()}/${rnd(0xffffff).toString(16).toUpperCase()} → replay`]],
+      [12, () => ["OK", "sync", `fsync ${(Math.random() * 3).toFixed(2)}ms · txg ${1e6 + rnd(9e5)}`]],
+      [8,  () => ["WARN", "io", `zd${rnd(64)} util ${80 + rnd(20)}% · queue ${rnd(40)}`]],
+    ];
+    const cls = { OK: "ok", WARN: "warn", ERR: "bad" };
+    const draw = (tpl) => { let w = tpl.reduce((s, [n]) => s + n, 0) * Math.random();
+      for (const [n, f] of tpl) if ((w -= n) < 0) return f(); return tpl[0][1](); };
+    const line = (tpl) => {
+      t += 40 + rnd(900);
+      const [lv, svc, msg] = draw(tpl), ts = new Date(t + 7 * 36e5).toISOString().slice(11, 23);
+      const txt = `${ts}  ${pad(lv || "INFO", 4)}  ${pad(svc, 6)}  ${msg}`;
+      return lv ? `<span class="${cls[lv]}">${txt}</span>` : txt;
+    };
+    const rows = Math.ceil(box.clientHeight / 18) + 6;
+    const cols = [...box.querySelectorAll(".log-col")].map((col, i) => {
+      const tpl = col.classList.contains("raw") ? rawT : logT;
+      const [a, b] = col.querySelectorAll(".track > div");
+      const fill = () => Array.from({ length: rows }, () => line(tpl)).join("\n") + "\n";
+      a.innerHTML = fill(); b.innerHTML = fill();
+      const track = col.firstElementChild;
+      track.style.setProperty("--dur", `${rows * (i ? 1.15 : 0.8)}s`);
+      /* về đầu vòng: nửa trên nhận lại đúng nội dung đang hiện, nửa dưới là log mới → không giật, không lặp */
+      track.addEventListener("animationiteration", () => { a.innerHTML = b.innerHTML; b.innerHTML = fill(); });
+      return track;
+    });
+    if (still || !cols.length) return;
+    new IntersectionObserver(([e]) => box.classList.toggle("paused", !e.isIntersecting)).observe(box);
+    document.addEventListener("visibilitychange", () => box.classList.toggle("paused", document.hidden));
+  })();
+
+  /* ---------- dải bảng mã chạy ngang ---------- */
+  const blk = `<span class="blk"><span>EMBRA</span><span>RELEASE PLAN</span><span>0201</span><span>VN-HCM 21:16</span><span>RESTORE POINT</span><span>0202</span><span>R0142</span><span>0103 / 0012</span><span></span></span>`;
+  document.getElementById("ticker").innerHTML = blk.repeat(14);
+
+  /* ---------- hiện dần khi cuộn (kiểu Wix fadeIn của TheHub) ---------- */
+  if ("IntersectionObserver" in window && !still) {
+    document.documentElement.classList.add("js");
+    const els = [...document.querySelectorAll(".rv")];
+    const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach(el => io.observe(el));
+    const sweep = () => els.forEach(el => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add("in"); });
+    requestAnimationFrame(() => requestAnimationFrame(sweep)); setTimeout(sweep, 1200);
+    addEventListener("scroll", () => { clearTimeout(sweep.t); sweep.t = setTimeout(sweep, 220); }, { passive: true });
+  }
+
+  /* ---------- đồng hồ giờ Việt Nam trong bảng mã ---------- */
+  const clocks = document.querySelectorAll("[data-clock]");
+  const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Ho_Chi_Minh", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  const tickClock = () => { const t = "HCM " + fmt.format(new Date()); clocks.forEach(c => (c.textContent = t)); };
+  tickClock(); setInterval(tickClock, 1000);
+
+  /* ---------- thẻ thông số: nút kéo ngang ---------- */
+  const cards = document.getElementById("cards");
+  const moveCards = (direction) => {
+    const step = cards.querySelector(".card").getBoundingClientRect().width + parseFloat(getComputedStyle(cards).columnGap);
+    const end = cards.scrollWidth - cards.clientWidth;
+    const wraps = direction > 0 ? cards.scrollLeft >= end - 2 : cards.scrollLeft <= 2;
+    cards.scrollTo({
+      left: wraps ? (direction > 0 ? 0 : end) : cards.scrollLeft + direction * step,
+      behavior: still ? "auto" : "smooth"
+    });
+  };
+  // Auto-advance only while visible; leave time to read after manual interaction.
+  const carousel = cards.closest(".dest");
+  let carouselVisible = false, carouselHovered = false, carouselTouching = false;
+  let carouselResumeAt = 0;
+  const pauseCarousel = () => { carouselResumeAt = Date.now() + 8000; };
+  new IntersectionObserver(([entry]) => {
+    carouselVisible = entry.isIntersecting;
+  }, { threshold: .25 }).observe(cards);
+  carousel.addEventListener("pointerenter", (event) => {
+    if (event.pointerType === "mouse") carouselHovered = true;
+  });
+  carousel.addEventListener("pointerleave", () => { carouselHovered = false; pauseCarousel(); });
+  carousel.addEventListener("pointerdown", () => { carouselTouching = true; pauseCarousel(); });
+  window.addEventListener("pointerup", () => { if (carouselTouching) pauseCarousel(); carouselTouching = false; });
+  window.addEventListener("pointercancel", () => { carouselTouching = false; pauseCarousel(); });
+  carousel.addEventListener("wheel", pauseCarousel, { passive: true });
+  carousel.addEventListener("keydown", pauseCarousel);
+  carousel.addEventListener("click", pauseCarousel);
+  if (!still) setInterval(() => {
+    if (!carouselVisible || document.hidden || carouselHovered || carouselTouching ||
+        carousel.matches(":focus-within") || Date.now() < carouselResumeAt || cards.scrollWidth <= cards.clientWidth + 2) return;
+    moveCards(1);
+  }, 4000);
+
+  /* ---------- nav: đánh dấu section đang xem ---------- */
+  const links = [...document.querySelectorAll(".nav a[href^='#']:not(.join-btn)")];
+  const nio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-45% 0px -50% 0px" });
+  links.forEach(a => { const t = document.querySelector(a.getAttribute("href")); if (t) nio.observe(t); });
+
+  /* ---------- cửa sổ sản phẩm tự diễn một vòng deploy (minh hoạ) ---------- */
+  (function story() {
+    const win = document.getElementById("window"), stage = document.getElementById("stage");
+    if (!win) return;
+    const li = Object.fromEntries([...document.querySelectorAll("#steps li")].map(el => [el.dataset.k, el]));
+    const st = document.getElementById("rel-status"), stT = st.querySelector("span");
+    const lines = [...document.querySelectorAll("#diff .ln, #check .ln")];
+    const drop = document.querySelector("#diff .d"), acts = document.getElementById("acts");
+    const toast = document.getElementById("toast"), tGo = document.getElementById("toast-go"), aGo = document.getElementById("approve-btn");
+    const cBox = document.getElementById("console"), cIn = document.getElementById("console-in"), KEY = "DROP legacy_ref";
+    const bud = document.getElementById("budget"), budV = document.getElementById("budget-v"), budD = document.getElementById("budget-d");
+    const BASE = 149000, NEXT = 179000, vnd = (n) => n.toLocaleString("vi-VN") + " ₫";
+    const emg = document.getElementById("em-panel"), rBtn = document.getElementById("restore-btn"), rLbl = document.getElementById("restore-l");
+    const small = (k, text) => { li[k].querySelector("small").textContent = text; };
+    let timers = [], ticks = [], running = false, cycle = 0;
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    const set = (k, s, r) => { li[k].dataset.s = s; if (r !== undefined) li[k].querySelector(".r").textContent = r; };
+    const status = (s, text) => { st.dataset.s = s; stT.textContent = text; };
+    const sec = (n) => n < 60 ? n + "s" : `${Math.floor(n / 60)}m ${String(n % 60).padStart(2, "0")}s`;
+    const count = (k, total, dur) => { const r = li[k].querySelector(".r"), t0 = performance.now();
+      const id = setInterval(() => { const p = Math.min(1, (performance.now() - t0) / dur); r.textContent = sec(Math.round(total * p)); if (p >= 1) clearInterval(id); }, 60); ticks.push(id); };
+    const clear = () => { timers.forEach(clearTimeout); ticks.forEach(clearInterval); timers = []; ticks = []; };
+    /* console ghi đè: phải gõ đúng "DROP legacy_ref" mới mở khoá nút ghi đè */
+    const check = () => {
+      const v = cIn.value, ok = v === KEY;
+      cBox.dataset.s = ok ? "ok" : v && !KEY.startsWith(v) ? "bad" : "";
+      acts.dataset.s = ok ? "armed" : "";
+      aGo.disabled = !ok; aGo.textContent = ok ? "GHI ĐÈ" : "LOCKED";
+      return ok;
+    };
+    /* budget tracker: thêm cột → dự toán tăng, nháy cam neon và đếm nhanh lên số mới */
+    const budget = (up, flash) => {
+      bud.classList.remove("flash"); bud.classList.toggle("up", up); budD.hidden = !up;
+      if (!up || !flash) { budV.textContent = vnd(up ? NEXT : BASE); return; }
+      void bud.offsetWidth; bud.classList.add("flash");
+      const t0 = performance.now(), id = setInterval(() => { const p = Math.min(1, (performance.now() - t0) / 450);
+        budV.textContent = vnd(Math.round((BASE + (NEXT - BASE) * p) / 1000) * 1000); if (p >= 1) clearInterval(id); }, 40); ticks.push(id);
+    };
+    /* emergency mode: viền cửa sổ nháy đỏ, nút thường mờ đi, hiện nút RESTORE TO CHECKPOINT */
+    const emergency = (on) => {
+      win.classList.toggle("is-emergency", on); emg.hidden = !on;
+      rBtn.disabled = !on; rBtn.classList.remove("press"); rLbl.textContent = "RESTORE TO CHECKPOINT";
+    };
+    const arm = () => { cIn.disabled = false; cIn.value = ""; check(); };
+    const reset = () => {
+      Object.keys(li).forEach(k => set(k, "pending", "—")); status("run", "ĐANG CHẠY");
+      lines.forEach(l => l.classList.add("off")); drop.classList.remove("flag"); acts.classList.add("off");
+      toast.classList.remove("show"); tGo.classList.remove("press"); aGo.classList.remove("press");
+      small("promote", "bị chặn · tách migration hoặc ghi đè"); small("health", "theo dõi sau khi lên production");
+      emergency(false); budget(false); arm();
+    };
+    /* nhảy thẳng tới trạng thái bị chặn — khi người xem tự gõ vào console */
+    const hold = () => {
+      set("build", "ok", "38s"); set("staging", "ok", "1m 12s"); set("plan", "ok", "4s"); set("restore", "ok", "21:16:04");
+      set("promote", "wait", "—"); set("health", "pending", "—"); status("wait", "BỊ CHẶN");
+      small("promote", "bị chặn · tách migration hoặc ghi đè"); small("health", "theo dõi sau khi lên production");
+      lines.forEach(l => l.classList.remove("off")); drop.classList.add("flag"); acts.classList.remove("off");
+      toast.classList.remove("show"); tGo.classList.remove("press"); aGo.classList.remove("press");
+      emergency(false); budget(true); arm();
+    };
+    /* sự cố: health check sau promote thất bại */
+    const crash = () => {
+      set("health", "fail", "5xx 38%"); small("health", "lỗi 5xx tăng sau khi lên production");
+      status("fail", "SỰ CỐ"); emergency(true);
+    };
+    /* khôi phục về restore point rồi thoát emergency mode */
+    const restore = (t) => {
+      at(t, () => { rBtn.disabled = true; rBtn.classList.add("press"); rLbl.textContent = "ĐANG KHÔI PHỤC…"; set("restore", "run", "…"); status("run", "ĐANG KHÔI PHỤC"); });
+      at(t + 1300, () => {
+        emergency(false); set("restore", "ok", "↺ 21:16:04");
+        set("promote", "pending", "—"); small("promote", "đã rollback · r_0142 chưa lên production");
+        set("health", "ok", "khoẻ"); small("health", "DB về 21:16:04 · mất ghi sau đó"); status("live", "ĐÃ KHÔI PHỤC");
+      });
+      if (!win.dataset.manual) at(t + 4500, play);
+    };
+    const promote = (t, bad) => {
+      at(t, () => { tGo.classList.remove("press"); aGo.classList.remove("press"); toast.classList.remove("show");
+        acts.dataset.s = "sent"; aGo.disabled = true; aGo.textContent = "ĐÃ GHI ĐÈ"; cIn.disabled = true; });
+      at(t + 150, () => { set("promote", "run", "0s"); small("promote", "đã ghi đè · đang chuyển traffic"); count("promote", 12, 900); status("run", "ĐANG PROMOTE"); });
+      at(t + 1100, () => { set("promote", "ok", "12s"); status("live", "LIVE"); set("health", "run", "…"); });
+      at(t + 2000, () => bad ? crash() : set("health", "ok", "khoẻ"));
+    };
+    /* vòng lẻ (1, 3, …) gặp sự cố và tự khôi phục; vòng chẵn chạy êm */
+    const play = () => {
+      clear(); delete win.dataset.manual; win.classList.add("anim"); reset();
+      const bad = ++cycle % 2 === 1;
+      at(400,  () => { set("build", "run", "0s"); count("build", 38, 1500); });
+      at(2000, () => { set("build", "ok", "38s"); set("staging", "run", "0s"); count("staging", 72, 1300); });
+      at(3400, () => { set("staging", "ok", "1m 12s"); set("plan", "run", "…"); });
+      at(3600, () => { lines[0].classList.remove("off"); budget(true, true); });
+      at(3900, () => lines[1].classList.remove("off"));
+      at(4250, () => { set("plan", "ok", "4s"); lines[2].classList.remove("off"); });
+      at(4550, () => { lines[3].classList.remove("off"); drop.classList.add("flag"); });
+      at(4850, () => set("restore", "run", "…"));
+      at(5350, () => set("restore", "ok", "21:16:04"));
+      at(5500, () => { set("promote", "wait", "—"); status("wait", "BỊ CHẶN"); acts.classList.remove("off"); });
+      at(5900, () => toast.classList.add("show"));
+      at(6500, () => tGo.classList.add("press"));
+      at(6750, () => { tGo.classList.remove("press"); toast.classList.remove("show"); });
+      [...KEY].forEach((c, i) => at(6900 + i * 55 + Math.random() * 30, () => { cIn.value += c; check(); }));
+      at(8200, () => aGo.classList.add("press"));
+      promote(8500, bad);
+      if (bad) restore(12300); else at(15500, play);
+    };
+    const stop = () => { clear(); running = false; };
+    /* người xem bấm vào console → dừng vòng tự diễn, để họ tự gõ */
+    const manual = () => { if (win.dataset.manual) return; clear(); win.dataset.manual = "1"; hold(); };
+    cIn.addEventListener("focus", manual);
+    cIn.addEventListener("input", check);
+    cIn.addEventListener("keydown", (e) => { if (e.key === "Enter" && check()) aGo.click(); });
+    /* người xem tự ghi đè → luôn gặp sự cố, để họ tự bấm RESTORE TO CHECKPOINT */
+    aGo.addEventListener("click", () => { if (!check()) return; clear(); aGo.classList.add("press"); promote(250, true); });
+    rBtn.addEventListener("click", () => { clear(); restore(0); });
+    check();
+    if (still || !("IntersectionObserver" in window)) { budget(true); return; }
+    new IntersectionObserver(([e]) => { if (e.isIntersecting && !running) { running = true; play(); } else if (!e.isIntersecting && running) stop(); }, { threshold: 0.3 }).observe(stage);
+    document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+  })();
+
+  /* ---------- waitlist → POST /api/waitlist (landing/waitlist, máy chủ tại VN) ---------- */
+  const t0 = Date.now();
+  const valid = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  const esc = (x) => x.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const form = document.getElementById("wl"), input = document.getElementById("email");
+  const err = form.querySelector(".err"), held = document.getElementById("wl-held"), done = document.getElementById("wl-done"), btn = document.getElementById("wl-submit");
+  const hero = document.getElementById("wl-hero"), hIn = document.getElementById("hero-email"), hErr = document.getElementById("hero-err");
+  document.querySelectorAll("a[href='#join']").forEach(a => a.addEventListener("click", () => setTimeout(() => input.focus({ preventScroll: true }), 500)));
+
+  /* hero chỉ điền sẵn email: chưa lưu gì cho tới khi người dùng tick đồng ý ở form dưới */
+  hero.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = hIn.value.trim();
+    if (!valid(email)) { hErr.textContent = "Email chưa đúng định dạng. Ví dụ: ban@congty.vn"; hErr.hidden = false; hIn.focus(); return; }
+    hErr.hidden = true; input.value = email;
+    held.textContent = "Email đã được điền bên dưới, chưa gửi đi. Bạn chọn ô đồng ý xử lý dữ liệu rồi bấm Tham gia waitlist để hoàn tất."; held.hidden = false;
+    document.getElementById("join").scrollIntoView({ behavior: still ? "auto" : "smooth" });
+    setTimeout(() => document.getElementById("u-live").focus({ preventScroll: true }), 600);
+  });
+
+  const showErr = (m) => { err.textContent = m; err.hidden = false; };
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = input.value.trim();
+    if (!valid(email)) { showErr("Email chưa đúng định dạng. Ví dụ: ban@congty.vn"); input.focus(); return; }
+    const consent = document.getElementById("consent");
+    if (!consent.checked) { showErr("Bạn cần chọn ô đồng ý sử dụng dữ liệu trước khi đăng ký."); consent.focus(); return; }
+    err.hidden = true;
+    const pick = (n) => form.querySelector(`input[name=${n}]:checked`)?.value || "";
+    const body = {
+      email, users: pick("users"), stack: pick("stack"), approver: pick("approver"), host: pick("host"), db_size: pick("db_size"),
+      incident: document.getElementById("incident").value, talk: document.getElementById("talk").checked,
+      newsletter: document.getElementById("newsletter").checked, consent: true,
+      website: document.getElementById("website").value, fill_ms: Date.now() - t0
+    };
+    btn.disabled = true; btn.textContent = "[ĐANG GỬI…]";
+    let res, data = {};
+    try {
+      res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      data = await res.json().catch(() => ({}));
+    } catch { res = null; }
+    btn.disabled = false; btn.textContent = "[Tham gia waitlist]";
+    if (!res || !res.ok || !data.ok) { showErr(data.error || "Chưa gửi được. Kiểm tra mạng rồi thử lại, hoặc email hello@embra.cloud."); return; }
+    const lines = [`<p>Mình vừa gửi email xác nhận tới <b>${esc(email)}</b>. Bấm link trong email để xác nhận đăng ký.</p>`];
+    if (data.qualified && body.talk) lines.push(`<p>App của bạn đã có user thật, phù hợp để trao đổi về alpha. Mình sẽ email trong 24 giờ để hẹn 15 phút. Gấp thì nhắn Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>`);
+    else if (data.qualified) lines.push(`<p>App của bạn đã có user thật, nên bạn nằm trong nhóm được ưu tiên ở đợt mời đầu.</p>`);
+    else lines.push(`<p>Mình đã nhận đăng ký và sẽ báo khi có đợt alpha phù hợp với dự án của bạn.</p>`);
+    done.innerHTML = `<h3>${data.existing ? "Đã cập nhật" : "Đã nhận"}</h3>${lines.join("")}`;
+    form.hidden = true; done.hidden = false; done.focus({ preventScroll: true });
+  });
+})();
+</script>
+</body>
+</html>
