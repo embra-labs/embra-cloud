@@ -391,6 +391,7 @@
   .hero .measure { bottom: 30px; width: 290px; }
   .scroll-cue { display: none; }
   .about { padding-block: 90px; }
+  .mobile-only { display: none; }
   .col-text { gap: 24px; }
   .col-text .bracket { margin: 8px 0 0; }
   .body-copy { font-size: 18px; line-height: 1.75; }
@@ -462,6 +463,8 @@
     .hero { min-height: 690px; }
     .hero-center { padding: 28px 20px 48px; gap: 18px; }
     .hero-h { font-size: clamp(46px, 12vw, 62px); }
+    .mobile-only { display: initial; }
+    .about #h-project { font-size: 38px; line-height: 1.22; overflow-wrap: anywhere; }
     .hero .caps { font-size: 11px; }
     .wl-hero { flex-direction: column; align-items: stretch; gap: 18px; }
     .wl-hero input { flex: auto; width: 100%; }
@@ -687,7 +690,7 @@
     <div class="row">
       <div class="col-text">
         <p class="eyebrow rv">01 / Bắt đầu từ dự án của bạn</p>
-        <h2 class="h-display rv" id="h-project">Bắt đầu với <span class="mark rv">frontend.</span><br>Thêm backend khi cần.</h2>
+        <h2 class="h-display rv" id="h-project">Bắt đầu với <span class="mark rv">frontend.</span><br>Thêm backend<br class="mobile-only"> khi cần.</h2>
         <p class="body-copy rv">Bạn có thể bắt đầu với landing page hoặc SPA. Khi cần API, database hay file storage, mục tiêu của Embra là giúp bạn quản lý tất cả trong cùng một project.</p>
         <p class="fine rv">Dành cho developer, team nhỏ và agency muốn bớt thời gian cấu hình và vận hành server.</p>
         <a class="bracket rv" href="#thong-so">[Xem kế hoạch alpha]</a>
