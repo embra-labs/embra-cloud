@@ -25,9 +25,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="alternate" type="text/markdown" href="index.md" title="Embra (markdown)">
-<link rel="preload" href="fonts/Handjet-normal-100-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Handjet-static-480-v1.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/IBMPlexSans-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/fonts.css?v=20261007">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
  {"@type":"WebSite","@id":"https://embra.cloud/#website","url":"https://embra.cloud/","name":"Embra","inLanguage":"vi"},
@@ -53,11 +53,11 @@
     --hl-yel: #F3E77A;
     --red:    #C8352B;
 
-    --pixel: "Handjet", "IBM Plex Mono", monospace;
+    --pixel: "Embra Display", "IBM Plex Mono", monospace;
     --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     --gothic: "UnifrakturMaguntia", "Old English Text MT", serif;
-    --px: "ELSH" 0, "ELGR" 1, "wght" 430;
+    --px: "ELSH" 2, "ELGR" 1, "wght" 430;
   }
   * { box-sizing: border-box; border-radius: 0; }
   [hidden] { display: none !important; }
@@ -114,7 +114,7 @@
   .hero .bottom-grid { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; }
   .hero-center { position: relative; text-align: center; display: grid; justify-items: center; gap: 16px; padding: 60px 16px 220px; }
   .caps { font-family: var(--sans); font-size: clamp(14px, 1.05vw, 17px); letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; }
-  .wordmark { display: flex; align-items: flex-end; line-height: .82; font-family: var(--pixel); font-variation-settings: "ELSH" 0, "ELGR" 1, "wght" 560; font-size: clamp(88px, 11vw, 188px); letter-spacing: .02em; }
+  .wordmark { display: flex; align-items: flex-end; line-height: .82; font-family: var(--pixel); font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 560; font-size: clamp(88px, 11vw, 188px); letter-spacing: .02em; }
   .wordmark .cap { font-family: var(--gothic); font-size: 1.08em; color: var(--red); line-height: .8; margin-right: .03em; font-variation-settings: normal; }
   .rule { display: flex; align-items: center; gap: 18px; font-family: var(--sans); font-size: clamp(14px, 1.2vw, 19px); letter-spacing: .16em; text-transform: uppercase; }
   .rule::before, .rule::after { content: ""; width: 38px; height: 1px; background: currentColor; }
@@ -409,7 +409,7 @@
   .map-foot { font: 11px/1.7 var(--mono); color: var(--grey); margin-top: 20px; }
   .partners { padding-top: 75px; }
   .partners h2.h-display { font-family: var(--pixel); font-variation-settings: var(--px); font-size: clamp(47px, 4.8vw, 75px); line-height: 1.05; margin: 20px 0; }
-  .h-display, .partners h2.h-display, .tile h3, .card h3 { font-variation-settings: "ELSH" 0, "ELGR" 1, "wght" 480; }
+  .h-display, .partners h2.h-display, .tile h3, .card h3 { font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 480; }
   .section-note { max-width: 780px; font-size: 16px; line-height: 1.7; color: #C4C4B8; margin: 0 0 32px; }
   .tiles { gap: 22px; }
   .tile h3 { font-size: 39px; line-height: 1.1; }
