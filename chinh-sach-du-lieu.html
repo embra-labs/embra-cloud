@@ -1,16 +1,4 @@
-<!doctype html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Thông báo xử lý dữ liệu cá nhân của waitlist Embra: ai giữ dữ liệu, thu gì, để làm gì, lưu ở đâu, giữ bao lâu và quyền của bạn.">
-<meta name="theme-color" content="#232323">
-<title>Dữ liệu của bạn · Embra</title>
-<link rel="canonical" href="https://embra.cloud/chinh-sach-du-lieu.html">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="fonts/fonts.css">
-<style>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dữ liệu khi liên hệ Embra · Embra</title><link rel="stylesheet" href="fonts/fonts.css?v=20261007"><link rel="icon" href="favicon.svg"><style>
   /* Phiên bản chữ này gắn với ConsentVersion = 2026-10-05 trong landing/waitlist/main.go.
      Sửa nội dung thì đổi cả hai. */
   :root { --char: #232323; --cream: #F6F6EA; --ink: #232323; --grey: #5A5A5A; --lime: #D3F28C; }
@@ -23,7 +11,7 @@
   header a { font-family: "IBM Plex Mono", monospace; font-size: 14px; text-decoration: none; color: var(--lime); }
   header b { font-family: "IBM Plex Sans", sans-serif; font-weight: 400; letter-spacing: .2em; }
   main { max-width: 860px; margin: 0 auto; padding: 72px 24px 110px; }
-  h1 { font-family: Handjet, "IBM Plex Mono", monospace; font-variation-settings: "ELSH" 0, "ELGR" 1, "wght" 430; font-weight: 430; text-transform: uppercase; font-size: clamp(38px, 5vw, 60px); line-height: 1.02; letter-spacing: .01em; margin: 0 0 18px; text-wrap: balance; }
+  h1 { font-family: "Embra Display", "IBM Plex Mono", monospace; font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 430; font-weight: 430; text-transform: uppercase; font-size: clamp(38px, 5vw, 60px); line-height: 1.02; letter-spacing: .01em; margin: 0 0 18px; text-wrap: balance; }
   .meta { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--grey); margin: 0 0 56px; }
   h2 { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; margin: 44px 0 14px; padding-top: 18px; border-top: 1px solid rgba(35,35,35,.25); }
   p, li { font-size: 17px; line-height: 1.75; max-width: 70ch; }
@@ -34,60 +22,4 @@
   th { font-family: "IBM Plex Mono", monospace; font-weight: 400; font-size: 12.5px; color: var(--grey); text-transform: uppercase; letter-spacing: .05em; }
   .wrap { overflow-x: auto; }
   footer { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--grey); max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
-</style>
-</head>
-<body>
-<header><div class="in"><b>EMBRA</b><a href="./">[ VỀ TRANG CHỦ ]</a></div></header>
-<main>
-  <h1>Embra dùng dữ liệu của bạn như thế nào?</h1>
-  <p>Trang này giải thích thông tin nào được lưu khi bạn đăng ký waitlist, ai có thể truy cập và cách yêu cầu xoá. Đây là thông báo xử lý dữ liệu cá nhân dành cho waitlist Embra.</p>
-  <p class="meta">Áp dụng cho waitlist Embra · Phiên bản 2026-10-05 · Theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP</p>
-
-  <h2>1. Ai chịu trách nhiệm về dữ liệu?</h2>
-  <p>Mình là Hoàng Xuân, người xây dựng và vận hành Embra, đồng thời là bên kiểm soát và xử lý dữ liệu đăng ký. Embra hiện là dự án cá nhân đang phát triển, chưa có pháp nhân và chưa cung cấp dịch vụ thương mại (<a href="https://github.com/hxuan190">github.com/hxuan190</a>).</p>
-  <p>Bạn có thể liên hệ trực tiếp với mình qua <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> · Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>
-
-  <h2>2. Form đăng ký lưu những gì?</h2>
-  <div class="wrap"><table>
-    <thead><tr><th>Dữ liệu</th><th>Bắt buộc</th><th>Mục đích sử dụng</th></tr></thead>
-    <tbody>
-      <tr><td>Email</td><td>Có</td><td>Gửi email xác nhận đăng ký, lời mời dùng thử và thông tin ra mắt Embra</td></tr>
-      <tr><td>Giai đoạn của project, stack, người review migration, nơi deploy và dung lượng PostgreSQL</td><td>Không</td><td>Chọn đợt alpha phù hợp với project của bạn</td></tr>
-      <tr><td>Mô tả sự cố với database hoặc migration</td><td>Không</td><td>Hiểu những khó khăn bạn gặp để phát triển Embra</td></tr>
-      <tr><td>Lựa chọn trao đổi 15 phút và nhận newsletter</td><td>Không</td><td>Liên hệ trao đổi hoặc gửi newsletter khi bạn chọn đồng ý</td></tr>
-      <tr><td>Thời điểm đăng ký, phiên bản nội dung đồng ý và hash một chiều của địa chỉ IP</td><td>Tự động</td><td>Ghi nhận việc bạn đồng ý sử dụng dữ liệu. Không lưu địa chỉ IP gốc</td></tr>
-    </tbody>
-  </table></div>
-  <p>Embra không yêu cầu dữ liệu cá nhân nhạy cảm. Khi kể về sự cố, bạn không cần gửi password, API key hay dữ liệu của khách hàng. Trang không dùng cookie hoặc công cụ tracking, quảng cáo của bên thứ ba. Font được tải trực tiếp từ server của Embra.</p>
-
-  <h2>3. Dữ liệu được lưu ở đâu?</h2>
-  <p>Thông tin trong form được lưu trên server tại Việt Nam. Chỉ mình, Hoàng Xuân, có quyền truy cập dữ liệu này. Embra không bán, cho thuê hay chia sẻ dữ liệu cho bên thứ ba để quảng cáo.</p>
-  <p>Email xác nhận và email liên hệ dùng địa chỉ hello@embra.cloud. Hộp thư này hiện nhận thư chuyển tiếp và gửi thư qua Gmail của Google LLC. Vì vậy, địa chỉ email của bạn và nội dung thư đi qua hệ thống Google, có thể được xử lý trên server ngoài Việt Nam. Nếu đổi nhà cung cấp email, Embra sẽ cập nhật trang này trước khi áp dụng.</p>
-
-  <h2>4. Dữ liệu được giữ bao lâu?</h2>
-  <p>Dữ liệu được giữ đến 12 tháng sau khi Embra ra mắt chính thức. Nếu bạn rút lại sự đồng ý trước đó, dữ liệu sẽ được xoá sớm hơn. Khi hết thời hạn lưu, dữ liệu được xoá khỏi server.</p>
-  <p>Nếu Embra thành lập công ty, mình sẽ xin lại sự đồng ý của bạn trước khi chuyển dữ liệu waitlist sang công ty.</p>
-
-  <h2>5. Muốn xem, sửa hoặc xoá dữ liệu?</h2>
-  <ul>
-    <li>Biết dữ liệu của mình được sử dụng thế nào, xem và nhận bản sao dữ liệu đó.</li>
-    <li>Yêu cầu sửa thông tin chưa đúng.</li>
-    <li>Rút lại sự đồng ý và yêu cầu xoá dữ liệu. Bạn có thể dùng link xoá trong email xác nhận để xoá dữ liệu khỏi server.</li>
-    <li>Phản đối hoặc yêu cầu hạn chế việc xử lý dữ liệu; khiếu nại tới cơ quan có thẩm quyền.</li>
-  </ul>
-  <p>Gửi yêu cầu tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Mình sẽ phản hồi trong 72 giờ và hoàn tất yêu cầu trong thời hạn luật định. Việc rút lại sự đồng ý không thay đổi việc xử lý dữ liệu đã diễn ra trước đó.</p>
-
-  <h2>6. Nếu dữ liệu gặp sự cố thì sao?</h2>
-  <p>Nếu phát hiện dữ liệu bị rò rỉ hoặc có người truy cập trái phép, Embra sẽ thông báo cho những người bị ảnh hưởng và cơ quan có thẩm quyền theo quy định.</p>
-
-  <h2 id="nguon">7. Nguồn ảnh trên trang chủ</h2>
-  <p>Các ảnh là tài liệu public domain, lấy qua Wikimedia Commons và được xử lý lại thành ảnh hạt đen trắng:</p>
-  <ul>
-    <li><a href="https://commons.wikimedia.org/wiki/File:View_of_IBM_digital_computer_model_7090_magnet_core_installation._ITT_Artic_Services,_Inc.,_Official_photograph_BMEWS_Site_II,_Clear,_AK,_by_unknown_photographer,_17_September_1965._HAER_AK-30-A-98.tif">Tủ bộ nhớ lõi từ IBM 7090, 1965</a> · Historic American Engineering Record, HAER AK-30-A-98</li>
-    <li><a href="https://commons.wikimedia.org/wiki/File:1771_Bonne_Map_of_Tonkin_(Vietnam)_China,_Formosa_(Taiwan)_and_Luzon_(Philippines)_-_Geographicus_-_Formosa-bonne-1771.jpg">Bản đồ vịnh Bắc Bộ, 1771</a> · Rigobert Bonne, qua Geographicus</li>
-    <li><a href="https://commons.wikimedia.org/wiki/File:Data_Processing_System_at_Ames_Research_Center_(A-31180).jpg">Phòng xử lý dữ liệu tại Ames Research Center</a> · NASA, A-31180</li>
-  </ul>
-</main>
-<footer>Embra là dự án đang phát triển. © 2026 Embra.</footer>
-</body>
-</html>
+</style></head><body><header><div class="in"><b>EMBRA</b><a href="index.html">← Trang chủ</a><a href="en/privacy.html" lang="en">EN</a></div></header><main><h1>Dữ liệu khi liên hệ Embra</h1><p class="meta">Cập nhật 2026-10-07</p><h2>1. Ai nhận thông tin?</h2><p>Hoàng Xuân là người vận hành Embra và trực tiếp nhận yêu cầu. Liên hệ: <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>.</p><h2>2. Trang này thu thập gì?</h2><p>Landing page không có form đăng ký và không tự tạo tài khoản. Bấm link email chỉ mở ứng dụng mail; bạn tự chọn nội dung gửi. Khi liên hệ, địa chỉ email hoặc thông tin tài khoản Zalo cùng nội dung bạn gửi được dùng để trao đổi về project, setup và báo giá.</p><h2>3. Thông tin đi qua đâu?</h2><p>Email hello@embra.cloud được nhận và gửi qua Gmail của Google LLC, nên địa chỉ email và nội dung thư có thể được xử lý ngoài Việt Nam. Nếu chọn Zalo, cuộc trao đổi diễn ra trên hệ thống Zalo. Không gửi password, API key hoặc dữ liệu khách hàng qua tin nhắn giới thiệu project.</p><h2>4. Thông tin được sử dụng thế nào?</h2><p>Thông tin bạn gửi được dùng để trả lời yêu cầu và trao đổi phương án triển khai. Không bán, cho thuê hoặc chia sẻ cho bên thứ ba để quảng cáo. Trước khi setup, hai bên sẽ thống nhất điều kiện dịch vụ, nơi xử lý và thời hạn lưu dữ liệu của project.</p><h2>5. Muốn xem, sửa hoặc xoá thông tin?</h2><p>Email hello@embra.cloud để yêu cầu xem, sửa, nhận bản sao hoặc xoá thông tin đã gửi. Bạn cũng có thể yêu cầu ngừng liên hệ, hạn chế hoặc phản đối việc xử lý dữ liệu.</p><h2>6. Đã đăng ký waitlist trước đây?</h2><p>Các đăng ký cũ vẫn theo <a href="privacy-waitlist-2026-10-05.html">thông báo ngày 05/10/2026</a> mà bạn đã đồng ý. Bản cập nhật landing page này không tự thay đổi sự đồng ý đó.</p></main><footer>© 2026 Embra</footer></body></html>
