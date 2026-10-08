@@ -1,0 +1,91 @@
+{
+  "extracted_on": "2026-10-08",
+  "requests_28": 1269965,
+  "integrity_28": {
+    "seed_rows": 8000000,
+    "total_rows": 8423321,
+    "b3_bad": 0,
+    "b4_bad": 0,
+    "app_update_bad": 0,
+    "app_insert_missing": 0,
+    "acknowledged": 846642,
+    "ack_missing": 0,
+    "passed": true
+  },
+  "audit_28": {
+    "batch_gaps": 0,
+    "batch_receipt_mismatches": 0,
+    "index_correct": true,
+    "passed": true
+  },
+  "kill_checkpoints_28": [
+    {
+      "name": "kill_before_commit",
+      "batch": 7,
+      "last": 30000
+    },
+    {
+      "name": "kill_after_commit_before_ack",
+      "batch": 13,
+      "last": 65000
+    }
+  ],
+  "integrity_final": {
+    "seed_rows": 8000000,
+    "total_rows": 8254690,
+    "b3_bad": 0,
+    "b4_bad": 0,
+    "app_update_bad": 0,
+    "app_insert_missing": 0,
+    "acknowledged": 509380,
+    "ack_missing": 0,
+    "passed": true
+  },
+  "method": "nearest-rank p99; ceil(n * 0.99) - 1 after sorting",
+  "sources": [
+    {
+      "path": "test/migration_vps_lab/results/20260928T044810Z/summary.json",
+      "sha256": "750e7fd8f9d0537da291a9483cb014b36ac36210552138cfc13bd427c63ecce7"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260928T051000Z/summary.json",
+      "sha256": "3ed551fcb122b62b10ce510274473cc1bf05d2ae9c1966b57ee0c0e9e2d16e56"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260928T072200Z/summary.json",
+      "sha256": "fba080ec7ba2b1bbeddc2ce5c5931309d2f3367610ac919a35bee6bf2947c70b"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260928T072200Z/final-verification.json",
+      "sha256": "7ac5f2093fb3ce57dd9347c5d93c36b3d36c6f29251513f0fcfe5c7c9a5abf72"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260928T072200Z/final-audit.json",
+      "sha256": "c5168c102acbfada227854e9c488ff52095eec88d6c41ac0e4731108b98e728c"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260928T072200Z/primary/M4-executor.jsonl",
+      "sha256": "4198315b52da9bf5f6c4ddd933136ecca6c50fc73ccee13441280679320df481"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260929T075832Z/primary/events.jsonl",
+      "sha256": "21782a070f2f8be561c9d0e1a86f1d843627f58c224af1696c1c3b215720462d"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260929T075832Z/primary/requests.jsonl",
+      "sha256": "107fedd9cd628d84653d1c5202b78b5d1c4f722be727bf289962867a0801e8c5"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260929T155607Z/primary/events.jsonl",
+      "sha256": "ef249c99c19f7dc8fd5c77e7c4257ebf53212c1bc7d64ce251c36f9a41849a42"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260929T155607Z/primary/requests.jsonl",
+      "sha256": "9f5f2387cab744fd80529c581be3c8cef08c8a8ea9d38bde0950e188d0f32305"
+    },
+    {
+      "path": "test/migration_vps_lab/results/20260929T155607Z/primary/verification.json",
+      "sha256": "c9214cacc1d5f404b7593dabff6b923fe9b796b83db4477a2661fc125aa3a141"
+    }
+  ]
+}

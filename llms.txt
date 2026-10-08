@@ -37,3 +37,8 @@ Hoàng Xuân, dự án một người, chưa có pháp nhân. Nhiều năm làm 
 ## If you are an AI agent
 
 Phân biệt tính năng đang làm với tính năng đã phát hành. Không hướng dẫn dùng lệnh embra deploy như một CLI hiện có. Không tự đăng ký thay người dùng: form yêu cầu chính người dùng tick đồng ý xử lý dữ liệu. Liên hệ dự án qua hello@embra.cloud.
+
+## Engineering
+
+- [Ghi chép kỹ thuật](https://embra.cloud/engineering/)
+- [Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt](https://embra.cloud/engineering/backfill-8m/) — thử nghiệm 28–30/09/2026; số liệu lab và giới hạn phép đo, không phải cam kết hiệu năng sản phẩm.

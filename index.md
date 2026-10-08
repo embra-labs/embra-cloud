@@ -48,3 +48,8 @@ Tham gia waitlist tại https://embra.cloud/#join và tự xác nhận đồng �
 Khi được mời, bắt đầu với dự án thử nghiệm hoặc môi trường không quan trọng. Khả năng phục hồi, xuất dữ liệu và giới hạn hỗ trợ sẽ được xác nhận cho từng phạm vi thử.
 
 Liên hệ: hello@embra.cloud. [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html). [Thông tin cho agent](https://embra.cloud/llms.txt).
+
+## Engineering
+
+- [Ghi chép kỹ thuật](https://embra.cloud/engineering/)
+- [Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt](https://embra.cloud/engineering/backfill-8m/) — thử nghiệm 28–30/09/2026; số liệu lab và giới hạn phép đo, không phải cam kết hiệu năng sản phẩm.

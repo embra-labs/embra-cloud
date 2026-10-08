@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt · Embra</title><meta name="description" content="846.642 lần ghi đã ACK được đối chiếu đầy đủ, nhưng p99 SQL lên 1,27–1,53 giây. Ghi chép lab về backfill, checkpoint và giới hạn của phép đo latency."><link rel="canonical" href="https://embra.cloud/engineering/backfill-8m/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#232323">
+<meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="Embra"><meta property="og:title" content="Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt"><meta property="og:description" content="846.642 lần ghi đã ACK được đối chiếu đầy đủ, nhưng p99 SQL lên 1,27–1,53 giây. Ghi chép lab về backfill, checkpoint và giới hạn của phép đo latency."><meta property="og:url" content="https://embra.cloud/engineering/backfill-8m/"><meta property="og:image" content="https://embra.cloud/engineering/backfill-8m/assets/cover.png"><meta property="og:image:alt" content="Backfill 8 triệu dòng. Dữ liệu đúng. Latency chưa đạt."><meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt", "description": "846.642 lần ghi đã ACK được đối chiếu đầy đủ, nhưng p99 SQL lên 1,27–1,53 giây. Ghi chép lab về backfill, checkpoint và giới hạn của phép đo latency.", "url": "https://embra.cloud/engineering/backfill-8m/", "inLanguage": "vi", "datePublished": "2026-10-08", "dateModified": "2026-10-08", "author": {"@type": "Organization", "name": "Embra", "url": "https://embra.cloud/"}, "publisher": {"@type": "Organization", "name": "Embra", "url": "https://embra.cloud/"}, "image": "https://embra.cloud/engineering/backfill-8m/assets/cover.png", "mainEntityOfPage": "https://embra.cloud/engineering/backfill-8m/"}</script><style>
+*{box-sizing:border-box}body{margin:0;background:#faf8f3;color:#262623;font:18px/1.8 system-ui,sans-serif}
+.bar{padding:16px 5vw;border-bottom:1px solid #ddd6c8;font-size:13px;letter-spacing:.06em}
+.bar a{color:inherit}main{max-width:820px;margin:54px auto 90px;padding:0 28px}h1{font-size:clamp(32px,5vw,48px);line-height:1.2;letter-spacing:-.035em;margin:0 0 28px}
+h2{font-size:28px;line-height:1.35;margin-top:54px}p{margin:22px 0}a{color:#8b421b;text-underline-offset:3px}img{display:block;width:100%;height:auto;border:1px solid #e3dccf;border-radius:8px}p:has(>em){font-size:15px;color:#62635b;line-height:1.65}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{padding:12px 10px;border-bottom:1px solid #ded7ca;text-align:left}th{background:#f0ece2}.table-scroll{overflow-x:auto}code{font-size:.88em;background:#eee9de;padding:2px 5px;border-radius:4px}pre{overflow:auto;padding:16px;background:#eee9de}hr{border:0;border-top:1px solid #ded7ca;margin:44px 0}strong{font-weight:650}.notice{background:#f0e7d5;padding:14px 18px;font-size:14px;border-left:3px solid #ac6a30;margin-bottom:32px}
+@media(max-width:600px){body{font-size:17px}main{margin-top:32px;padding:0 20px}h2{font-size:24px}.table-scroll table{min-width:550px}}
+
+.bar{background:#232323;color:#faf8f3;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px max(20px,calc((100vw - 1040px)/2))}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;text-decoration:none;letter-spacing:.06em}.brand img{width:32px;height:32px;border:0;border-radius:0}.bar nav{display:flex;flex-wrap:wrap;gap:20px;letter-spacing:0}.bar a:hover{color:#e9c36b}a:focus-visible{outline:3px solid #ae5520;outline-offset:5px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:10}.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8b421b}main{max-width:860px}h2{scroll-margin-top:20px}code{overflow-wrap:anywhere}pre code{overflow-wrap:normal}.toc{border-top:1px solid #ded7ca;border-bottom:1px solid #ded7ca;padding:18px 0;margin:32px 0;font-size:15px}.toc summary{cursor:pointer;font-weight:600}.toc ul{padding-left:22px}.toc li{margin:8px 0}.closing{border-top:1px solid #ded7ca;margin-top:48px;padding-top:24px;font-size:16px}.site-foot{border-top:1px solid #ded7ca;padding:28px 20px;text-align:center;font-size:14px}.card{border-top:1px solid #ded7ca;margin-top:40px;padding-top:24px}.card h2{margin-top:18px}.card img{margin:24px 0}figure{margin:30px 0}p:has(>em){font-size:15px}img{background:#faf8f3}.table-scroll{margin:28px 0}.table-scroll:focus-visible{outline:2px solid #ae5520}@media(max-width:600px){.bar{gap:16px}.bar nav{gap:16px;font-size:13px}.toc{font-size:14px}main{padding:0 20px}}
+</style></head>
+<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
+<main id="main"><p class="kicker">Engineering / PostgreSQL / Thử nghiệm</p><article><h1 id="backfill-8-trieu-dong-du-lieu-ung-nhung-latency-khong-at">Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt</h1>
+<p><em>Embra Engineering · Xuất bản 08/10/2026 · Thử nghiệm 28–30/09/2026.</em></p>
+<p>Trong lượt thử ngày 28/9, cả <strong>846.642 lần ghi đã nhận ACK (phản hồi thành công)</strong> đều được tìm thấy khi đối chiếu cuối lượt thử. Hai ca backfill hoàn tất, kể cả ca bị ngắt trước commit và sau commit nhưng chưa trả ACK. Các trường dữ liệu được kiểm tra không có sai lệch.</p>
+<p>Tuy vậy, p99 của request SQL trong các pha backfill lên khoảng <strong>1,27–1,53 giây</strong>, từ baseline khoảng 2–3 ms. Theo ngưỡng đã đặt cho lượt thử, phần hiệu năng không đạt.</p>
+<p>Một migration có thể cập nhật đúng từng dòng mà vẫn khiến ứng dụng chậm đến mức không nên triển khai. Bài này kể cách thử hai điều đó, một lỗi trong runner khiến bài thử phải tiếp tục giữa chừng, và vì sao thêm cơ chế điều tốc ở vòng sau vẫn chưa đủ để kết luận thành công.</p>
+<p>Đây là thử nghiệm hạ tầng của Embra với dữ liệu tổng hợp, chưa phải kết quả trên ứng dụng khách hàng hoặc cam kết của dịch vụ hosting.</p>
+<details class="toc"><summary>Trong bài này</summary><ul><li><a href="#can-biet-ieu-gi-truoc-khi-cho-migration-chay">Cần biết điều gì trước khi cho migration chạy?</a></li><li><a href="#cau-hinh-nho-tai-cham-ung-bang-ang-oi">Cấu hình nhỏ, tải chạm đúng bảng đang đổi</a></li><li><a href="#em-dong-chua-u-e-ket-luan-du-lieu-ung">Đếm dòng chưa đủ để kết luận dữ liệu đúng</a></li><li><a href="#kill-process-o-hai-phia-cua-commit">Kill process ở hai phía của commit</a></li><li><a href="#runner-a-dung-truoc-khi-bai-thu-hoan-tat">Runner đã dừng trước khi bài thử hoàn tất</a></li><li><a href="#khong-co-request-loi-nhung-p99-khong-at">Không có request lỗi, nhưng p99 không đạt</a></li><li><a href="#oi-iem-bat-au-ong-ho-thi-ket-luan-oi-theo">Đổi điểm bắt đầu đồng hồ thì kết luận đổi theo</a></li><li><a href="#o-them-i-o-giup-thu-hep-cau-hoi">Đo thêm I/O giúp thu hẹp câu hỏi</a></li><li><a href="#ieu-bai-thu-thay-oi-trong-cach-anh-gia-migration">Điều bài thử thay đổi trong cách đánh giá migration</a></li></ul></details><h2 id="can-biet-ieu-gi-truoc-khi-cho-migration-chay">Cần biết điều gì trước khi cho migration chạy?</h2>
+<p>Một bảng <code>orders</code> có tám triệu dòng cần thêm dữ liệu cho phiên bản app mới. Trong lúc backfill, workload tiếp tục đọc, cập nhật và tạo đơn. Hai câu hỏi phải được trả lời riêng: dữ liệu cuối cùng có đúng không, và các request đang phục vụ bị ảnh hưởng bao nhiêu?</p>
+<p>Backfill ở đây là điền giá trị vào cột mới cho những dòng đã tồn tại. Trong fixture, phép biến đổi dựa trên <code>id</code>, không phụ thuộc trường <code>amount</code> mà workload đang cập nhật. Điều đó làm phép đối chiếu rõ ràng hơn, đồng thời giới hạn kết luận: bài thử chưa kiểm mọi phép biến đổi có phụ thuộc dữ liệu đang đổi.</p>
+<p>Luồng lab bắt đầu bằng diễn tập trên clone lấy từ replica. Sau khi có kết quả, một approval được ký cho kế hoạch cụ thể; executor kiểm điều kiện rồi mới áp dụng lên primary. Bài thử còn có các ca thêm cột, transaction dài giữ bảng và tạo index. Phần được phân tích sâu ở đây là backfill M3 và backfill có ngắt M4.</p>
+<h2 id="cau-hinh-nho-tai-cham-ung-bang-ang-oi">Cấu hình nhỏ, tải chạm đúng bảng đang đổi</h2>
+<p><a href="assets/topology.svg" aria-label="Mở hình ở kích thước đầy đủ"><img loading="lazy" width="1100" height="420" alt="Sơ đồ lab ngày 28/9: generator chạy cùng primary 4 vCPU, replica 2 vCPU cung cấp clone diễn tập." src="assets/topology.svg" /></a></p>
+<p><em>Hình 1. Cấu hình của lượt 28/9. Generator dùng chung CPU với primary; replica nhỏ hơn primary. Đây là hai giới hạn của phép đo, cần giữ khi diễn giải kết quả.</em></p>
+<p>Primary có 4 vCPU và 8 GB RAM; replica có 2 vCPU và 4 GB RAM. PostgreSQL 16.15 chạy trên ext4 đặt trong ZFS zvol. <code>fsync</code>, <code>full_page_writes</code> và <code>synchronous_commit</code> đều bật. Replica nhận dữ liệu bất đồng bộ. Database lúc seed khoảng 10,35 GiB.</p>
+<p>Workload được lên lịch ở mức 200 transaction mỗi giây, chia đều đọc, cập nhật và insert vào chính bảng đang migrate. Generator có 64 worker và giới hạn 1.024 request đang chờ hoặc chạy. Payload mỗi dòng là dữ liệu tổng hợp có tính nén; đây chưa phải đại diện cho mọi kiểu dữ liệu app.</p>
+<p>Số đo latency trong vòng đầu là <strong>thời gian từ khi worker bắt đầu request đến khi request hoàn tất</strong>, bao gồm logic client và giao tiếp PostgreSQL. Nó không phải thời gian giữ lock riêng, cũng không phải latency HTTP qua Internet. Với generator chạy ngay trên primary, tranh chấp CPU có thể ảnh hưởng cả công cụ đo lẫn database.</p>
+<h2 id="em-dong-chua-u-e-ket-luan-du-lieu-ung">Đếm dòng chưa đủ để kết luận dữ liệu đúng</h2>
+<p>Bảng vẫn tăng trong lúc backfill. Vì thế, so “số dòng đã update” với row count cuối cùng sẽ không trả lời được liệu migration đã xử lý đúng phạm vi hay chưa.</p>
+<p>Lab chốt một watermark — mốc ID cuối thuộc phạm vi backfill — và ghi tiến độ vào receipt, bản ghi trạng thái thực thi trong database. Mỗi batch cập nhật dữ liệu và checkpoint trong cùng transaction. Các insert mới được trigger của fixture điền giá trị cần thiết; chúng được đối chiếu riêng với phần backfill.</p>
+<p>Sau bài thử, verifier quét toàn bảng để kiểm giá trị biến đổi, bộ đếm dùng để phát hiện áp dụng trùng, và các thay đổi của workload. Nó còn đối chiếu những lần ghi đã nhận ACK với dữ liệu đã lưu. Kết quả cuối ngày 28/9:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng số liệu, có thể cuộn ngang"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Phép đối chiếu</th>
+<th style="text-align: right;">Kết quả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Số dòng ban đầu</td>
+<td style="text-align: right;">8.000.000</td>
+</tr>
+<tr>
+<td style="text-align: left;">Số dòng cuối cùng</td>
+<td style="text-align: right;">8.423.321</td>
+</tr>
+<tr>
+<td style="text-align: left;">Lần ghi đã nhận ACK được đối chiếu</td>
+<td style="text-align: right;">846.642</td>
+</tr>
+<tr>
+<td style="text-align: left;">ACK không tìm thấy khi đối chiếu</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Giá trị backfill sai ở M3 / M4</td>
+<td style="text-align: right;">0 / 0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sai lệch cập nhật của workload</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table></div>
+<p>Số dòng cuối khớp tám triệu dòng seed cộng 423.321 insert có receipt. Các batch không có khoảng trống; checkpoint và tổng số dòng tác động khớp nhật ký batch. Đây là bằng chứng cho các invariant đã kiểm trong fixture, không phải khẳng định mọi migration đều an toàn.</p>
+<h2 id="kill-process-o-hai-phia-cua-commit">Kill process ở hai phía của commit</h2>
+<p>Ca M4 đặt hai điểm ngắt. Điểm thứ nhất nằm trước commit batch 7. Điểm thứ hai nằm sau commit batch 13 nhưng trước khi executor trả ACK.</p>
+<p><a href="assets/commit-resume.svg" aria-label="Mở hình ở kích thước đầy đủ"><img loading="lazy" width="1100" height="475" alt="Hai điểm ngắt của M4: trước commit giữ checkpoint 30.000; sau commit nhưng trước ACK giữ checkpoint 65.000." src="assets/commit-resume.svg" /></a></p>
+<p><em>Hình 2. Sơ đồ cơ chế, không phải timeline theo tỷ lệ thời gian. Checkpoint là giá trị được quan sát trong ca M4 ngày 28/9.</em></p>
+<p>Sau điểm ngắt trước commit, <code>last_id</code> vẫn là 30.000. Sau điểm ngắt sau commit, <code>last_id</code> là 65.000. Khi chạy tiếp, executor dùng receipt trong database để biết tiến độ đã commit, thay vì suy trạng thái từ việc process chết hoặc client chưa nhận ACK.</p>
+<p>Nếu chỉ căn cứ vào ACK, batch đã commit nhưng chưa phản hồi có thể bị chạy lại. Nếu cập nhật checkpoint tách khỏi transaction dữ liệu, crash giữa hai bước có thể tạo khoảng trống giữa điều đã làm và điều được ghi nhận. Trong phạm vi batch transactional của lab, gắn hai phần đó vào cùng transaction là điều cần kiểm.</p>
+<p>Kết quả này không chứng minh “exactly once” cho toàn bộ pipeline. Các tác động ngoài transaction, như tạo index concurrently, cần cách đối chiếu riêng. Bài thử cũng chỉ kill process; chưa kiểm mất điện hoặc failover HA.</p>
+<h2 id="runner-a-dung-truoc-khi-bai-thu-hoan-tat">Runner đã dừng trước khi bài thử hoàn tất</h2>
+<p>M3 lần đầu dừng vì runner thiếu retry cho <code>55P03</code>, lỗi không lấy được lock. Khi đó 69 batch, tương ứng 345.000 dòng, đã commit.</p>
+<p>Runner được bổ sung retry có giới hạn cho lỗi này. Bài thử tiếp tục bằng cùng kế hoạch đã ký, cùng executor artifact và receipt đã có; database không được reset để chạy lại từ đầu. Phần dừng vẫn được giữ trong kết quả: trước khi bị ngắt, p99 của request đã lên 1.530 ms.</p>
+<p>Chỉ nhìn phần chạy tiếp sẽ bỏ qua một cửa sổ xấu và lỗi đã buộc runner phải sửa. Vì thế, thời gian “apply” cần được đọc cẩn thận: 12,9 giây trước ngắt và 304,1 giây chạy tiếp không bao gồm khoảng gián đoạn ở giữa.</p>
+<h2 id="khong-co-request-loi-nhung-p99-khong-at">Không có request lỗi, nhưng p99 không đạt</h2>
+<p>Trong ba lượt ghi nhận của ngày 28/9, workload có 1.269.965 request SQL và không ghi nhận lỗi request. Mặc dù vậy, ngưỡng p99 không quá hai lần baseline đã bị vượt rất xa.</p>
+<p><a href="assets/latency-28.svg" aria-label="Mở hình ở kích thước đầy đủ"><img loading="lazy" width="655" height="347" alt="So sánh p99 baseline với p99 backfill ngày 28/9, theo từng lượt; trục latency logarithmic và đơn vị ms." src="assets/latency-28.svg" /></a></p>
+<p><em>Hình 3. Chấm xám là baseline của đúng lượt; chấm cam là p99 trong pha backfill. Trục ngang logarithmic, đơn vị ms. M3 trước ngắt, M3 chạy tiếp và M4 là ba cửa sổ riêng, không ghép thành một time series. Dữ liệu: <a href="data/latency.csv">latency.csv</a>.</em></p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng số liệu, có thể cuộn ngang"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Pha</th>
+<th style="text-align: right;">Request trong cửa sổ</th>
+<th style="text-align: right;">Baseline p99</th>
+<th style="text-align: right;">Apply p99</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">M3 trước ngắt</td>
+<td style="text-align: right;">2.574</td>
+<td style="text-align: right;">2,827 ms</td>
+<td style="text-align: right;">1.530,466 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">M3 chạy tiếp</td>
+<td style="text-align: right;">60.821</td>
+<td style="text-align: right;">1,993 ms</td>
+<td style="text-align: right;">1.266,496 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">M4 có hai điểm ngắt</td>
+<td style="text-align: right;">63.970</td>
+<td style="text-align: right;">2,562 ms</td>
+<td style="text-align: right;">1.532,476 ms</td>
+</tr>
+</tbody>
+</table></div>
+<p>p99 là mốc mà khoảng 99% mẫu không vượt quá. Nó cho thấy phần đuôi phân bố mà một con số trung bình có thể che mất. Ở đây, p99 của request đã tăng lên hàng giây dù tất cả cuối cùng đều trả về thành công.</p>
+<p>Replica cũng có backlog replay lớn: đỉnh được lấy mẫu khoảng 6,32 GiB ở M3 và 6,79 GiB ở M4. Đây là lượng dữ liệu chờ replay, không phải phép đo mất dữ liệu hay RPO. Một lần diễn tập thành công trên clone cũng chưa trả lời được ảnh hưởng của apply lên primary đang có tải.</p>
+<h2 id="oi-iem-bat-au-ong-ho-thi-ket-luan-oi-theo">Đổi điểm bắt đầu đồng hồ thì kết luận đổi theo</h2>
+<p>Đo từ lúc worker đã bắt đầu sẽ bỏ qua thời gian request nằm chờ trong generator. Với workload có lịch phát cố định, cần nhìn thêm thời gian <strong>từ lịch phát đến lúc hoàn tất</strong>. Đại lượng này gồm cả trễ phát request và thời gian xử lý sau đó; nó giúp phát hiện khi chính bộ tạo tải không theo kịp lịch.</p>
+<p>Hai lượt đầu ngày 28/9 có lỗi căn chỉnh mốc monotonic và wall clock, nên metric từ lịch phát đã bị loại khỏi báo cáo. Lượt cuối sửa mốc đồng hồ. Riêng cửa sổ M4, p99 từ lúc bắt đầu là 1.532,476 ms, còn p99 từ lịch phát là 1.689,916 ms. Không lấy hiệu hai percentile này làm p99 thời gian chờ: chúng có thể thuộc những request khác nhau.</p>
+<p>Sang ngày 29/9, generator được tách sang máy khác và backfill có cơ chế điều tốc theo tín hiệu latency/replica lag. Cũng có thêm nguồn tải trong các vòng sau. Các thay đổi ấy làm điều kiện thử khác đi; không thể đặt hai kết quả cạnh nhau rồi quy toàn bộ chênh lệch cho throttle.</p>
+<p>Lượt 29/9 có một ví dụ rõ về giới hạn của tiêu chí tương đối. <code>summary.json</code> đánh dấu M3 và M4 đạt “p99 ≤ 2× baseline”: p99 từ lúc bắt đầu request là 855,556 ms và 643,126 ms. Nhưng baseline lúc đó đã là <strong>505,289 ms</strong>, không còn 2–3 ms như lượt trước. Theo thời gian từ lịch phát, hai pha tương ứng lên 1.361,706 ms và 1.651,383 ms, vượt mục tiêu dưới một giây của vòng này.</p>
+<p><a href="assets/latency-followup.svg" aria-label="Mở hình ở kích thước đầy đủ"><img loading="lazy" width="692" height="343" alt="p99 từ lịch phát đến hoàn tất ở hai lượt sau, với đường mục tiêu một giây; các lượt được trình bày riêng." src="assets/latency-followup.svg" /></a></p>
+<p><em>Hình 4. Tính lại từ request log, chọn các request có thời điểm bắt đầu trong cửa sổ apply. Đây vẫn là workload SQL, không phải latency HTTP. Các lượt khác điều kiện; biểu đồ không phải phép so sánh A/B của throttle. Nguồn và cách tính trong <a href="evidence.html">ghi chú bằng chứng</a>.</em></p>
+<p>Lượt cuối, chạy qua đêm 29 sang 30/9, vẫn không đạt: p99 từ lịch phát của M3 khoảng 1.848,479 ms, M4 khoảng 2.485,287 ms. Baseline cùng metric đã là 1.601,807 ms trước apply, nên không thể quy toàn bộ độ chậm cho migration. Kết quả verifier của lượt này vẫn ghi không thiếu ACK trong 509.380 lần ghi được đối chiếu. Hai tiêu chí tiếp tục cho hai câu trả lời khác nhau.</p>
+<h2 id="o-them-i-o-giup-thu-hep-cau-hoi">Đo thêm I/O giúp thu hẹp câu hỏi</h2>
+<p>Vòng cuối bổ sung mẫu I/O để đối chiếu với request chậm. Báo cáo của vòng đó ghi nhận khoảng một nửa số request trên 200 ms trùng với các giây có hoạt động I/O cao theo ngưỡng phân loại đã chọn. Đây là tương quan đáng điều tra, chưa đủ để kết luận phần trăm latency do đĩa gây ra.</p>
+<p>Một phần đuôi vẫn chưa giải thích được. Bộ lấy mẫu ZFS TXG — nhóm transaction ZFS ghi xuống đĩa — cũng có lỗi parser: đọc dòng cuối rỗng làm tín hiệu mới không được ghi nhận. Vì vậy dữ liệu vòng này không đủ để xác nhận giả thuyết TXG là nguyên nhân còn lại.</p>
+<p>Bối cảnh trước vòng cuối cũng không sạch như một benchmark kiểm soát: archive WAL từng bị quota đích lưu trữ làm gián đoạn, primary đầy đĩa, rồi phải xử lý hạ tầng và seed lại schema trước khi chạy. Kết quả toàn vẹn của dataset được seed lại không chứng minh dữ liệu của lượt gặp sự cố trước đó đã được khôi phục nguyên vẹn. Baseline và tình trạng máy trước lượt chạy phải được giữ cùng kết quả, thay vì chỉ công bố con số đẹp nhất.</p>
+<h2 id="ieu-bai-thu-thay-oi-trong-cach-anh-gia-migration">Điều bài thử thay đổi trong cách đánh giá migration</h2>
+<p>Một gate migration cần nhiều kết quả riêng: biến đổi dữ liệu có đúng không, trạng thái sau ngắt có đối chiếu được không, app cũ còn tương thích không và phần tải đang phục vụ bị ảnh hưởng thế nào. Gộp chúng thành một dấu “pass” làm mất thông tin quan trọng nhất cho người duyệt.</p>
+<p>Sau các lượt 28–30/9, phần toàn vẹn và tiếp tục backfill có bằng chứng trong phạm vi fixture. Mục tiêu latency vẫn chưa đạt. Throttle đã được thử; cần kiểm tiếp cơ chế điều tốc, hàng đợi và ảnh hưởng I/O bằng một phép đo có baseline ổn định trước khi mở rộng kết luận.</p>
+<p>Với bài thử tương tự, việc hữu ích nhất là chốt trước từng tiêu chí, giữ dữ liệu cả khi bài chạy không đẹp, và kiểm chính công cụ đo. Trong trường hợp này, câu “không mất lần ghi đã ACK” có giá trị. Nó vẫn phải đứng cạnh câu “request đã chậm đến hàng giây”.</p>
+<hr />
+<p><strong>Phạm vi bằng chứng:</strong> fixture riêng, PostgreSQL 16.15, dữ liệu tổng hợp và các workload đã nêu; không phải benchmark toàn bộ Embra hiện hành. Xem <a href="data/evidence.json">số liệu chọn lọc</a>, <a href="data/latency.csv">CSV dùng vẽ biểu đồ</a> và <a href="evidence.html">phương pháp đối chiếu</a>. Các vòng chưa được chạy lại khi biên tập bài này.</p></article><aside class="closing"><p><strong>Đọc tiếp:</strong> <a href="https://github.com/embra-labs/.github/blob/main/docs/deploy-with-postgres.md">Chuẩn bị deploy một app có Postgres</a>.</p><p>Embra đang trong closed alpha. <a href="/#trang-thai">Xem phạm vi hiện tại</a> hoặc <a href="/#join">đăng ký thử với dự án của bạn</a>.</p></aside></main><footer class="site-foot">Embra · <a href="/engineering/">Engineering</a> · <a href="https://github.com/embra-labs/embra-cloud">Mã nguồn website</a> · <a href="mailto:hello@embra.cloud">Liên hệ</a></footer></body></html>

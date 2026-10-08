@@ -1,0 +1,12 @@
+run,phase,label,metric,selection,requests,p99_ms,baseline_p99_ms
+20260928T044810Z,M3_apply,M3 trước ngắt,start_to_end,overlap_apply_window,2574,1530.466,2.827
+20260928T051000Z,M3_apply,M3 chạy tiếp,start_to_end,overlap_apply_window,60821,1266.496,1.993
+20260928T072200Z,M4_apply,M4 có hai điểm ngắt,start_to_end,overlap_apply_window,63970,1532.476,2.562
+20260929T075832Z,M3_apply,M3,start_to_end,start_in_apply_window,457437,855.556,505.289
+20260929T075832Z,M4_apply,M4,start_to_end,start_in_apply_window,835749,643.126,505.289
+20260929T075832Z,M3_apply,M3,scheduled_to_end,start_in_apply_window,457437,1361.706,815.892
+20260929T075832Z,M4_apply,M4,scheduled_to_end,start_in_apply_window,835749,1651.383,815.892
+20260929T155607Z,M3_apply,M3,start_to_end,start_in_apply_window,434468,1181.179,1380.285
+20260929T155607Z,M4_apply,M4,start_to_end,start_in_apply_window,128260,2024.861,1380.285
+20260929T155607Z,M3_apply,M3,scheduled_to_end,start_in_apply_window,434468,1848.479,1601.807
+20260929T155607Z,M4_apply,M4,scheduled_to_end,start_in_apply_window,128260,2485.287,1601.807
