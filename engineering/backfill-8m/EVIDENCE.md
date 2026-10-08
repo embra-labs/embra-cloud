@@ -76,3 +76,7 @@ python -m venv .venv
 Script tạo thư mục `assets/`, các biểu đồ, cover và bản preview HTML local. Chế độ `--source-root` chỉ dùng được khi có checkout dữ liệu lab gốc; dữ liệu đó không nằm trong gói công khai. Các lượt thử không được chạy lại khi biên tập bài.
 
 Có câu hỏi về phương pháp hoặc phát hiện sai số? [Mở issue trên repository website](https://github.com/embra-labs/embra-cloud/issues) hoặc liên hệ [hello@embra.cloud](mailto:hello@embra.cloud). Không đưa dữ liệu ứng dụng hoặc thông tin truy cập vào issue công khai.
+
+## Ví dụ chạy được đi kèm
+
+[backfill-demo](https://github.com/embra-labs/backfill-demo) có một fixture mới gồm 1.000 dòng, workload app, SIGKILL ở hai phía commit và hai đối chứng sai. Code, kết quả mẫu và CI công khai. Ví dụ này giải thích cơ chế checkpoint; không phải mã nguồn đã thực thi của các lượt 28–30/9, không thay thế raw log của benchmark và không đo latency.

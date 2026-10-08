@@ -121,6 +121,20 @@ Sau các lượt 28–30/9, phần toàn vẹn và tiếp tục backfill có b�
 
 Với bài thử tương tự, việc hữu ích nhất là chốt trước từng tiêu chí, giữ dữ liệu cả khi bài chạy không đẹp, và kiểm chính công cụ đo. Trong trường hợp này, câu “không mất lần ghi đã ACK” có giá trị. Nó vẫn phải đứng cạnh câu “request đã chậm đến hàng giây”.
 
+## Tự kiểm cơ chế commit và chạy tiếp
+
+[Repo backfill-demo](https://github.com/embra-labs/backfill-demo) là ví dụ độc lập 1.000 dòng để thử cơ chế trong bài. App tiếp tục đọc/ghi trong lúc executor bị kill trước hoặc sau commit; verifier đối chiếu từng dòng và các lần ghi đã nhận ACK. Hai biến thể cố tình sai cho thấy cách phát hiện bỏ sót và xử lý trùng.
+
+Có Docker Compose và Bash, chạy:
+
+```bash
+git clone https://github.com/embra-labs/backfill-demo.git
+cd backfill-demo
+./demo.sh
+```
+
+Lệnh tạo database riêng và tự dọn container/volume của lượt thử. Xem [code, kết quả mẫu và giới hạn](https://github.com/embra-labs/backfill-demo#readme) hoặc [CI](https://github.com/embra-labs/backfill-demo/actions). Đây là fixture nhỏ mới viết để giải thích cơ chế; không tái lập benchmark tám triệu dòng hoặc chứng minh mục tiêu latency đã đạt.
+
 ---
 
 **Phạm vi bằng chứng:** fixture riêng, PostgreSQL 16.15, dữ liệu tổng hợp và các workload đã nêu; không phải benchmark toàn bộ Embra hiện hành. Xem [số liệu chọn lọc](data/evidence.json), [CSV dùng vẽ biểu đồ](data/latency.csv) và [phương pháp đối chiếu](EVIDENCE.md). Các vòng chưa được chạy lại khi biên tập bài này.
