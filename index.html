@@ -588,7 +588,7 @@
   .status-board th { width: 280px; padding-right: 24px; font-weight: 500; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
   .status-board th::before { display: inline-block; width: 4.4ch; }
   .status-board tr:nth-child(1) th::before { content: "[✓]"; } .status-board tr:nth-child(2) th::before { content: "[·]"; }
-  .status-board tr:nth-child(3) th::before { content: "[ ]"; } .status-board tr:nth-child(4) th::before { content: "[✕]"; color: var(--red); }
+  .status-board tr:nth-child(3) th::before { content: "[·]"; } .status-board tr:nth-child(4) th::before { content: "[→]"; } .status-board tr:nth-child(5) th::before { content: "[ ]"; }
   .status-board td { font-size: 16px; line-height: 1.6; }
   .sb-note { font: 13px/1.7 var(--mono); color: var(--grey); margin: 18px 0 0; }
   @media (max-width: 860px) {
@@ -612,6 +612,11 @@
   .wordmark .cap svg { display: block; height: .72em; width: auto; fill: var(--white); margin-bottom: .04em; }
   .toast .app i { display: grid; place-items: center; width: 18px; height: 18px; background: var(--char); }
   .toast .app i svg { width: 10px; height: auto; fill: var(--white); }
+  .hero-links, .surface-links { display: flex; flex-wrap: wrap; gap: 12px 24px; font: 13px/1.7 var(--mono); }
+  .hero-links { justify-content: center; }
+  .hero-links a, .surface-links a, .status-board td a { text-underline-offset: 4px; }
+  .surface-links { margin-top: 24px; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 </style>
 </head>
 <body>
@@ -655,18 +660,19 @@
       <div class="log-col raw"><div class="track"><div></div><div></div></div></div>
     </div>
     <div class="hero-center">
-      <p class="caps rv">Node.js / Next.js + PostgreSQL · TP.HCM (chưa chốt)</p>
+      <p class="caps rv">HOSTING APP TẠI VIỆT NAM · NODE.JS / NEXT.JS + POSTGRESQL</p>
       <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
       <h1 class="hero-h rv">Mỗi lần deploy<br><span>đều có đường lui.</span></h1>
       <p class="hero-copy rv">Embra đang xây dựng luồng deploy từ code đến app và database. Migration có rủi ro sẽ dừng để bạn review trước khi chạy, với restore point để dùng khi cần.</p>
-      <p class="hero-scope rv">CLOSED ALPHA · ĐĂNG KÝ WAITLIST · CHƯA NHẬN APP PRODUCTION</p>
+      <p class="hero-scope rv">ĐANG PHÁT TRIỂN · ĐĂNG KÝ QUAN TÂM CLOSED ALPHA</p>
       <form class="wl-hero rv" id="wl-hero" novalidate>
         <label class="vh" for="hero-email">Email</label>
         <input id="hero-email" type="email" autocomplete="email" placeholder="ban@congty.vn" required>
         <button class="bracket" type="submit">[Tham gia waitlist]</button>
       </form>
       <p class="err" id="hero-err" role="alert" hidden></p>
-      <a class="hero-more rv" href="#stage">Xem demo deploy <span aria-hidden="true">↓</span></a>
+      <p class="hero-links rv"><a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">Bắt đầu ở đây</a><a href="#trang-thai">Xem bằng chứng kỹ thuật</a></p>
+      <a class="hero-more rv" href="#stage">Xem flow sản phẩm <span aria-hidden="true">↓</span></a>
     </div>
 
     <div class="codes" aria-hidden="true">
@@ -721,7 +727,7 @@
         <h2 class="rv">Review migration trước khi deploy</h2>
         <p class="section-note rv">Trong demo này, Embra chặn lệnh xoá cột mà app vẫn đang dùng. Nếu bạn override để chạy tiếp, app sẽ lỗi. Bạn có thể thử restore database về thời điểm trước migration.</p>
         <div class="stage rv">
-          <div class="window" id="window" role="img" aria-label="Minh hoạ giao diện Embra: release r_0142 bị chặn vì xoá một cột mà code còn đọc">
+          <div class="window" id="window" role="group" aria-label="Minh hoạ giao diện Embra: release r_0142 bị chặn vì xoá một cột mà code còn đọc">
             <div class="win-bar"><span>shop-vn / releases / <b>r_0142</b></span><span class="sp"></span><span class="em-tag">EMERGENCY MODE</span><span>vn-hcm</span></div>
             <div class="win-body">
               <aside class="side" aria-hidden="true">
@@ -757,19 +763,19 @@
                   <div class="ln">[✓] ADD COLUMN · additive, tự cho qua</div>
                   <div class="ln">[✕] DROP COLUMN · code còn đọc cột này (src/orders/export.ts:41) · ĐÃ CHẶN</div>
                 </div>
-                <div class="acts" id="acts" aria-hidden="true">
+                <div class="acts" id="acts">
                   <label class="console" id="console">
                     <i class="console-t">GHI ĐÈ CHẶN · ghi vào audit log</i>
                     <i class="console-p">&gt;_</i>
-                    <input id="console-in" type="text" tabindex="-1" placeholder="gõ DROP legacy_ref để ghi đè" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="32">
+                    <input id="console-in" type="text" placeholder="gõ DROP legacy_ref để ghi đè" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="32">
                   </label>
                   <span>tách migration</span><span>từ chối</span>
-                  <button class="arm" id="approve-btn" type="button" tabindex="-1" disabled>LOCKED</button>
+                  <button class="arm" id="approve-btn" type="button" disabled>LOCKED</button>
                 </div>
-                <div class="em-panel" id="em-panel" aria-hidden="true" hidden>
+                <div class="em-panel" id="em-panel" hidden>
                   <p class="em-t">[✕] HEALTH CHECK THẤT BẠI</p>
                   <p class="em-d">5xx 38% sau khi ghi đè DROP COLUMN.<br>Code không tự quay lại được: cột đã mất.</p>
-                  <button class="em-btn" id="restore-btn" type="button" tabindex="-1" disabled><span id="restore-l">RESTORE TO CHECKPOINT</span><small>DB về 21:16:04 · mất ~2 phút ghi sau thời điểm này</small></button>
+                  <button class="em-btn" id="restore-btn" type="button" disabled><span id="restore-l">RESTORE TO CHECKPOINT</span><small>DB về 21:16:04 · mất ~2 phút ghi sau thời điểm này</small></button>
                 </div>
               </div>
             </div>
@@ -781,7 +787,7 @@
             <div class="btns"><span>bỏ qua</span><span class="go" id="toast-go">MỞ RELEASE</span></div>
           </div>
         </div>
-        <p class="caption">[ Demo tương tác, không chạy trên app thật. Chi phí hiển thị chỉ là ví dụ. ]</p>
+        <p class="caption">[ Minh hoạ flow sản phẩm hướng tới M2, không chạy trên app thật. Thời gian và chi phí hiển thị là ví dụ; chưa phải giao diện phát hành. ]</p>
       </div>
     </div>
     <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
@@ -789,7 +795,7 @@
 
   <!-- ============ DEST: thông số ============ -->
   <section class="dest" id="thong-so" aria-labelledby="h-dest">
-    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi <span class="mark rv">alpha</span></h2><p class="scope-intro">Alpha tập trung vào frontend, Node.js / Next.js và PostgreSQL. Các thẻ dưới đây phân biệt phần đang chuẩn bị với roadmap mở rộng.</p></div>
+    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi <span class="mark rv">alpha</span></h2><p class="scope-intro">Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. M1 xây nền tảng; M2 tiếp tục flow sản phẩm minh hoạ ở trên. Các thẻ là định hướng phát triển; phạm vi dùng thử thực tế được xác nhận trong lời mời.</p></div>
     <div class="cards" id="cards" role="region" aria-label="Phạm vi dự kiến, cuộn ngang để xem thêm" tabindex="0">
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="120" y="330" width="96" height="130"/><path d="M132 0 V519 M152 0 V519 M30 300 H320"/><rect x="152" y="372" width="40" height="40"/></g></svg>
@@ -833,15 +839,17 @@
   <!-- ============ TRẠNG THÁI ============ -->
   <section class="status-board grid-paper" id="trang-thai" aria-labelledby="h-status">
     <div class="sb-in">
-      <p class="eyebrow">03 / Trạng thái 30.09.2026</p>
+      <p class="eyebrow">03 / Tiến độ và bằng chứng · 08.10.2026</p>
       <h2 class="h-display rv" id="h-status">Embra đang <span class="mark rv">ở đâu?</span></h2>
       <table>
-        <tr><th scope="row">Đã thử trong lab</th><td>Gate migration trên replica · restore PITR từ S3</td></tr>
-        <tr><th scope="row">Đang làm</th><td>Build và deploy Node.js / Next.js · domain · HTTPS · CLI/MCP</td></tr>
-        <tr><th scope="row">Chưa làm</th><td>File storage · worker · queue · auth · email · realtime</td></tr>
-        <tr><th scope="row">Chưa cam kết</th><td>SLA · uptime 99.x% · autoscale</td></tr>
+        <tr><th scope="row">Đọc và chạy ngay</th><td><a href="/engineering/backfill-8m/">Bài lab backfill 8 triệu dòng</a> · <a href="https://github.com/embra-labs/backfill-demo">demo checkpoint 1.000 dòng</a>, có code và CI</td></tr>
+        <tr><th scope="row">Đã thử trong lab</th><td>Diễn tập migration trên clone từ replica · restore PITR từ backup. Kết quả thử nghiệm dùng dữ liệu tổng hợp.</td></tr>
+        <tr><th scope="row">M1 / Nền tảng</th><td>Đang triển khai CLI, app container image, PostgreSQL và migration gate</td></tr>
+        <tr><th scope="row">M2 / Trải nghiệm</th><td>Tiếp tục flow build, deploy, review và recovery trên giao diện minh hoạ.</td></tr>
+        <tr><th scope="row">Roadmap mở rộng</th><td>File storage · worker · queue · auth · email · realtime</td></tr>
       </table>
-      <p class="sb-note">Các thử nghiệm chạy trên VPS của Embra, chưa chạy trên app của khách hàng. Hiện chưa có bản public để bạn tự deploy; alpha sẽ được onboarding trực tiếp với từng team.</p>
+      <p class="sb-note">Đang nhận đăng ký quan tâm; ngày mở đợt thử chưa chốt. CLI chưa có bản public, chưa nhận app production. Stack, tính năng, giới hạn và chi phí dùng thử được xác nhận trước khi bắt đầu.</p>
+      <p class="surface-links"><a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">Bắt đầu và quy trình alpha →</a><a href="https://github.com/embra-labs/.github/blob/main/docs/changelog.md">Changelog →</a><a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">Hỗ trợ / báo lỗi →</a></p>
     </div>
   </section>
 
@@ -853,7 +861,7 @@
       <details><summary><span class="n">02</span><span>Chỉ làm frontend thì có dùng được không?</span></summary><p>Có thể đăng ký với landing page, portfolio hoặc SPA; bạn không cần có backend hay database. Luồng deploy frontend đang được phát triển để đưa vào alpha.</p></details>
       <details><summary><span class="n">03</span><span>Đăng ký là dùng được ngay chưa?</span></summary><p>Chưa. Sau khi bạn xác nhận email, mình sẽ liên hệ khi có đợt alpha phù hợp và hỗ trợ setup trực tiếp. Bạn sẽ biết stack, tính năng, giới hạn và chi phí trước khi bắt đầu. Đăng ký waitlist không tạo tài nguyên hay phát sinh phí.</p></details>
       <details><summary><span class="n">04</span><span>Auth, email, queue và realtime đã có chưa?</span></summary><p>Chưa, các dịch vụ này nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team tham gia alpha.</p></details>
-      <details><summary><span class="n">05</span><span>Có cần dùng AI agent không?</span></summary><p>Không cần. Embra đang xây dựng CLI/MCP để bạn có thể thao tác trực tiếp hoặc dùng coding agent. Cả hai đều phải tuân theo quyền truy cập và các bước approve đã đặt cho project.</p></details>
+      <details><summary><span class="n">05</span><span>Có cần dùng AI agent không?</span></summary><p>Không cần. CLI là phần nền tảng đang triển khai; giao diện và MCP là hướng phát triển tiếp theo. Bạn có thể thao tác trực tiếp; quyền và bước duyệt của từng luồng sẽ được công bố cùng phiên bản dùng thử.</p></details>
       <details><summary><span class="n">06</span><span>Giá và vị trí hạ tầng thế nào?</span></summary><p>Giá chưa chốt; chi phí và điều kiện dùng thử được thông báo trước khi bắt đầu. Hạ tầng dự kiến tại TP.HCM. Vị trí xử lý dữ liệu của từng dịch vụ và các bên tích hợp sẽ được công bố trong phạm vi cung cấp.</p></details>
       <details><summary><span class="n">07</span><span>Có thể đưa app production lên ngay không?</span></summary><p>Chưa. Alpha dành cho project thử nghiệm, chưa nhận app production. Trước khi bắt đầu, mình sẽ trao đổi với bạn về cách backup, restore, export dữ liệu và giới hạn support của đợt thử.</p></details>
     </div>
@@ -882,8 +890,8 @@
   <section class="join" id="join" aria-labelledby="h-join">
     <div class="join-inner">
       <div class="col-text">
-        <h2 class="h-display rv" id="h-join">Tham gia closed alpha</h2>
-        <p class="body-copy rv">Bạn đang build gì? Đăng ký waitlist để cùng thử Embra. Mình sẽ gửi email xác nhận trước, rồi liên hệ khi có đợt alpha phù hợp.</p>
+        <h2 class="h-display rv" id="h-join">Đăng ký quan tâm alpha</h2>
+        <p class="body-copy rv">Bạn đang build gì? Đăng ký quan tâm và xác nhận email để được liên hệ khi có đợt phù hợp. Bước này chưa cấp quyền truy cập; mình sẽ trao đổi stack, giới hạn, chi phí và cách lấy dữ liệu ra trước khi bắt đầu.</p>
         <form class="wl rv" id="wl" novalidate>
           <p class="held" id="wl-held" hidden></p>
           <div><label class="opt-label" for="email">Email của bạn</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ban@congty.vn" required></div>
@@ -946,6 +954,8 @@
       <p class="legal">© 2026 EMBRA · DỰ ÁN ĐANG PHÁT TRIỂN</p>
     </div>
     <nav aria-label="Chân trang">
+      <a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">[   BẮT ĐẦU   ]</a>
+      <a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">[   HỖ TRỢ   ]</a>
       <a href="/engineering/">[   ENGINEERING   ]</a>
       <a href="#quyen">[   CÁCH HOẠT ĐỘNG   ]</a>
       <a href="llms.txt">[   LLMS.TXT   ]</a>
@@ -1169,7 +1179,7 @@
       at(t, () => { rBtn.disabled = true; rBtn.classList.add("press"); rLbl.textContent = "ĐANG KHÔI PHỤC…"; set("restore", "run", "…"); status("run", "ĐANG KHÔI PHỤC"); });
       at(t + 1300, () => {
         emergency(false); set("restore", "ok", "↺ 21:16:04");
-        set("promote", "pending", "—"); small("promote", "đã rollback · r_0142 chưa lên production");
+        set("promote", "pending", "—"); small("promote", "đã khôi phục về mốc trước r_0142");
         set("health", "ok", "khoẻ"); small("health", "DB về 21:16:04 · mất ghi sau đó"); status("live", "ĐÃ KHÔI PHỤC");
       });
       if (!win.dataset.manual) at(t + 4500, play);
@@ -1262,7 +1272,7 @@
     btn.disabled = false; btn.textContent = "[Tham gia waitlist]";
     if (!res || !res.ok || !data.ok) { showErr(data.error || "Chưa gửi được. Kiểm tra mạng rồi thử lại, hoặc email hello@embra.cloud."); return; }
     const lines = [`<p>Mình vừa gửi email xác nhận tới <b>${esc(email)}</b>. Bấm link trong email để xác nhận đăng ký.</p>`];
-    if (data.qualified && body.talk) lines.push(`<p>App của bạn đã có user thật, phù hợp để trao đổi về alpha. Mình sẽ email trong 24 giờ để hẹn 15 phút. Gấp thì nhắn Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>`);
+    if (data.qualified && body.talk) lines.push(`<p>App của bạn đã có user thật, phù hợp để trao đổi về alpha. Mình sẽ liên hệ để trao đổi khi có lịch phù hợp. Gấp thì nhắn Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>`);
     else if (data.qualified) lines.push(`<p>App của bạn đã có user thật, nên bạn nằm trong nhóm được ưu tiên ở đợt mời đầu.</p>`);
     else lines.push(`<p>Mình đã nhận đăng ký và sẽ báo khi có đợt alpha phù hợp với dự án của bạn.</p>`);
     done.innerHTML = `<h3>${data.existing ? "Đã cập nhật" : "Đã nhận"}</h3>${lines.join("")}`;

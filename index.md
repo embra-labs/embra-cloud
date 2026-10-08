@@ -1,31 +1,28 @@
 # Embra · Mỗi lần deploy đều có đường lui
 
-Node.js / Next.js + PostgreSQL · TP.HCM (chưa chốt). Embra đang xây dựng luồng deploy từ code đến app và database. Migration có rủi ro sẽ dừng để bạn review trước khi chạy, với restore point để dùng khi cần.
+Hosting app cho developer và team nhỏ tại Việt Nam, tập trung vào ứng dụng có PostgreSQL. Embra đang xây dựng luồng deploy từ code đến app và database, với review migration và chuẩn bị phục hồi.
 
-**Trạng thái 30/09/2026:** closed alpha, onboarding thủ công từng team một. Chưa có bản public để deploy, chưa nhận app production. 0 app production, 0 team đang thử, đợt mời tiếp chưa định ngày.
+**Cập nhật 08/10/2026:** đang phát triển và nhận đăng ký quan tâm closed alpha. Ngày mở đợt thử chưa chốt; onboarding thủ công theo lời mời.
 
-## Bắt đầu từ dự án của bạn
+[Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Đăng ký quan tâm](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
-Bạn có thể bắt đầu với landing page hoặc SPA. Khi cần API, database hay file storage, mục tiêu của Embra là giúp bạn quản lý tất cả trong cùng một project.
+## Từ nền tảng đến trải nghiệm sản phẩm
 
-Dành cho developer, team nhỏ và agency muốn bớt thời gian cấu hình và vận hành server.
+**M1** xây nền tảng: CLI, app đóng gói thành container image, PostgreSQL và migration gate. Image được build bằng công cụ bên ngoài và ghim theo digest.
 
-## Embra đang xây dựng những gì?
+**M2** tiếp tục flow sản phẩm đang minh hoạ trên website: build, deploy, review và recovery. Giao diện, build từ source và MCP là hướng phát triển tiếp theo. Khả năng dùng thử thực tế được xác nhận trong lời mời, không suy từ phạm vi M1 hoặc màn hình demo.
 
-- **Build lỗi? Biết chỗ để sửa:** tách config theo environment, xem build logs và tìm nguyên nhân khi deploy lỗi.
-- **Hiểu chi phí trước khi chạy:** xem tài nguyên dự kiến, cách tính phí và giới hạn sử dụng trước khi deploy. Giá cụ thể sẽ được gửi cùng lời mời alpha.
-- **Theo dõi app ở một nơi:** xem logs, health checks và lịch sử deploy của các service trong cùng một project.
+Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, worker, queue, auth, email và realtime là roadmap mở rộng.
 
-## Embra đang ở đâu?
+## Có thể kiểm chứng ngay
 
-| Trạng thái | Nội dung |
-|---|---|
-| Đã thử trong lab | Gate migration trên replica · restore PITR từ S3 |
-| Đang làm | Build và deploy Node.js / Next.js · domain · HTTPS · CLI/MCP |
-| Chưa làm | File storage · worker · queue · auth · email · realtime |
-| Chưa cam kết | SLA · uptime 99.x% · autoscale |
+| Nội dung | Phạm vi bằng chứng |
+| :--- | :--- |
+| [Backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/) | Lab 28–30/09/2026: toàn vẹn đạt trong fixture; mục tiêu latency chưa đạt |
+| [backfill-demo](https://github.com/embra-labs/backfill-demo) | Fixture riêng 1.000 dòng, code + CI, kill trước/sau commit và đối chứng sai; không tái lập benchmark cũ |
+| [Flow sản phẩm](https://embra.cloud/#stage) | Minh hoạ hướng tới M2; chưa phải giao diện phát hành, không chạy trên app thật |
 
-Lab = VPS thử nghiệm của Embra, không phải app của khách. Giao diện release trên trang chủ chỉ là minh hoạ; con số chi phí trong đó là số ví dụ. Lời mời sẽ ghi rõ tính năng, stack, giới hạn, chi phí và điều kiện thử. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp sẽ được công bố theo phạm vi cung cấp.
+Các thử nghiệm dùng dữ liệu tổng hợp. Số thời gian và chi phí trong minh hoạ là ví dụ. Restore về mốc cũ có thể bỏ các lần ghi sau mốc đó; kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu.
 
 ## Hoàng Xuân / Founder
 
@@ -41,15 +38,12 @@ Embra đang được xây dựng theo hướng đó. Mình muốn cùng những 
 
 Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân, chưa có pháp nhân. [GitHub](https://github.com/hxuan190) · [LinkedIn](https://www.linkedin.com/in/hxuan190)
 
-## Tham gia closed alpha
+## Đăng ký quan tâm alpha
 
-Tham gia waitlist tại https://embra.cloud/#join và tự xác nhận đồng ý xử lý dữ liệu. Sau khi xác nhận email, bạn sẽ được liên hệ khi có đợt alpha phù hợp. Đăng ký không tạo tài nguyên hay phát sinh phí. Chưa cần chuyển ứng dụng đang chạy sang Embra.
+1. [Đăng ký quan tâm](https://embra.cloud/#join) và xác nhận email; bước này chưa cấp quyền truy cập.
+2. Khi có đợt phù hợp, Embra liên hệ để xác nhận stack, giới hạn, chi phí và cách hỗ trợ.
+3. Trước khi thử, bạn nhận hướng dẫn truy cập, phiên bản được hỗ trợ và cách lấy dữ liệu ra khi kết thúc.
 
-Khi được mời, bắt đầu với dự án thử nghiệm hoặc môi trường không quan trọng. Khả năng phục hồi, xuất dữ liệu và giới hạn hỗ trợ sẽ được xác nhận cho từng phạm vi thử.
+Đăng ký không tạo tài nguyên hoặc phát sinh phí. CLI chưa có bản public; chưa nhận app production. Giá chưa chốt. Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt; vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp.
 
-Liên hệ: hello@embra.cloud. [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html). [Thông tin cho agent](https://embra.cloud/llms.txt).
-
-## Engineering
-
-- [Ghi chép kỹ thuật](https://embra.cloud/engineering/)
-- [Backfill 8 triệu dòng: dữ liệu đúng, nhưng latency không đạt](https://embra.cloud/engineering/backfill-8m/) — thử nghiệm 28–30/09/2026; số liệu lab và giới hạn phép đo, không phải cam kết hiệu năng sản phẩm.
+[Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md) · [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md) · [hello@embra.cloud](mailto:hello@embra.cloud) · [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html) · [Thông tin cho agent](https://embra.cloud/llms.txt)
