@@ -125,6 +125,8 @@ def extract(root):
 
 def saveplot(fig, name):
     fig.savefig(ASSETS / (name + '.svg'), bbox_inches='tight')
+    svg_path = ASSETS / (name + '.svg')
+    svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines()) + '\n')
     fig.savefig(ASSETS / (name + '.png'), dpi=180, bbox_inches='tight')
     plt.close(fig)
 
@@ -142,7 +144,7 @@ def figures():
     for i, r in enumerate(earlier):
         b, v = float(r['baseline_p99_ms']), float(r['p99_ms'])
         ax.plot([b, v], [i, i], color='#cec8bb', linewidth=3, zorder=1)
-        ax.scatter(b, i, color='#656962', s=80, zorder=2, label='Baseline cùng lượt' if i == 0 else None)
+        ax.scatter(b, i, color='#656962', s=80, zorder=2, label='Mức nền cùng lượt' if i == 0 else None)
         ax.scatter(v, i, color='#b45820', s=85, zorder=2, label='Trong pha backfill' if i == 0 else None)
         ax.annotate(f'{b:,.3f}', (b, i), xytext=(0, 12), textcoords='offset points', ha='center', fontsize=9)
         ax.annotate(f'{v:,.3f}', (v, i), xytext=(0, 12), textcoords='offset points', ha='center', fontsize=9)
@@ -151,11 +153,11 @@ def figures():
     ax.set_xticks([1, 10, 100, 1000], labels=['1', '10', '100', '1.000'])
     ax.set_yticks(range(3), [r['label'] for r in earlier])
     ax.set_ylim(2.6, -.6)
-    ax.set_xlabel('p99 request SQL (ms) · trục logarithmic')
+    ax.set_xlabel('p99 yêu cầu SQL (ms) · trục logarit')
     ax.grid(axis='x', color='#dfd9cf')
     ax.legend(loc='lower left', bbox_to_anchor=(-.01, 1.08), ncol=2, frameon=False, fontsize=10)
-    fig.suptitle('28/9 · Dữ liệu đúng, đuôi latency vẫn tăng', fontsize=17, x=.05, ha='left', y=.98)
-    fig.text(.05, .91, 'Đo từ lúc worker bắt đầu request; ba cửa sổ riêng, không phải time series.', fontsize=10)
+    fig.suptitle('28/9 · Dữ liệu đúng, độ trễ vẫn tăng', fontsize=17, x=.05, ha='left', y=.98)
+    fig.text(.05, .91, 'Đo từ lúc bắt đầu xử lý; ba khoảng đo riêng, không nối thành chuỗi.', fontsize=10)
     fig.text(.05, .025, 'Nguồn: summary từng lượt · Số ghi trên điểm dùng dấu chấm thập phân.', fontsize=9, color='#666')
     saveplot(fig, 'latency-28')
 
@@ -175,8 +177,8 @@ def figures():
     axes[0].set_ylabel('p99 lịch phát → hoàn tất (ms)')
     fig.suptitle('Tính cả thời gian chờ, p99 vẫn vượt một giây', fontsize=16, x=.05, ha='left', y=.98)
     fig.text(.05, .89, 'Đường nét đứt: mục tiêu 1.000 ms của vòng sau.', fontsize=10)
-    fig.text(.05, .08, 'Tính lại từ log SQL · nearest-rank · chọn request bắt đầu trong cửa sổ apply.', fontsize=9)
-    fig.text(.05, .035, 'Khác cấu hình / bối cảnh tải: không dùng biểu đồ này làm phép so sánh A/B của throttle.', fontsize=9, color='#666')
+    fig.text(.05, .08, 'Tính từ nhật ký SQL · nearest-rank · chọn yêu cầu bắt đầu khi áp migration.', fontsize=9)
+    fig.text(.05, .035, 'Khác cấu hình / tải: không dùng biểu đồ này để so sánh A/B cơ chế điều tốc.', fontsize=9, color='#666')
     saveplot(fig, 'latency-followup')
 
     fig = plt.figure(figsize=(12, 6.3), facecolor='#232323')
@@ -208,33 +210,33 @@ def arrow(x1, y1, x2, y2):
 
 
 def diagrams():
-    s = txt(40, 48, 'Lab 28/9 · Generator chạy cùng primary', 29, weight='bold')
-    s += box(40, 88, 435, 235) + txt(65, 123, 'PRIMARY · 4 vCPU / 8 GB', 22, weight='bold')
+    s = txt(40, 48, 'Thử nghiệm 28/9 · Bộ tạo tải chạy cùng máy chính', 29, weight='bold')
+    s += box(40, 88, 435, 235) + txt(65, 123, 'MÁY CHÍNH · 4 vCPU / 8 GB', 22, weight='bold')
     s += txt(65, 164, 'PostgreSQL 16.15 · bảng orders')
-    s += txt(65, 203, 'Generator: 200 tx/s theo lịch', 20, '#b45820')
-    s += txt(65, 238, '64 worker · read / update / insert', 18)
+    s += txt(65, 203, 'Bộ tạo tải: 200 giao dịch/s theo lịch', 20, '#b45820')
+    s += txt(65, 238, '64 tác vụ · đọc / sửa / thêm dòng', 18)
     s += txt(65, 285, 'Dùng chung CPU, có thể tranh tài nguyên.', 17, '#656962')
-    s += box(680, 88, 375, 115) + txt(702, 123, 'REPLICA · 2 vCPU / 4 GB', 22, weight='bold')
-    s += txt(702, 163, 'Replication bất đồng bộ', 19)
+    s += box(680, 88, 375, 115) + txt(702, 123, 'MÁY PHỤ · 2 vCPU / 4 GB', 22, weight='bold')
+    s += txt(702, 163, 'Sao chép bất đồng bộ', 19)
     s += arrow(475, 148, 680, 148) + txt(506, 131, 'WAL', 18)
-    s += box(680, 248, 375, 75) + txt(702, 279, 'Clone ZFS để diễn tập', 20)
-    s += txt(702, 304, 'Chạy migration thử trước khi approve', 16, '#656962')
+    s += box(680, 248, 375, 75) + txt(702, 279, 'Bản sao ZFS để diễn tập', 20)
+    s += txt(702, 304, 'Chạy thử migration trước khi duyệt', 16, '#656962')
     s += arrow(865, 203, 865, 246)
-    s += txt(40, 368, 'Seed: 8 triệu dòng / 10,35 GiB · ext4 trên zvol · dữ liệu tổng hợp', 19)
-    s += txt(40, 400, 'Sơ đồ topology; không thể hiện mọi thành phần backup/approval của lab.', 16, '#656962')
+    s += txt(40, 368, 'Ban đầu: 8 triệu dòng / 10,35 GiB · ext4 trên zvol · dữ liệu tổng hợp', 19)
+    s += txt(40, 400, 'Sơ đồ lược bỏ chi tiết sao lưu và ký duyệt của bài thử.', 16, '#656962')
     svg(s, 'topology.svg')
-    s = txt(40, 48, 'M4 · Hai điểm ngắt, hai checkpoint khác nhau', 28, weight='bold')
+    s = txt(40, 48, 'M4 · Hai điểm ngắt, hai mốc tiến độ', 28, weight='bold')
     for y, title, before, middle, end in [
-        (100, 'Ngắt trước commit batch 7', 'Dữ liệu + receipt', 'CHƯA COMMIT', 'last_id = 30.000'),
-        (275, 'Ngắt sau commit batch 13, trước ACK', 'Dữ liệu + receipt', 'ĐÃ COMMIT', 'last_id = 65.000')]:
+        (100, 'Ngắt trước commit lô 7', 'Dữ liệu + bản ghi', 'CHƯA COMMIT', 'last_id = 30.000'),
+        (275, 'Ngắt sau commit lô 13, trước ACK', 'Dữ liệu + bản ghi', 'ĐÃ COMMIT', 'last_id = 65.000')]:
         s += txt(40, y, title, 22, weight='bold')
         s += box(40, y+22, 260, 64)+txt(60, y+61, before, 20)
         s += arrow(302, y+54, 384, y+54)
         s += box(386, y+22, 270, 64)+txt(408, y+61, middle, 20, '#b45820')
         s += arrow(658, y+54, 741, y+54)
         s += box(743, y+22, 310, 64)+txt(765, y+61, end, 22, weight='bold')
-    s += txt(40, 226, 'Transaction chưa commit → đọc receipt cũ và xử lý lại batch chưa hoàn tất.', 18, '#656962')
-    s += txt(40, 402, 'ACK bị mất → đọc receipt đã commit và tiếp tục từ checkpoint mới.', 18, '#656962')
+    s += txt(40, 226, 'Chưa commit → đọc bản ghi cũ, xử lý lại lô chưa hoàn tất.', 18, '#656962')
+    s += txt(40, 402, 'Mất ACK → đọc bản ghi đã commit, tiếp tục từ mốc tiến độ mới.', 18, '#656962')
     s += txt(40, 449, 'Sơ đồ cơ chế; không theo tỷ lệ thời gian. Nguồn: M4-executor.jsonl, lượt 28/9.', 16, '#656962')
     svg(s, 'commit-resume.svg', height=475)
 
