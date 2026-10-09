@@ -22,6 +22,7 @@ Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, w
 
 | Nội dung | Phạm vi bằng chứng |
 | :--- | :--- |
+| [Một lần deploy ở Embra đi qua những đâu?](https://embra.cloud/engineering/how-embra-works/) | Kiến trúc đối chiếu ngày 09/10/2026: kế hoạch, migration, chuyển traffic và giới hạn phục hồi |
 | [Backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/) | Lab 28–30/09/2026: toàn vẹn đạt trong fixture; mục tiêu latency chưa đạt |
 | [backfill-demo](https://github.com/embra-labs/backfill-demo) | Fixture riêng 1.000 dòng, code + CI, kill trước/sau commit và đối chứng sai; không tái lập benchmark cũ |
 | [Flow sản phẩm](https://embra.cloud/#stage) | Minh hoạ hướng tới M2; chưa phải giao diện phát hành, không chạy trên app thật |

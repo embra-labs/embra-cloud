@@ -17,6 +17,7 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 ## Bằng chứng công khai
 
 - [Engineering](https://embra.cloud/engineering/)
+- [Một lần deploy ở Embra đi qua những đâu?](https://embra.cloud/engineering/how-embra-works/): kiến trúc đối chiếu ngày 09/10/2026, phân biệt nền tảng hiện có với hướng M2; không phải cam kết production.
 - [Lab backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/): thử nghiệm 28–30/09/2026; toàn vẹn đạt trong fixture, mục tiêu latency chưa đạt. Có aggregate và phương pháp; raw log chưa public.
 - [backfill-demo](https://github.com/embra-labs/backfill-demo): fixture độc lập 1.000 dòng, code và CI, kill trước/sau commit cùng đối chứng sai. Không tái lập benchmark cũ, không phải executor production.
 - [Flow sản phẩm](https://embra.cloud/#stage): concept giao diện, thời gian và chi phí là ví dụ.
