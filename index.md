@@ -1,8 +1,12 @@
 # Embra · Mỗi lần deploy đều có đường lui
 
-Hosting app cho developer và team nhỏ tại Việt Nam, tập trung vào ứng dụng có PostgreSQL. Embra đang xây dựng luồng deploy từ code đến app và database, với review migration và chuẩn bị phục hồi.
+Embra đang xây dựng hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: build, deploy và theo dõi app trong cùng một project, với review thay đổi database và chuẩn bị phục hồi.
 
-**Cập nhật 08/10/2026:** đang phát triển và nhận đăng ký quan tâm closed alpha. Ngày mở đợt thử chưa chốt; onboarding thủ công theo lời mời.
+## Có phù hợp với dự án của bạn?
+
+Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend; alpha dành cho project thử nghiệm, chưa nhận app production.
+
+**Cập nhật 09/10/2026:** đang phát triển và nhận đăng ký quan tâm closed alpha. Ngày mở đợt thử chưa chốt; onboarding thủ công theo lời mời.
 
 [Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Đăng ký quan tâm](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
@@ -34,9 +38,17 @@ Với một team nhỏ, người viết code thường cũng là người deploy
 
 Đó là vấn đề mình muốn giải quyết với Embra: thấy rủi ro trước khi chạy migration, có bước review rõ ràng và chuẩn bị đường restore trước khi cần đến nó.
 
-Embra đang được xây dựng theo hướng đó. Mình muốn cùng những team đầu tiên kiểm chứng nó trên project thử nghiệm.
+Mình kiểm tra riêng tính toàn vẹn dữ liệu và ảnh hưởng đến app. Trong [lab backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/), toàn vẹn đạt trong fixture nhưng latency chưa đạt mục tiêu. Kết quả và giới hạn phép đo được công bố để người đọc đối chiếu.
 
 Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân, chưa có pháp nhân. [GitHub](https://github.com/hxuan190) · [LinkedIn](https://www.linkedin.com/in/hxuan190)
+
+## Quyền kiểm soát và hỗ trợ
+
+Rollback code và restore database là hai việc khác nhau. Restore về mốc cũ có thể bỏ các lần ghi sau mốc đó.
+
+Cơ chế quyền truy cập dữ liệu và quy trình export của bản alpha chưa được công bố đầy đủ. Trước khi thử, Embra sẽ xác nhận ai có quyền truy cập, phạm vi quyền và cách lấy dữ liệu ra khi kết thúc.
+
+Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực tiếp support; phạm vi hỗ trợ nền tảng, thời gian hỗ trợ và cách xử lý sự cố được xác nhận trong lời mời. [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md).
 
 ## Đăng ký quan tâm alpha
 

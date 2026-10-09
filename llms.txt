@@ -1,6 +1,10 @@
 # Embra
 
-> Hosting app cho developer và team nhỏ tại Việt Nam, tập trung vào PostgreSQL. Cập nhật 08/10/2026: đang phát triển và nhận đăng ký quan tâm closed alpha; onboarding thủ công theo lời mời, ngày mở đợt thử chưa chốt.
+> Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, hướng tới build, deploy và theo dõi app trong cùng một project. Cập nhật 09/10/2026: đang phát triển và nhận đăng ký quan tâm closed alpha; onboarding thủ công theo lời mời, ngày mở đợt thử chưa chốt.
+
+## Tình huống phù hợp
+
+Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend; alpha dành cho project thử nghiệm, chưa nhận app production.
 
 ## Lộ trình và mức sẵn sàng
 
@@ -22,6 +26,10 @@
 Đăng ký quan tâm và xác nhận email chưa cấp quyền truy cập, không tạo tài nguyên hoặc phát sinh phí. Khi có đợt phù hợp, Embra liên hệ và xác nhận stack, giới hạn, chi phí, hỗ trợ, hướng dẫn truy cập và cách lấy dữ liệu ra.
 
 Giá chưa chốt. Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
+
+## Quyền kiểm soát và hỗ trợ
+
+Cơ chế quyền truy cập dữ liệu và quy trình export alpha chưa được công bố đầy đủ; phải xác nhận trước khi thử. Không suy có self-service export, SLA hoặc hỗ trợ 24/7. Người dùng chịu trách nhiệm code và logic ứng dụng; Hoàng Xuân trực tiếp support trong phạm vi được xác nhận ở lời mời.
 
 ## Người xây dựng
 
