@@ -76,4 +76,6 @@ Một vướng mắc gần đây cho thấy khoảng cách ấy khá cụ thể.
 
 Phần M2 sẽ đưa build từ mã nguồn, giao diện và MCP vào luồng này. Các câu hỏi về timeout, ảnh hưởng lên app đang chạy và phục hồi vẫn phải được giải quyết ở nền tảng. Một giao diện dễ hiểu cần phản ánh đúng những trạng thái đó, nhất là khi code và database không cùng quay lại được một mốc.
 
+Nếu đang chuẩn bị deploy app của mình, [guide deploy với Postgres](https://embra.cloud/engineering/deploy-with-postgres/) có các bước diễn tập và checklist để ghi kết quả.
+
 Bạn có thể bắt đầu kiểm chứng từ [bài backfill tám triệu dòng](/engineering/backfill-8m/) và [demo checkpoint](https://github.com/embra-labs/backfill-demo). Để xem sản phẩm đang ở đâu và phạm vi dùng thử, đọc [tiến độ Embra](/#trang-thai).
