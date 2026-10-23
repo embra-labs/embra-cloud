@@ -621,6 +621,12 @@
   .surface-links { margin-top: 24px; }
   a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 </style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://stats.embra.cloud/js/pa-oxyg6Tp26hm2eRS6x5TRV.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Bỏ qua, tới nội dung</a>
@@ -1282,6 +1288,7 @@
     else if (data.qualified) lines.push(`<p>App của bạn đã có user thật, nên bạn nằm trong nhóm được ưu tiên ở đợt mời đầu.</p>`);
     else lines.push(`<p>Mình đã nhận đăng ký và sẽ báo khi có đợt alpha phù hợp với dự án của bạn.</p>`);
     done.innerHTML = `<h3>${data.existing ? "Đã cập nhật" : "Đã nhận"}</h3>${lines.join("")}`;
+    if (!data.existing) window.plausible("Waitlist");
     form.hidden = true; done.hidden = false; done.focus({ preventScroll: true });
   });
 })();
