@@ -3,7 +3,7 @@
 <title>Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới? · Embra</title><meta name="description" content="Kiểm dữ liệu qua deploy, chia migration thành từng bước, chọn lúc dừng và diễn tập restore. Có checklist tải về, dùng được khi tự host."><link rel="canonical" href="https://embra.cloud/engineering/deploy-with-postgres/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#232323">
 <meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="Embra"><meta property="og:title" content="Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới?"><meta property="og:description" content="Kiểm dữ liệu qua deploy, chia migration thành từng bước, chọn lúc dừng và diễn tập restore. Có checklist tải về, dùng được khi tự host."><meta property="og:url" content="https://embra.cloud/engineering/deploy-with-postgres/"><meta property="og:image" content="https://embra.cloud/engineering/deploy-with-postgres/assets/cover.png"><meta property="og:image:alt" content="Deploy app có Postgres: dữ liệu, migration, rollback và restore."><meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới?", "description": "Kiểm dữ liệu qua deploy, chia migration thành từng bước, chọn lúc dừng và diễn tập restore. Có checklist tải về, dùng được khi tự host.", "url": "https://embra.cloud/engineering/deploy-with-postgres/", "inLanguage": "vi", "datePublished": "2026-10-09", "dateModified": "2026-10-09", "author": {"@type": "Organization", "name": "Embra", "url": "https://embra.cloud/"}, "publisher": {"@type": "Organization", "name": "Embra", "url": "https://embra.cloud/"}, "image": "https://embra.cloud/engineering/deploy-with-postgres/assets/cover.png", "mainEntityOfPage": "https://embra.cloud/engineering/deploy-with-postgres/"}</script><style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới?", "description": "Kiểm dữ liệu qua deploy, chia migration thành từng bước, chọn lúc dừng và diễn tập restore. Có checklist tải về, dùng được khi tự host.", "url": "https://embra.cloud/engineering/deploy-with-postgres/", "inLanguage": "vi", "datePublished": "2026-10-09", "dateModified": "2026-10-09", "author": {"@type": "Person", "@id": "https://embra.cloud/#founder", "name": "Hoàng Xuân", "jobTitle": "Founder", "url": "https://embra.cloud/#nguoi-lam", "sameAs": ["https://github.com/hxuan190", "https://www.linkedin.com/in/hxuan190"]}, "publisher": {"@type": "Organization", "@id": "https://embra.cloud/#org", "name": "Embra", "url": "https://embra.cloud/", "logo": {"@type": "ImageObject", "url": "https://embra.cloud/apple-touch-icon.png"}}, "image": "https://embra.cloud/engineering/deploy-with-postgres/assets/cover.png", "mainEntityOfPage": "https://embra.cloud/engineering/deploy-with-postgres/"}</script><style>
 *{box-sizing:border-box}body{margin:0;background:#faf8f3;color:#262623;font:18px/1.8 system-ui,sans-serif}
 .bar{padding:16px 5vw;border-bottom:1px solid #ddd6c8;font-size:13px;letter-spacing:.06em}
 .bar a{color:inherit}main{max-width:820px;margin:54px auto 90px;padding:0 28px}h1{font-size:clamp(32px,5vw,48px);line-height:1.2;letter-spacing:-.035em;margin:0 0 28px}
@@ -15,13 +15,13 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 </style></head>
 <body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
 <main id="main"><p class="kicker">Engineering / Hướng dẫn thực hành</p><article><h1 id="deploy-app-co-postgres-kiem-gi-truoc-khi-chuyen-sang-ban-moi">Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới?</h1>
-<p><em>Embra Engineering · Xuất bản trên website 09/10/2026 · Phát triển từ guide GitHub ngày 08/10/2026.</em></p>
+<p><em>Hoàng Xuân · Embra Engineering · Xuất bản trên website 09/10/2026 · Phát triển từ guide GitHub ngày 08/10/2026.</em></p>
 <p>Bài này giúp bạn chuẩn bị một lần deploy app có Postgres: dữ liệu nào phải giữ lại, code cũ còn chạy được sau migration không, và cần kiểm gì nếu phải restore. Dùng được khi tự host hoặc dùng nền tảng khác; không cần tài khoản Embra.</p>
 <p>Các bước thực hành dùng môi trường test và dữ liệu tổng hợp. <a href="checklist.md" download="embra-postgres-checklist.md">Tải checklist để ghi kết quả</a>.</p>
 <p>Bạn có một app nhận đơn hàng. Trên máy cá nhân, trang web mở được, API ghi đơn
 vào Postgres và ảnh được lưu vào một thư mục. Để đưa app lên mạng, hãy xác định
 phần nào có thể tạo lại và phần nào phải sống qua lần thay phiên bản tiếp theo.</p>
-<details class="toc"><summary>Trong hướng dẫn này</summary><ul><li><a href="#ve-uong-i-cua-mot-on-hang">Vẽ đường đi của một đơn hàng</a></li><li><a href="#kiem-tra-bon-ieu-truoc-lan-deploy-tiep-theo">Kiểm tra bốn điều trước lần deploy tiếp theo</a></li><li><a href="#tach-oi-schema-thanh-cac-lan-deploy-co-uong-quay-lai">Tách đổi schema thành các lần deploy có đường quay lại</a></li><li><a href="#bai-thuc-hanh-nho">Bài thực hành nhỏ</a></li><li><a href="#khi-nao-nen-dung-deploy">Khi nào nên dừng deploy?</a></li><li><a href="#dien-tap-phuc-hoi-rieng">Diễn tập phục hồi riêng</a></li><li><a href="#ghi-ket-qua-truoc-khi-goi-la-san-sang">Ghi kết quả trước khi gọi là sẵn sàng</a></li><li><a href="#oc-tiep-theo-van-e-ban-ang-gap">Đọc tiếp theo vấn đề bạn đang gặp</a></li></ul></details><h2 id="ve-uong-i-cua-mot-on-hang">Vẽ đường đi của một đơn hàng</h2>
+<details class="toc"><summary>Trong hướng dẫn này</summary><ul><li><a href="#ve-duong-di-cua-mot-don-hang">Vẽ đường đi của một đơn hàng</a></li><li><a href="#kiem-tra-bon-dieu-truoc-lan-deploy-tiep-theo">Kiểm tra bốn điều trước lần deploy tiếp theo</a></li><li><a href="#tach-doi-schema-thanh-cac-lan-deploy-co-duong-quay-lai">Tách đổi schema thành các lần deploy có đường quay lại</a></li><li><a href="#bai-thuc-hanh-nho">Bài thực hành nhỏ</a></li><li><a href="#khi-nao-nen-dung-deploy">Khi nào nên dừng deploy?</a></li><li><a href="#dien-tap-phuc-hoi-rieng">Diễn tập phục hồi riêng</a></li><li><a href="#ghi-ket-qua-truoc-khi-goi-la-san-sang">Ghi kết quả trước khi gọi là sẵn sàng</a></li><li><a href="#doc-tiep-theo-van-de-ban-dang-gap">Đọc tiếp theo vấn đề bạn đang gặp</a></li></ul></details><h2 id="ve-duong-di-cua-mot-don-hang">Vẽ đường đi của một đơn hàng</h2>
 <pre><code class="language-text">Trình duyệt → API → Postgres: mã đơn, trạng thái, tham chiếu ảnh
                  → nơi lưu file: nội dung ảnh
                  → hàng đợi, nếu có → worker gửi thông báo
@@ -30,7 +30,7 @@ phần nào có thể tạo lại và phần nào phải sống qua lần thay p
 dữ liệu có cấu trúc. Nơi lưu file giữ nội dung ảnh. Worker làm việc có thể xử lý
 sau khi API trả lời. Một ứng dụng nhỏ có thể gộp frontend và API trong một
 process; chỉ tách thêm khi công việc cần đến.</p>
-<h2 id="kiem-tra-bon-ieu-truoc-lan-deploy-tiep-theo">Kiểm tra bốn điều trước lần deploy tiếp theo</h2>
+<h2 id="kiem-tra-bon-dieu-truoc-lan-deploy-tiep-theo">Kiểm tra bốn điều trước lần deploy tiếp theo</h2>
 <p><strong>1. Khi thay container, dữ liệu nào còn?</strong></p>
 <p>File trong lớp ghi của container có thể mất khi container bị xóa và tạo lại.
 Ảnh người dùng cần nơi lưu bền vững như volume được quản lý hoặc object storage.
@@ -51,7 +51,7 @@ hoặc gửi email cho khách mỗi lần hệ thống gọi healthcheck.</p>
 <p>Code cũ phải đọc được schema và dữ liệu hiện tại. Nếu migration đã xóa cột mà
 code cũ dùng, quay lại image cũ không tự mang cột đó về. Trước deploy, kiểm tra
 tính tương thích của thay đổi dữ liệu và đường phục hồi riêng.</p>
-<h2 id="tach-oi-schema-thanh-cac-lan-deploy-co-uong-quay-lai">Tách đổi schema thành các lần deploy có đường quay lại</h2>
+<h2 id="tach-doi-schema-thanh-cac-lan-deploy-co-duong-quay-lai">Tách đổi schema thành các lần deploy có đường quay lại</h2>
 <p>Giả sử bản A đọc cột <code>legacy_ref</code>. Bản B chuyển sang <code>external_ref</code>. Nếu B xoá ngay cột cũ, rollback về A vẫn lỗi vì database không còn như lúc A được deploy.</p>
 <p>Thay đổi này có thể chia thành ba giai đoạn. Đây là cách tổ chức công việc, không phải một chuỗi SQL áp dụng nguyên xi cho mọi app:</p>
 <div class="table-scroll" tabindex="0" role="region" aria-label="Bảng hướng dẫn, có thể cuộn ngang"><table>
@@ -153,7 +153,7 @@ backup phục hồi được là hai điều cần kiểm riêng.</p>
 </tbody>
 </table></div>
 <p>Bộ kiểm này giúp tìm các lỗ hổng thường gặp, chưa chứng minh hệ thống chịu được mọi sự cố hoặc mọi mức tải. Thời gian restore của database thử nhỏ không phải cam kết thời gian cho database production.</p>
-<h2 id="oc-tiep-theo-van-e-ban-ang-gap">Đọc tiếp theo vấn đề bạn đang gặp</h2>
+<h2 id="doc-tiep-theo-van-de-ban-dang-gap">Đọc tiếp theo vấn đề bạn đang gặp</h2>
 <ul>
 <li><strong>Muốn hiểu một nền tảng phối hợp app và database thế nào:</strong> <a href="https://embra.cloud/engineering/how-embra-works/">Một lần deploy ở Embra đi qua những đâu?</a>.</li>
 <li><strong>Đang chuẩn bị backfill bảng lớn:</strong> <a href="https://embra.cloud/engineering/backfill-8m/">Backfill tám triệu dòng: dữ liệu đúng, nhưng latency không đạt</a>. Bài thử cho thấy vì sao dữ liệu đúng và app đáp ứng được là hai tiêu chí riêng.</li>
