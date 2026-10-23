@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Từ Việt Nam tới Singapore, Hong Kong, Virginia: một request có database tốn bao nhiêu mạng? · Embra</title><meta name="description" content="Đo 120 vòng TCP và TLS từ một máy tại Việt Nam tới endpoint ở TP.HCM, Hà Nội, Singapore, Hong Kong, Tokyo và Virginia, rồi tính chi phí mạng khi app và database đặt ở hai nơi."><link rel="canonical" href="https://embra.cloud/engineering/do-tre-viet-nam/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#232323">
+<meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="Embra"><meta property="og:title" content="Từ Việt Nam tới Singapore, Hong Kong, Virginia: một request có database tốn bao nhiêu mạng?"><meta property="og:description" content="120 vòng đo TCP và TLS từ Việt Nam, và chi phí mạng khi app và database ở hai nơi."><meta property="og:url" content="https://embra.cloud/engineering/do-tre-viet-nam/"><meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Từ Việt Nam tới Singapore, Hong Kong, Virginia: một request có database tốn bao nhiêu mạng?", "description": "Đo 120 vòng TCP và TLS từ một máy tại Việt Nam tới endpoint ở TP.HCM, Hà Nội, Singapore, Hong Kong, Tokyo và Virginia.", "url": "https://embra.cloud/engineering/do-tre-viet-nam/", "inLanguage": "vi", "datePublished": "2026-10-22", "dateModified": "2026-10-22", "author": {"@type": "Person", "@id": "https://embra.cloud/#founder", "name": "Hoàng Xuân", "jobTitle": "Founder", "url": "https://embra.cloud/#nguoi-lam", "sameAs": ["https://github.com/hxuan190", "https://www.linkedin.com/in/hxuan190"]}, "publisher": {"@type": "Organization", "@id": "https://embra.cloud/#org", "name": "Embra", "url": "https://embra.cloud/", "logo": {"@type": "ImageObject", "url": "https://embra.cloud/apple-touch-icon.png"}}, "mainEntityOfPage": "https://embra.cloud/engineering/do-tre-viet-nam/"}</script><style>
+*{box-sizing:border-box}body{margin:0;background:#faf8f3;color:#262623;font:18px/1.8 system-ui,sans-serif}
+.bar{padding:16px 5vw;border-bottom:1px solid #ddd6c8;font-size:13px;letter-spacing:.06em}
+.bar a{color:inherit}main{max-width:820px;margin:54px auto 90px;padding:0 28px}h1{font-size:clamp(32px,5vw,48px);line-height:1.2;letter-spacing:-.035em;margin:0 0 28px}
+h2{font-size:28px;line-height:1.35;margin-top:54px}p{margin:22px 0}a{color:#8b421b;text-underline-offset:3px}p:has(>em){font-size:15px;color:#62635b;line-height:1.65}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{padding:12px 10px;border-bottom:1px solid #ded7ca;text-align:left;vertical-align:top}th{background:#f0ece2}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}.table-scroll{overflow-x:auto}code{font-size:.88em;background:#eee9de;padding:2px 5px;border-radius:4px}pre{overflow:auto;padding:16px;background:#eee9de}hr{border:0;border-top:1px solid #ded7ca;margin:44px 0}strong{font-weight:650}
+@media(max-width:600px){body{font-size:17px}main{margin-top:32px;padding:0 20px}h2{font-size:24px}.table-scroll table{min-width:550px}}
+
+.bar{background:#232323;color:#faf8f3;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px max(20px,calc((100vw - 1040px)/2))}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;text-decoration:none;letter-spacing:.06em}.brand img{width:32px;height:32px;border:0;border-radius:0}.bar nav{display:flex;flex-wrap:wrap;gap:20px;letter-spacing:0}.bar a:hover{color:#e9c36b}a:focus-visible{outline:3px solid #ae5520;outline-offset:5px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:10}.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8b421b}main{max-width:860px}h2{scroll-margin-top:20px}.toc{border-top:1px solid #ded7ca;border-bottom:1px solid #ded7ca;padding:18px 0;margin:32px 0;font-size:15px}.toc summary{cursor:pointer;font-weight:600}.toc ul{padding-left:22px}.toc li{margin:8px 0}.site-foot{border-top:1px solid #ded7ca;padding:28px 20px;text-align:center;font-size:14px}.table-scroll{margin:28px 0}.table-scroll:focus-visible{outline:2px solid #ae5520}
+.bars{margin:28px 0;font-size:14px}.bars div{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:6px 0}.bars i{display:block;height:14px;background:#ac6a30;border-radius:2px}.bars span:last-child{text-align:right;font-variant-numeric:tabular-nums}@media(max-width:600px){.bars div{grid-template-columns:110px 1fr 56px}.bar{gap:16px}.bar nav{gap:16px;font-size:13px}main{padding:0 20px}}
+</style></head>
+<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
+<main id="main"><p class="kicker">Engineering / Đo đạc</p><article><h1>Từ Việt Nam tới Singapore, Hong Kong, Virginia: một request có database tốn bao nhiêu mạng?</h1>
+<p><em>Hoàng Xuân · Embra Engineering · Đo 00:17–00:25 ngày 22/10/2026 · Một máy, một nhà mạng, ngoài giờ cao điểm. Đọc <a href="#gioi-han">giới hạn</a> trước khi dùng số.</em></p>
+<p>Từ máy đo tại Việt Nam, một vòng mạng tới Singapore mất khoảng <strong>66 ms</strong>, gấp đôi tới TP.HCM (33 ms). Tới Virginia, region mặc định của function trên Vercel, mất <strong>282 ms</strong>. Chênh lệch này nhỏ khi trang chỉ tải một lần. Nó lớn dần khi app và database nằm ở hai nơi, vì mỗi truy vấn chạy tuần tự trả thêm một vòng.</p>
+<details class="toc"><summary>Trong bài này</summary><ul><li><a href="#cach-do">Đo cái gì, đo thế nào</a></li><li><a href="#ket-qua">Kết quả</a></li><li><a href="#truy-van">Khi app và database ở hai nơi</a></li><li><a href="#cdn">CDN gần không có nghĩa là function gần</a></li><li><a href="#gioi-han">Giới hạn của phép đo</a></li><li><a href="#tu-do">Tự đo từ mạng của bạn</a></li></ul></details>
+
+<h2 id="cach-do">Đo cái gì, đo thế nào</h2>
+<p>Mỗi vòng, công cụ mở một kết nối TCP rồi bắt tay TLS tới từng đích, lần lượt, rồi nghỉ 1 giây. Tổng cộng 120 vòng. Tên miền được phân giải trước khi bấm giờ. Thời gian TCP connect xấp xỉ một vòng mạng (RTT).</p>
+<p>Đích là endpoint API hoặc object storage theo region của nhà cung cấp: Bizfly Cloud và VNG Cloud ở Hà Nội và TP.HCM, AWS ở Singapore, Hong Kong, Tokyo và Virginia. Front-end của các endpoint này nằm trong region tương ứng. Thêm <code>vercel.com</code> để thấy CDN của Vercel ở gần đến đâu. Không đo app thật của ai.</p>
+<p>Công cụ là một chương trình Go ngắn, chỉ dùng thư viện chuẩn; mã nguồn chưa công bố. <a href="#tu-do">Cách làm</a> đủ để tự viết lại.</p>
+
+<h2 id="ket-qua">Kết quả</h2>
+<p>TCP connect p50, mili giây, càng ngắn càng tốt:</p>
+<div class="bars" role="img" aria-label="Biểu đồ thanh TCP connect p50 theo đích">
+<div><span>TP.HCM (Bizfly)</span><i style="width:11.8%"></i><span>33,2</span></div>
+<div><span>TP.HCM (VNG)</span><i style="width:12.1%"></i><span>34,1</span></div>
+<div><span>Vercel CDN</span><i style="width:12.6%"></i><span>35,4</span></div>
+<div><span>Hà Nội (VNG)</span><i style="width:17.6%"></i><span>49,6</span></div>
+<div><span>Hà Nội (Bizfly)</span><i style="width:20.5%"></i><span>57,8</span></div>
+<div><span>Singapore</span><i style="width:23.5%"></i><span>66,2</span></div>
+<div><span>Hong Kong</span><i style="width:27.3%"></i><span>76,8</span></div>
+<div><span>Tokyo</span><i style="width:47.9%"></i><span>134,9</span></div>
+<div><span>Virginia, Mỹ</span><i style="width:100%"></i><span>281,7</span></div>
+</div>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng kết quả đo, có thể cuộn ngang"><table>
+<thead><tr><th>Đích</th><th class="n">Connect p50</th><th class="n">Connect p90</th><th class="n">TLS p50</th><th class="n">Request đầu p50</th><th class="n">Thành công</th></tr></thead>
+<tbody>
+<tr><td>Bizfly Cloud, TP.HCM</td><td class="n">33,2</td><td class="n">61,8</td><td class="n">95,1</td><td class="n">161</td><td class="n">119/120</td></tr>
+<tr><td>VNG Cloud, TP.HCM</td><td class="n">34,1</td><td class="n">55,6</td><td class="n">94,3</td><td class="n">162</td><td class="n">117/120</td></tr>
+<tr><td>Vercel (CDN anycast)</td><td class="n">35,4</td><td class="n">62,7</td><td class="n">79,8</td><td class="n">151</td><td class="n">119/120</td></tr>
+<tr><td>VNG Cloud, Hà Nội</td><td class="n">49,6</td><td class="n">61,5</td><td class="n">71,0</td><td class="n">170</td><td class="n">118/120</td></tr>
+<tr><td>Bizfly Cloud, Hà Nội</td><td class="n">57,8</td><td class="n">83,6</td><td class="n">81,9</td><td class="n">198</td><td class="n">117/120</td></tr>
+<tr><td>AWS, Singapore</td><td class="n">66,2</td><td class="n">95,3</td><td class="n">79,1</td><td class="n">211</td><td class="n">116/120</td></tr>
+<tr><td>AWS, Hong Kong</td><td class="n">76,8</td><td class="n">108,5</td><td class="n">91,1</td><td class="n">245</td><td class="n">117/120</td></tr>
+<tr><td>AWS, Tokyo</td><td class="n">134,9</td><td class="n">168,7</td><td class="n">148,3</td><td class="n">418</td><td class="n">115/120</td></tr>
+<tr><td>AWS, Virginia (Mỹ)</td><td class="n">281,7</td><td class="n">314,7</td><td class="n">298,2</td><td class="n">862</td><td class="n">112/120</td></tr>
+</tbody></table></div>
+<p><em>Đơn vị mili giây. “Request đầu” là mô hình cho một request HTTPS trên kết nối mới: connect + TLS + một vòng cho chính request, chưa tính thời gian server xử lý. TLS gồm cả phần tính toán của server đích, nên chỉ so sánh tương đối giữa các đích. Các lần không thành công đều là timeout 3 giây ở bước TLS, rải đều mọi đích, nhiều khả năng do đường mạng phía máy đo.</em></p>
+<p>Ba điều đọc được từ bảng:</p>
+<ul>
+<li><strong>Từ máy này, Singapore chỉ chậm hơn Hà Nội khoảng 8–17 ms.</strong> Máy đo nhiều khả năng ở phía Nam: TP.HCM nhanh nhất. Người dùng ở Hà Nội sẽ thấy thứ tự khác; xem <a href="#gioi-han">giới hạn</a>.</li>
+<li><strong>Đuôi dài hơn trung vị nhiều.</strong> p90 tới Singapore là 95 ms, có lần vượt 1 giây. Người dùng cảm nhận các lần chậm đó, không cảm nhận trung vị.</li>
+<li><strong>Virginia gấp khoảng 4 lần Singapore.</strong> Một function để region mặc định trả khoảng 0,9 giây chỉ cho phần mạng của request đầu tiên.</li>
+</ul>
+
+<h2 id="truy-van">Khi app và database ở hai nơi</h2>
+<p>Một trang thường chạy vài truy vấn nối tiếp: đọc session, đọc user, đọc danh sách đơn. Nếu app và database cùng data center, mỗi vòng dưới 1 ms. Nếu ở hai nơi, mỗi truy vấn tuần tự cộng thêm một RTT giữa hai nơi đó.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng ước lượng thời gian mạng theo số truy vấn, có thể cuộn ngang"><table>
+<thead><tr><th>App ở … , database ở …</th><th class="n">RTT giữa hai nơi</th><th class="n">1 truy vấn</th><th class="n">5 truy vấn</th><th class="n">10 truy vấn</th></tr></thead>
+<tbody>
+<tr><td>Cùng data center</td><td class="n">&lt; 1</td><td class="n">&lt; 1</td><td class="n">&lt; 5</td><td class="n">&lt; 10</td></tr>
+<tr><td>TP.HCM, Singapore (ước lượng)</td><td class="n">~66</td><td class="n">66</td><td class="n">331</td><td class="n">662</td></tr>
+<tr><td>TP.HCM, Virginia (ước lượng)</td><td class="n">~282</td><td class="n">282</td><td class="n">1.409</td><td class="n">2.817</td></tr>
+</tbody></table></div>
+<p><em>Đơn vị mili giây, chỉ phần mạng, cộng thêm vào thời gian mỗi request. Ước lượng từ RTT đo ở máy này, không phải số đo server-to-server; đường giữa hai data center thường ổn định hơn đường từ mạng gia đình. Connection pool giữ kết nối sẵn nên không tính bắt tay TCP/TLS ở đây.</em></p>
+<p>Vì vậy câu hỏi đầu tiên không phải “region nào gần người dùng nhất”, mà là “app có nằm cùng chỗ với database không”. Vercel cũng tự khuyến nghị <a href="https://vercel.com/docs/regions">đặt function cùng region với database</a>. Gộp các truy vấn tuần tự thành một (JOIN, hoặc chạy song song khi độc lập) giảm chi phí này ở mọi nơi.</p>
+
+<h2 id="cdn">CDN gần không có nghĩa là function gần</h2>
+<p>Kết nối tới <code>vercel.com</code> chỉ mất 35 ms, ngang TP.HCM, vì CDN của Vercel có điểm hiện diện gần. Nhưng đó là nơi kết thúc kết nối và trả nội dung tĩnh. Function vẫn chạy ở region compute; Vercel có <a href="https://vercel.com/docs/regions">19 region</a>, gần nhất là Singapore và Hong Kong, mặc định là Virginia. Trang tĩnh nhanh không chứng minh API có database cũng nhanh.</p>
+
+<h2 id="gioi-han">Giới hạn của phép đo</h2>
+<ul>
+<li><strong>Một máy, một nhà mạng, một khung giờ.</strong> Đo lúc 00:17–00:25, ngoài giờ cao điểm. Buổi tối (20:00–23:00), băng thông quốc tế thường nghẽn hơn; các con số tới Singapore, Hong Kong và Mỹ có thể xấu hơn đáng kể. Chưa đo từ mạng di động.</li>
+<li><strong>Vị trí máy đo.</strong> Mạng cố định tại Việt Nam; RTT thấp nhất tới TP.HCM gợi ý máy ở phía Nam. Người dùng ở miền Bắc sẽ thấy Hà Nội nhanh hơn và Singapore xa hơn.</li>
+<li><strong>Endpoint không phải app.</strong> Đây là front-end API/storage của nhà cung cấp. Thời gian TLS phụ thuộc cả cấu hình server đích.</li>
+<li><strong>Bảng truy vấn là ước lượng</strong> từ RTT đo ở máy này, chưa đo trực tiếp giữa hai data center.</li>
+</ul>
+<p>Embra sẽ đo lại vào giờ cao điểm và từ mạng di động, rồi cập nhật bài này kèm ngày sửa.</p>
+
+<h2 id="tu-do">Tự đo từ mạng của bạn</h2>
+<p>Số đo từ mạng của chính người dùng có giá trị hơn mọi bảng chung. Cách đo trong bài này:</p>
+<ol>
+<li>Chọn đích là endpoint theo region của nhà cung cấp bạn đang cân nhắc (API hoặc object storage của region đó), không dùng tên miền có CDN phía trước.</li>
+<li>Phân giải DNS trước, rồi mới bấm giờ cho TCP connect và TLS handshake.</li>
+<li>Xen kẽ các đích trong cùng một vòng, nghỉ 1 giây giữa các vòng, chạy ít nhất 100 vòng.</li>
+<li>Báo cả p50 và p90, cùng số lần thất bại; không dùng trung bình.</li>
+<li>Chạy lại vào giờ cao điểm tối và từ mạng di động.</li>
+</ol>
+<p>Muốn dùng công cụ của Embra, gửi email tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>.</p>
+
+<hr>
+<p>Bài liên quan: <a href="/so-sanh/">so sánh nơi chạy app có Postgres cho người dùng Việt Nam</a> và <a href="/engineering/chuyen-khoi-vercel/">chuyển app Next.js có Postgres khỏi Vercel</a>. Embra đang xây hosting app và PostgreSQL tại Việt Nam, hiện ở closed alpha; số đo trong bài là của các nhà cung cấp khác, không phải của hạ tầng Embra.</p>
+</article></main><footer class="site-foot">Embra · Hosting app và PostgreSQL đang phát triển<br><a href="/engineering/">Engineering</a> · <a href="/so-sanh/">So sánh</a> · <a href="/#nguoi-lam">Người xây dựng</a> · <a href="https://github.com/embra-labs/embra-cloud">Mã nguồn website</a> · <a href="mailto:hello@embra.cloud">Liên hệ</a></footer></body></html>

@@ -22,6 +22,9 @@ Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, w
 
 | Nội dung | Phạm vi bằng chứng |
 | :--- | :--- |
+| [So sánh nơi chạy app có Postgres](https://embra.cloud/so-sanh/) | Vercel, Railway, Mắt Bão Vibe Host, VPS và Embra; đối chiếu trang chính thức 21/10/2026 |
+| [Độ trễ từ Việt Nam tới các region gần](https://embra.cloud/engineering/do-tre-viet-nam/) | Đo 22/10/2026 từ một máy, ngoài giờ cao điểm; có giới hạn phép đo |
+| [Chuyển app Next.js có Postgres khỏi Vercel](https://embra.cloud/engineering/chuyen-khoi-vercel/) | Hướng dẫn thực hành: kiểm kê, build, chuyển database có diễn tập, đổi DNS; dùng được khi tự host |
 | [Deploy app có Postgres](https://embra.cloud/engineering/deploy-with-postgres/) | Hướng dẫn thực hành: migration, rollback, restore và checklist tải về; dùng được khi tự host |
 | [Một lần deploy ở Embra đi qua những đâu?](https://embra.cloud/engineering/how-embra-works/) | Kiến trúc đối chiếu ngày 09/10/2026: kế hoạch, migration, chuyển traffic và giới hạn phục hồi |
 | [Backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/) | Lab 28–30/09/2026: toàn vẹn đạt trong fixture; mục tiêu latency chưa đạt |

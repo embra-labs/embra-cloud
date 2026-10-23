@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chuyển app Next.js có Postgres khỏi Vercel: kiểm gì trước ngày đổi DNS? · Embra</title><meta name="description" content="Liệt kê những gì Vercel đang làm thay bạn, build Next.js chạy được ngoài Vercel, chuyển database bằng pg_dump có diễn tập và đổi DNS có đường quay lại. Dùng được với bất kỳ nơi chạy nào."><link rel="canonical" href="https://embra.cloud/engineering/chuyen-khoi-vercel/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#232323">
+<meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="Embra"><meta property="og:title" content="Chuyển app Next.js có Postgres khỏi Vercel: kiểm gì trước ngày đổi DNS?"><meta property="og:description" content="Những gì Vercel đang làm thay bạn, build chạy ngoài Vercel, chuyển database có diễn tập và đổi DNS có đường quay lại."><meta property="og:url" content="https://embra.cloud/engineering/chuyen-khoi-vercel/"><meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Chuyển app Next.js có Postgres khỏi Vercel: kiểm gì trước ngày đổi DNS?", "description": "Liệt kê những gì Vercel đang làm thay bạn, build Next.js chạy được ngoài Vercel, chuyển database bằng pg_dump có diễn tập và đổi DNS có đường quay lại.", "url": "https://embra.cloud/engineering/chuyen-khoi-vercel/", "inLanguage": "vi", "datePublished": "2026-10-21", "dateModified": "2026-10-21", "author": {"@type": "Person", "@id": "https://embra.cloud/#founder", "name": "Hoàng Xuân", "jobTitle": "Founder", "url": "https://embra.cloud/#nguoi-lam", "sameAs": ["https://github.com/hxuan190", "https://www.linkedin.com/in/hxuan190"]}, "publisher": {"@type": "Organization", "@id": "https://embra.cloud/#org", "name": "Embra", "url": "https://embra.cloud/", "logo": {"@type": "ImageObject", "url": "https://embra.cloud/apple-touch-icon.png"}}, "mainEntityOfPage": "https://embra.cloud/engineering/chuyen-khoi-vercel/"}</script><style>
+*{box-sizing:border-box}body{margin:0;background:#faf8f3;color:#262623;font:18px/1.8 system-ui,sans-serif}
+.bar{padding:16px 5vw;border-bottom:1px solid #ddd6c8;font-size:13px;letter-spacing:.06em}
+.bar a{color:inherit}main{max-width:820px;margin:54px auto 90px;padding:0 28px}h1{font-size:clamp(32px,5vw,48px);line-height:1.2;letter-spacing:-.035em;margin:0 0 28px}
+h2{font-size:28px;line-height:1.35;margin-top:54px}p{margin:22px 0}a{color:#8b421b;text-underline-offset:3px}img{display:block;width:100%;height:auto;border:1px solid #e3dccf;border-radius:8px}p:has(>em){font-size:15px;color:#62635b;line-height:1.65}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{padding:12px 10px;border-bottom:1px solid #ded7ca;text-align:left;vertical-align:top}th{background:#f0ece2}.table-scroll{overflow-x:auto}code{font-size:.88em;background:#eee9de;padding:2px 5px;border-radius:4px}pre{overflow:auto;padding:16px;background:#eee9de}hr{border:0;border-top:1px solid #ded7ca;margin:44px 0}strong{font-weight:650}.notice{background:#f0e7d5;padding:14px 18px;font-size:14px;border-left:3px solid #ac6a30;margin-bottom:32px}
+@media(max-width:600px){body{font-size:17px}main{margin-top:32px;padding:0 20px}h2{font-size:24px}.table-scroll table{min-width:550px}}
+
+.bar{background:#232323;color:#faf8f3;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px max(20px,calc((100vw - 1040px)/2))}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;text-decoration:none;letter-spacing:.06em}.brand img{width:32px;height:32px;border:0;border-radius:0}.bar nav{display:flex;flex-wrap:wrap;gap:20px;letter-spacing:0}.bar a:hover{color:#e9c36b}a:focus-visible{outline:3px solid #ae5520;outline-offset:5px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:10}.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8b421b}main{max-width:860px}h2{scroll-margin-top:20px}code{overflow-wrap:anywhere}pre code{overflow-wrap:normal}.toc{border-top:1px solid #ded7ca;border-bottom:1px solid #ded7ca;padding:18px 0;margin:32px 0;font-size:15px}.toc summary{cursor:pointer;font-weight:600}.toc ul{padding-left:22px}.toc li{margin:8px 0}.site-foot{border-top:1px solid #ded7ca;padding:28px 20px;text-align:center;font-size:14px}.table-scroll{margin:28px 0}.table-scroll:focus-visible{outline:2px solid #ae5520}@media(max-width:600px){.bar{gap:16px}.bar nav{gap:16px;font-size:13px}.toc{font-size:14px}main{padding:0 20px}}
+</style></head>
+<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
+<main id="main"><p class="kicker">Engineering / Hướng dẫn thực hành</p><article><h1>Chuyển app Next.js có Postgres khỏi Vercel: kiểm gì trước ngày đổi DNS?</h1>
+<p><em>Hoàng Xuân · Embra Engineering · Xuất bản 21/10/2026 · Đối chiếu tài liệu Next.js, Vercel và PostgreSQL cùng ngày.</em></p>
+<p>Phần khó của việc rời Vercel thường không phải build app ở nơi khác. Phần khó là những việc Vercel đang làm thay bạn mà không ai ghi lại, và database phải chuyển sang mà không mất đơn hàng được ghi trong lúc chuyển. Bài này đi qua bốn bước: kiểm kê, build chạy ngoài Vercel, chuyển database có diễn tập, đổi DNS có đường quay lại.</p>
+<p>Hướng dẫn dùng được khi bạn chuyển sang VPS, một PaaS khác hay tự host. Không cần tài khoản Embra.</p>
+<details class="toc"><summary>Trong hướng dẫn này</summary><ul><li><a href="#kiem-ke">1. Kiểm kê những gì Vercel đang làm thay bạn</a></li><li><a href="#build">2. Build Next.js chạy được ngoài Vercel</a></li><li><a href="#nhieu-instance">Khi chạy nhiều instance</a></li><li><a href="#database">3. Chuyển database có diễn tập</a></li><li><a href="#dns">4. Đổi DNS có đường quay lại</a></li><li><a href="#checklist">Ghi kết quả trước ngày chuyển</a></li></ul></details>
+
+<h2 id="kiem-ke">1. Kiểm kê những gì Vercel đang làm thay bạn</h2>
+<p>Mở dashboard của project và ghi lại từng mục dưới đây. Mỗi dòng “có” là một việc nơi mới phải làm được, hoặc bạn phải tự làm.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng kiểm kê, có thể cuộn ngang"><table>
+<thead><tr><th>Ở Vercel</th><th>Cần kiểm</th><th>Nơi mới phải có</th></tr></thead>
+<tbody>
+<tr><td>Environment Variables</td><td>Biến nào cho Production, Preview, Development; biến nào có tiền tố <code>NEXT_PUBLIC_</code></td><td>Cách lưu secret không lộ trong log; build lại khi đổi biến public</td></tr>
+<tr><td>Integrations / Marketplace</td><td>Database, Redis, blob storage được cài qua Marketplace và biến môi trường chúng tự thêm</td><td>Từng dịch vụ tương ứng, hoặc giữ nguyên dịch vụ đó và chỉ chuyển app</td></tr>
+<tr><td>Cron Jobs</td><td>Route nào được gọi theo lịch, bao lâu một lần</td><td>Bộ lập lịch gọi đúng route, có xác thực</td></tr>
+<tr><td>Domains</td><td>Domain chính, domain phụ, redirect www, chứng chỉ</td><td>HTTPS và redirect tương đương</td></tr>
+<tr><td>Image Optimization, cache, ISR</td><td>Trang nào dùng <code>revalidate</code>, ảnh nào qua <code>next/image</code></td><td>Xem <a href="#build">bước 2</a></td></tr>
+<tr><td>Preview Deployments</td><td>Team có dùng link preview cho mỗi pull request không</td><td>Môi trường preview, nếu vẫn cần</td></tr>
+</tbody></table></div>
+<p>Nếu database của bạn từng là Vercel Postgres, nó <a href="https://vercel.com/docs/postgres">đã được chuyển sang Neon từ 12/2024</a>. Chuỗi kết nối hiện trỏ tới Neon; bạn có thể giữ database ở đó và chỉ chuyển app, hoặc chuyển cả hai.</p>
+
+<h2 id="build">2. Build Next.js chạy được ngoài Vercel</h2>
+<p>Next.js chạy bằng <code>next start</code> trên một server Node.js có <a href="https://nextjs.org/docs/app/guides/self-hosting">Image Optimization, Proxy và ISR hoạt động không cần cấu hình thêm</a>. Để đóng gói gọn vào container, bật <code>output: 'standalone'</code>:</p>
+<pre><code class="language-js">// next.config.js
+module.exports = {
+  output: 'standalone',
+}</code></pre>
+<p>Build sẽ tạo <code>.next/standalone</code> kèm <code>server.js</code>. Thư mục này <a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/output">không tự chép <code>public</code> và <code>.next/static</code></a>; thiếu bước này, trang chạy nhưng CSS, JS và ảnh trả 404:</p>
+<pre><code class="language-bash">cp -r public .next/standalone/ &amp;&amp; cp -r .next/static .next/standalone/.next/
+PORT=3000 HOSTNAME=0.0.0.0 node .next/standalone/server.js</code></pre>
+<p>Bốn điểm hay lỗi khi rời Vercel:</p>
+<ul>
+<li><strong>Biến <code>NEXT_PUBLIC_</code> được nhúng vào bundle lúc build.</strong> Đổi giá trị ở runtime không có tác dụng; phải build lại cho từng môi trường. Biến không có tiền tố chỉ đọc ở server; giá trị lúc chạy chỉ có tác dụng khi trang render động, còn trang prerender dùng giá trị lúc build.</li>
+<li><strong>Đặt reverse proxy phía trước.</strong> Tài liệu Next.js khuyến nghị dùng reverse proxy như nginx thay vì mở thẳng server ra internet. Nếu dùng nginx và có streaming, tắt buffering (header <code>X-Accel-Buffering: no</code>), nếu không trang sẽ chờ render xong mới trả.</li>
+<li><strong>Image Optimization trên Linux glibc.</strong> Image Optimization có thể dùng nhiều bộ nhớ và cần <a href="https://sharp.pixelplumbing.com/install#linux-memory-allocator">cấu hình thêm cho sharp</a>. Theo dõi RAM của container trong vài ngày đầu.</li>
+<li><strong>Tắt server cho đúng.</strong> Gửi <code>SIGTERM</code> và chờ 10–30 giây để request đang chạy và callback <code>after()</code> hoàn tất.</li>
+</ul>
+
+<h3 id="nhieu-instance">Khi chạy nhiều instance</h3>
+<p>Cache và ISR mặc định nằm trên đĩa của từng instance. Một instance với đĩa bền vững thì chạy đúng ngay. Từ hai instance trở lên, hoặc khi đĩa không bền, cần thêm:</p>
+<ul>
+<li>Một <a href="https://nextjs.org/docs/app/guides/self-hosting#configuring-caching"><code>cacheHandler</code></a> dùng chung (ví dụ Redis), nếu không mỗi instance giữ bản cache riêng và <code>revalidateTag</code> chỉ xoá cache trên một instance.</li>
+<li>Cùng một <code>NEXT_SERVER_ACTIONS_ENCRYPTION_KEY</code> cho mọi instance, nếu không sẽ gặp lỗi “Failed to find Server Action”.</li>
+<li>Một <code>deploymentId</code> để khi deploy cuốn chiếu, trình duyệt đang mở bản cũ được tải lại sang bản mới thay vì gọi asset hoặc Server Action không còn tồn tại.</li>
+</ul>
+<p>Nếu app nhỏ, một instance kèm restart tự động thường đơn giản hơn nhiều so với việc dựng đủ các phần trên.</p>
+
+<h2 id="database">3. Chuyển database có diễn tập</h2>
+<p>Với database cỡ vài GB, cách dễ kiểm nhất là <code>pg_dump</code> rồi <code>pg_restore</code>. <code>pg_dump</code> <a href="https://www.postgresql.org/docs/18/app-pgdump.html">tạo bản xuất nhất quán và không chặn người đọc hay ghi</a>, nhưng bản xuất chỉ chứa dữ liệu tới thời điểm bắt đầu dump. Đơn ghi sau đó không có trong bản này.</p>
+<p>Vì vậy hãy làm hai lần: một lần diễn tập, một lần thật.</p>
+<ol>
+<li><strong>Kiểm phiên bản.</strong> Server đích nên cùng hoặc mới hơn major version của nguồn. Dùng <code>pg_dump</code> cùng major với server đích; nó từ chối dump từ server mới hơn chính nó, và bản dump không chắc nạp được vào server cũ hơn. Khác major thì thêm <code>--quote-all-identifiers</code>. Ghi lại các extension đang dùng (<code>\dx</code>) và kiểm nơi mới có đủ.</li>
+<li><strong>Diễn tập.</strong> Dump database đang chạy, restore vào database trống ở nơi mới, trỏ một bản app thử vào đó. Đọc lại vài bản ghi cụ thể bạn biết trước (mã đơn, tổng tiền), không chỉ đếm số dòng. Ghi lại thời gian dump và restore.</li>
+<li><strong>Chọn cửa sổ dừng ghi.</strong> Thời gian diễn tập cho biết app cần dừng ghi bao lâu. Báo trước cho người dùng; bật chế độ chỉ đọc hoặc trang bảo trì cho các route ghi.</li>
+<li><strong>Chuyển thật.</strong> Dừng ghi, dump lần cuối, restore, chạy lại bước đối chiếu, rồi mới trỏ app mới vào database mới.</li>
+</ol>
+<pre><code class="language-bash"># Định dạng custom để pg_restore chọn lọc được
+pg_dump --format=custom --dbname="$SOURCE_URL" --file=app.dump
+# Bỏ owner và GRANT của role ở nơi cũ; dừng ngay khi có lỗi, áp trong một transaction
+pg_restore --no-owner --no-privileges --exit-on-error --single-transaction \
+  --dbname="$TARGET_URL" app.dump</code></pre>
+<p>Mặc định <code>pg_restore</code> chạy tiếp khi gặp lỗi, nên một restore “xong” vẫn có thể thiếu bảng; <code>--exit-on-error</code> làm lỗi hiện ra ngay. Nếu nguồn là Neon, dùng chuỗi kết nối direct, không qua pooler. Đọc chuỗi kết nối từ biến môi trường, không dán mật khẩu vào lệnh để tránh lưu vào lịch sử shell. Nếu không chấp nhận được thời gian dừng ghi, bạn cần replication (ví dụ logical replication) thay vì dump; việc đó phức tạp hơn và nên diễn tập riêng.</p>
+<p>Sau khi chuyển, giữ database cũ ở chế độ chỉ đọc vài ngày. Đó là đường quay lại nếu phát hiện thiếu dữ liệu, với điều kiện bạn chấp nhận bỏ các lần ghi đã xảy ra ở nơi mới.</p>
+
+<h2 id="dns">4. Đổi DNS có đường quay lại</h2>
+<ol>
+<li><strong>Hạ TTL trước 24–48 giờ</strong>, ví dụ xuống 300 giây, để khi đổi bản ghi, phần lớn người dùng nhận địa chỉ mới nhanh.</li>
+<li><strong>Chuẩn bị HTTPS ở nơi mới trước khi đổi.</strong> Nếu chứng chỉ chỉ cấp được sau khi DNS trỏ về, sẽ có vài phút người dùng gặp lỗi chứng chỉ. Có thể cấp trước bằng DNS-01 challenge; nếu domain đang dùng nameserver của Vercel, chuyển bản ghi hoặc nameserver và kiểm bản ghi CAA trước.</li>
+<li><strong>Giữ deployment cũ trên Vercel</strong> cho tới khi nơi mới chạy ổn định vài ngày. Quay lại DNS chỉ an toàn khi database vẫn tương thích với code cũ.</li>
+<li><strong>Theo dõi sau khi đổi:</strong> tỉ lệ lỗi, thời gian phản hồi của route có truy vấn, cron có chạy đúng giờ, ảnh có tải được.</li>
+</ol>
+
+<h2 id="checklist">Ghi kết quả trước ngày chuyển</h2>
+<p>Bảng dưới là mẫu để tự điền, không phải kết quả của Embra. “Chưa chạy” khác với “đạt”.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng checklist, có thể cuộn ngang"><table>
+<thead><tr><th>Phép kiểm</th><th>Bằng chứng cần lưu</th><th>Kết quả của bạn</th></tr></thead>
+<tbody>
+<tr><td>Kiểm kê</td><td>Danh sách biến môi trường, integration, cron, domain đã đối chiếu với nơi mới</td><td>Chưa chạy</td></tr>
+<tr><td>Build ngoài Vercel</td><td>Trang tải đủ CSS, JS, ảnh; biến public đúng môi trường</td><td>Chưa chạy</td></tr>
+<tr><td>Diễn tập database</td><td>Bản ghi mẫu khớp từng trường; thời gian dump + restore</td><td>Chưa chạy</td></tr>
+<tr><td>Cửa sổ dừng ghi</td><td>Thời lượng dự kiến, đã báo người dùng</td><td>Chưa chạy</td></tr>
+<tr><td>HTTPS nơi mới</td><td>Chứng chỉ hợp lệ cho mọi domain trước khi đổi DNS</td><td>Chưa chạy</td></tr>
+<tr><td>Đường quay lại</td><td>Deployment cũ còn chạy; database cũ chỉ đọc; người quyết định quay lại</td><td>Chưa chạy</td></tr>
+</tbody></table></div>
+<p>Thời gian restore của database thử nhỏ không dự báo đúng cho database lớn hơn; đo lại với dữ liệu cỡ thật nếu được.</p>
+
+<hr>
+<p>Đang cân nhắc nơi chạy mới cho app có người dùng tại Việt Nam? <a href="/so-sanh/">Bảng so sánh Vercel, Railway, Mắt Bão Vibe Host và VPS</a> đặt các lựa chọn cạnh nhau theo vị trí server, cách trả tiền và trách nhiệm database. Embra đang xây hosting app và PostgreSQL tập trung vào migration và restore, hiện ở closed alpha; bài này là hướng dẫn chung, không phải danh sách tính năng đã phát hành.</p>
+</article></main><footer class="site-foot">Embra · Hosting app và PostgreSQL đang phát triển<br><a href="/engineering/">Engineering</a> · <a href="/so-sanh/">So sánh</a> · <a href="/#nguoi-lam">Người xây dựng</a> · <a href="https://github.com/embra-labs/embra-cloud">Mã nguồn website</a> · <a href="mailto:hello@embra.cloud">Liên hệ</a></footer></body></html>
