@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Mắt Bão Vibe Host hay VPS? · Embra</title><meta name="description" content="So sánh nơi chạy app Node.js / Next.js có PostgreSQL cho người dùng tại Việt Nam: vị trí server, giá khởi điểm, cách trả tiền và ai chịu phần vận hành database. Số liệu đối chiếu ngày 21/10/2026."><link rel="canonical" href="https://embra.cloud/so-sanh/">
+<title>Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Render, Mắt Bão Vibe Host hay VPS? · Embra</title><meta name="description" content="So sánh nơi chạy app Node.js / Next.js có PostgreSQL cho người dùng tại Việt Nam: vị trí server, giá khởi điểm, cách trả tiền và ai chịu phần vận hành database. Số liệu đối chiếu ngày 21/10/2026."><link rel="canonical" href="https://embra.cloud/so-sanh/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#232323">
 <meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="Embra"><meta property="og:title" content="Chạy app có Postgres cho người dùng Việt Nam: chọn nền tảng nào?"><meta property="og:description" content="Vị trí server, giá khởi điểm, cách trả tiền và ai chịu phần vận hành database. Đối chiếu ngày 21/10/2026."><meta property="og:url" content="https://embra.cloud/so-sanh/"><meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Mắt Bão Vibe Host hay VPS?", "description": "So sánh nơi chạy app Node.js / Next.js có PostgreSQL cho người dùng tại Việt Nam: vị trí server, giá khởi điểm, cách trả tiền và ai chịu phần vận hành database.", "url": "https://embra.cloud/so-sanh/", "inLanguage": "vi", "datePublished": "2026-10-21", "dateModified": "2026-10-21", "author": {"@type": "Person", "@id": "https://embra.cloud/#founder", "name": "Hoàng Xuân", "jobTitle": "Founder", "url": "https://embra.cloud/#nguoi-lam", "sameAs": ["https://github.com/hxuan190", "https://www.linkedin.com/in/hxuan190"]}, "publisher": {"@type": "Organization", "@id": "https://embra.cloud/#org", "name": "Embra", "url": "https://embra.cloud/", "logo": {"@type": "ImageObject", "url": "https://embra.cloud/apple-touch-icon.png"}}, "mainEntityOfPage": "https://embra.cloud/so-sanh/"}</script><style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Render, Mắt Bão Vibe Host hay VPS?", "description": "So sánh nơi chạy app Node.js / Next.js có PostgreSQL cho người dùng tại Việt Nam: vị trí server, giá khởi điểm, cách trả tiền và ai chịu phần vận hành database.", "url": "https://embra.cloud/so-sanh/", "inLanguage": "vi", "datePublished": "2026-10-21", "dateModified": "2026-10-24", "author": {"@type": "Person", "@id": "https://embra.cloud/#founder", "name": "Hoàng Xuân", "jobTitle": "Founder", "url": "https://embra.cloud/#nguoi-lam", "sameAs": ["https://github.com/hxuan190", "https://www.linkedin.com/in/hxuan190"]}, "publisher": {"@type": "Organization", "@id": "https://embra.cloud/#org", "name": "Embra", "url": "https://embra.cloud/", "logo": {"@type": "ImageObject", "url": "https://embra.cloud/apple-touch-icon.png"}}, "mainEntityOfPage": "https://embra.cloud/so-sanh/"}</script><style>
 *{box-sizing:border-box}body{margin:0;background:#faf8f3;color:#262623;font:18px/1.8 system-ui,sans-serif}
 .bar{padding:16px 5vw;border-bottom:1px solid #ddd6c8;font-size:13px;letter-spacing:.06em}
 .bar a{color:inherit}main{max-width:820px;margin:54px auto 90px;padding:0 28px}h1{font-size:clamp(32px,5vw,48px);line-height:1.2;letter-spacing:-.035em;margin:0 0 28px}
@@ -12,7 +12,8 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 @media(max-width:600px){body{font-size:17px}main{margin-top:32px;padding:0 20px}h2{font-size:24px}.table-scroll table{min-width:550px}}
 
 .bar{background:#232323;color:#faf8f3;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px max(20px,calc((100vw - 1040px)/2))}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;text-decoration:none;letter-spacing:.06em}.brand img{width:32px;height:32px;border:0;border-radius:0}.bar nav{display:flex;flex-wrap:wrap;gap:20px;letter-spacing:0}.bar a:hover{color:#e9c36b}a:focus-visible{outline:3px solid #ae5520;outline-offset:5px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:10}.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8b421b}main{max-width:860px}h2{scroll-margin-top:20px}code{overflow-wrap:anywhere}pre code{overflow-wrap:normal}.toc{border-top:1px solid #ded7ca;border-bottom:1px solid #ded7ca;padding:18px 0;margin:32px 0;font-size:15px}.toc summary{cursor:pointer;font-weight:600}.toc ul{padding-left:22px}.toc li{margin:8px 0}.site-foot{border-top:1px solid #ded7ca;padding:28px 20px;text-align:center;font-size:14px}.table-scroll{margin:28px 0}.table-scroll:focus-visible{outline:2px solid #ae5520}.wide table{min-width:760px}@media(max-width:600px){.bar{gap:16px}.bar nav{gap:16px;font-size:13px}.toc{font-size:14px}main{padding:0 20px}}
-</style><!-- Privacy-friendly analytics by Plausible -->
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://embra.cloud/"}, {"@type": "ListItem", "position": 2, "name": "Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Render, Mắt Bão Vibe Host hay VPS?", "item": "https://embra.cloud/so-sanh/"}]}</script>
+<!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://stats.embra.cloud/js/pa-oxyg6Tp26hm2eRS6x5TRV.js"></script>
 <script>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
@@ -20,8 +21,8 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 </script>
 </head>
 <body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
-<main id="main"><p class="kicker">So sánh / Đối chiếu 21/10/2026</p><article><h1>Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Mắt Bão Vibe Host hay VPS?</h1>
-<p><em>Hoàng Xuân · Embra · Xuất bản 21/10/2026 · Giá và region lấy từ trang chính thức của từng bên trong ngày; có thể đã đổi khi bạn đọc.</em></p>
+<main id="main"><p class="kicker">So sánh / Đối chiếu 21/10/2026, thêm Render 24/10/2026</p><article><h1>Chạy app có Postgres cho người dùng Việt Nam: Vercel, Railway, Render, Mắt Bão Vibe Host hay VPS?</h1>
+<p><em>Hoàng Xuân · Embra · Xuất bản 21/10/2026, thêm Render 24/10/2026 · Giá và region lấy từ trang chính thức của từng bên trong ngày đối chiếu; có thể đã đổi khi bạn đọc.</em></p>
 <p>Nếu người dùng ở Việt Nam và app ghi dữ liệu vào Postgres, ba câu hỏi quyết định lựa chọn là: server đặt ở đâu, bạn trả tiền bằng gì, và khi migration hỏng thì ai restore. Bài này đặt các lựa chọn phổ biến cạnh nhau theo ba câu hỏi đó. Embra cũng có trong bảng, kèm mức sẵn sàng thật của nó.</p>
 <details class="toc"><summary>Trong bài này</summary><ul><li><a href="#chon-nhanh">Chọn nhanh theo tình huống</a></li><li><a href="#bang">Bảng đối chiếu</a></li><li><a href="#vi-tri">Vị trí server và độ trễ</a></li><li><a href="#thanh-toan">Giá, tiền tệ và hoá đơn</a></li><li><a href="#database">Ai chịu phần database</a></li><li><a href="#cau-hoi">Câu hỏi nên hỏi trước khi chọn</a></li><li><a href="#embra">Embra đang ở đâu</a></li><li><a href="#nguon">Nguồn</a></li></ul></details>
 
@@ -31,6 +32,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <tbody>
 <tr><td>Frontend Next.js, ít hoặc không có database, người dùng ở nhiều nước</td><td>Vercel</td><td>Thanh toán USD; region châu Á gần nhất là Singapore, Hong Kong; Postgres qua Marketplace hoặc tự nối database bên ngoài</td></tr>
 <tr><td>App full-stack cần deploy nhanh, chấp nhận trả USD bằng thẻ</td><td>Railway</td><td>Region gần nhất là Singapore; tính phí theo usage</td></tr>
+<tr><td>App cần worker, cron và Postgres có point-in-time recovery, trả USD bằng thẻ</td><td>Render</td><td>Region gần nhất là Singapore; phí workspace cộng compute theo từng instance</td></tr>
 <tr><td>Muốn deploy từ GitHub, có sẵn database, trả VND</td><td>Mắt Bão Vibe Host</td><td>CPU, RAM, dung lượng tính theo gói và chia cho các site trong gói (mỗi site một container riêng); trang sản phẩm không ghi vị trí server, nên hỏi trực tiếp</td></tr>
 <tr><td>Bạn tự vận hành được Linux, Postgres, backup và muốn rẻ nhất</td><td>VPS tại Việt Nam (tuỳ chọn thêm Coolify, Dokploy)</td><td>Bạn tự chịu cập nhật bảo mật, backup, restore và migration</td></tr>
 <tr><td>App có dữ liệu người dùng thật, sợ nhất là migration hỏng hoặc không restore được</td><td>Nền tảng nào có quy trình review migration và restore đã diễn tập; xem <a href="#cau-hoi">câu hỏi</a></td><td>Đây là phần Embra đang xây, chưa phát hành công khai (xem <a href="#embra">mức sẵn sàng</a>)</td></tr>
@@ -43,6 +45,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <tbody>
 <tr><td><a href="https://vercel.com/pricing">Vercel</a></td><td>Có</td><td>Qua <a href="https://vercel.com/docs/postgres">Marketplace</a> hoặc tự nối database bên ngoài (Vercel Postgres đã chuyển sang Neon từ 12/2024)</td><td>Singapore (<code>sin1</code>), Hong Kong (<code>hkg1</code>); function mặc định chạy ở Washington (<code>iad1</code>) nếu không đổi</td><td>Hobby miễn phí nhưng chỉ cho mục đích cá nhân, phi thương mại; Pro 20 USD/seat/tháng</td><td>USD</td></tr>
 <tr><td><a href="https://railway.com/pricing">Railway</a></td><td>Có</td><td>Có, <a href="https://docs.railway.com/databases/postgresql">template PostgreSQL một node</a>; backup cần bật riêng</td><td>Singapore (<a href="https://docs.railway.com/reference/deployment-regions">Southeast Asia Metal</a>)</td><td>Hobby 5 USD/tháng gồm 5 USD usage; Pro 20 USD/workspace</td><td>Thẻ tín dụng, USD; thanh toán qua invoice chỉ có ở Enterprise</td></tr>
+<tr><td><a href="https://render.com/pricing">Render</a></td><td>Có</td><td>Có, Postgres có quản lý; <a href="https://render.com/docs/postgresql-backups">point-in-time recovery</a> 3 ngày (Hobby) hoặc 7 ngày (Pro trở lên); gói Free không có backup và <a href="https://render.com/docs/free">hết hạn sau 30 ngày</a></td><td>Singapore (<a href="https://render.com/docs/regions">một trong 5 region</a>)</td><td>Hobby 0 USD + compute; Pro 25 USD/tháng + compute. Web service trả phí từ 7 USD/tháng (512 MB RAM), Postgres từ 6 USD/tháng (256 MB RAM, 1 GB SSD)</td><td>Thẻ tín dụng hoặc ghi nợ qua Stripe, USD</td></tr>
 <tr><td><a href="https://www.matbao.net/hosting/vibe-hosting.html">Mắt Bão Vibe Host</a></td><td>Có, tự deploy khi push</td><td>Có (PostgreSQL, MySQL, MongoDB, Redis), backup tự động theo lịch</td><td>Không công bố trên trang sản phẩm</td><td>Giá niêm yết 79.000 / 149.000 / 290.000 VND/tháng, chưa VAT, mua tối thiểu 3 tháng (đang giảm 20% tới 31/10/2026)</td><td>VND; trang hiển thị ZaloPay, MoMo, Visa, Mastercard, JCB</td></tr>
 <tr><td>VPS tại Việt Nam, ví dụ <a href="https://azdigi.com/pro-vps/">AZDIGI Pro VPS Platinum-1</a></td><td>Tự dựng (GitHub Actions, Coolify, Dokploy…)</td><td>Tự cài và tự vận hành</td><td>Việt Nam</td><td>1 vCPU, 1 GB RAM: 79.000–119.000 VND/tháng tuỳ kỳ hạn 36–3 tháng, chưa VAT</td><td>VND</td></tr>
 <tr><td>Embra</td><td>Đang xây trong M2</td><td>PostgreSQL theo môi trường, có migration gate và restore point là trọng tâm thiết kế</td><td>Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt</td><td>Chưa chốt</td><td>Chưa chốt; Embra là dự án cá nhân, chưa có pháp nhân</td></tr>
@@ -50,14 +53,14 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <p>Embra chưa phát hành công khai; dòng Embra mô tả hướng thiết kế và trạng thái hiện tại, không phải tính năng đã mua được. Chi tiết ở <a href="#embra">mục cuối</a>.</p>
 
 <h2 id="vi-tri">Vị trí server và độ trễ</h2>
-<p>Vercel có 19 region compute; các region châu Á gần Việt Nam là Singapore và Hong Kong, và function <a href="https://vercel.com/docs/regions">mặc định chạy ở Washington, D.C.</a> nếu bạn không đổi. Railway có một region châu Á tại Singapore. Cả hai đều không có region tại Việt Nam.</p>
+<p>Vercel có 19 region compute; các region châu Á gần Việt Nam là Singapore và Hong Kong, và function <a href="https://vercel.com/docs/regions">mặc định chạy ở Washington, D.C.</a> nếu bạn không đổi. Railway và Render mỗi bên có một region châu Á, đều tại Singapore. Cả ba đều không có region tại Việt Nam.</p>
 <p>Với một app ghi database, điều đáng đo là thời gian của một request có truy vấn, không chỉ thời gian tải trang tĩnh từ CDN. Vercel tự khuyến nghị đặt function <a href="https://vercel.com/docs/regions">cùng region với database</a>. Nếu app chạy ở Singapore còn database ở Washington, mỗi truy vấn phải đi vòng qua Thái Bình Dương.</p>
 <p>Bài này chưa đưa số đo độ trễ từ Việt Nam. Con số phụ thuộc nhà mạng và tuyến cáp tại thời điểm đo; hãy đo từ chính mạng người dùng của bạn trước khi quyết định.</p>
 
 <h2 id="thanh-toan">Giá, tiền tệ và hoá đơn</h2>
 <p>Ba điều thường bị bỏ qua khi so giá:</p>
 <ul>
-<li><strong>Tiền tệ và cách trả.</strong> Vercel và Railway tính bằng USD; Railway ghi rõ nhận thẻ tín dụng cho gói thường. Mắt Bão và các nhà cung cấp VPS trong nước báo giá bằng VND.</li>
+<li><strong>Tiền tệ và cách trả.</strong> Vercel, Railway và Render tính bằng USD; Railway ghi rõ nhận thẻ tín dụng cho gói thường, Render nhận thẻ tín dụng và thẻ ghi nợ qua Stripe. Mắt Bão và các nhà cung cấp VPS trong nước báo giá bằng VND.</li>
 <li><strong>Giá chưa VAT và kỳ hạn.</strong> Giá VPS và Mắt Bão Vibe Host ở trên đều chưa gồm VAT. Mức rẻ nhất thường đòi trả trước dài: AZDIGI 79.000 VND/tháng là giá khi trả 36 tháng; trả 3 tháng là 119.000 VND/tháng.</li>
 <li><strong>Hoá đơn cho doanh nghiệp.</strong> Nếu công ty bạn cần hoá đơn điện tử Việt Nam để hạch toán, hỏi nhà cung cấp trước khi mua. Bài này không kết luận bên nào xuất được loại hoá đơn nào. Riêng Embra hiện là dự án cá nhân, chưa có pháp nhân.</li>
 </ul>
@@ -92,7 +95,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <p>Nếu bạn có project thử nghiệm và muốn thử cùng Embra, <a href="/#join">đăng ký quan tâm</a>; alpha chưa nhận app production. Lời mời sẽ ghi rõ stack, giới hạn, chi phí và cách lấy dữ liệu ra trước khi bạn bắt đầu.</p>
 
 <h2 id="nguon">Nguồn</h2>
-<p>Truy cập ngày 21/10/2026.</p>
+<p>Truy cập ngày 21/10/2026; nguồn Render truy cập ngày 24/10/2026.</p>
 <ul>
 <li><a href="https://vercel.com/pricing">Vercel: Pricing</a></li>
 <li><a href="https://vercel.com/docs/regions">Vercel: Global network and regions</a></li>
@@ -100,6 +103,10 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <li><a href="https://railway.com/pricing">Railway: Pricing</a></li>
 <li><a href="https://docs.railway.com/reference/deployment-regions">Railway: Deployment regions</a></li>
 <li><a href="https://docs.railway.com/databases/postgresql">Railway: PostgreSQL</a></li>
+<li><a href="https://render.com/pricing">Render: Pricing</a></li>
+<li><a href="https://render.com/docs/regions">Render: Regions</a></li>
+<li><a href="https://render.com/docs/postgresql-backups">Render: Postgres backups và recovery</a></li>
+<li><a href="https://render.com/docs/free">Render: Free instances</a></li>
 <li><a href="https://www.matbao.net/hosting/vibe-hosting.html">Mắt Bão: Vibe Host</a></li>
 <li><a href="https://azdigi.com/pro-vps/">AZDIGI: Pro VPS</a></li>
 </ul>
