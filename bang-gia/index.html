@@ -82,6 +82,7 @@ main section.wrap{padding-top:96px}
 .pick button[aria-pressed=true]{background:var(--lime);color:var(--char);border-color:var(--lime)}
 .compare .last{border-bottom:0}
 .note{font-size:14px;color:var(--grey);margin:14px 0 0}
+.mbar{display:none}
 .specs-wrap{margin:22px 0 0}.specs-wrap summary{cursor:pointer;font:500 15px/1.5 var(--sans);text-decoration:underline;text-underline-offset:3px}.specs{width:100%;border-collapse:collapse;margin:18px 0 0;font:15px/1.5 var(--sans)}.specs caption{text-align:left;font-size:14px;color:var(--grey);padding:0 0 10px}.specs th,.specs td{text-align:left;padding:10px 12px;border-top:1px solid var(--rule)}.specs thead th{border-top:1px solid var(--char);font-weight:600}.specs tbody th{font-weight:500;color:var(--grey)}
 @media(max-width:760px){.specs{font-size:13px}.specs th,.specs td{padding:8px 6px}}
 
@@ -108,6 +109,7 @@ main section.wrap{padding-top:96px}
 
 @media(max-width:1020px){.hero .wrap{grid-template-columns:1fr}.receipt-col{max-width:520px}.compare{grid-template-columns:150px repeat(3,minmax(0,1fr))}.compare>*{padding:12px}.ph .price{font-size:34px}}
 @media(max-width:760px){
+ .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;align-items:baseline;gap:10px;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:var(--char);color:var(--cream);border-top:1px solid #55554f;font:500 14px/1.2 var(--mono);text-decoration:none;transition:transform .25s}.mbar b{font-size:18px;color:var(--lime)}.mbar .go{margin-left:auto;text-decoration:underline;text-underline-offset:3px}.mbar.away{transform:translateY(110%)}body{padding-bottom:64px}
  .hero{padding:40px 0 72px}.extras{grid-template-columns:1fr}.seg{width:100%}.seg label{flex:1}.seg span{padding:12px 6px;text-align:center}.seg small{display:block;margin:2px 0 0}
  .compare{grid-template-columns:1fr;border:0;background:none}.compare .rh{display:none}
  .compare .col{border:1px solid var(--char);border-top:0;background:#fff}.compare .col.on{background:var(--char)}
@@ -132,9 +134,9 @@ main section.wrap{padding-top:96px}
   <h1 class="px">Bảng giá</h1>
   <p class="lead">Mỗi project trả một hoá đơn mỗi tháng, bằng VND, quét VietQR là xong. Chọn gói và phần thêm; hoá đơn bên cạnh tính đúng số bạn sẽ chuyển. Beta trả phí mở từ 25/10/2026.</p>
   <fieldset class="ctl"><legend>Gói</legend><div class="seg">
-   <label><input type="radio" name="plan" value="start"><span>Start</span></label>
-   <label><input type="radio" name="plan" value="build" checked><span>Build</span></label>
-   <label><input type="radio" name="plan" value="grow"><span>Grow</span></label></div></fieldset>
+   <label><input type="radio" name="plan" value="start"><span>Start<small>249.000đ</small></span></label>
+   <label><input type="radio" name="plan" value="build" checked><span>Build<small>399.000đ</small></span></label>
+   <label><input type="radio" name="plan" value="grow"><span>Grow<small>749.000đ</small></span></label></div></fieldset>
   <fieldset class="ctl"><legend>Trả mỗi lần</legend><div class="seg">
    <label><input type="radio" name="months" value="1" checked><span>1 tháng</span></label>
    <label><input type="radio" name="months" value="3"><span>3 tháng<small>−5%</small></span></label>
@@ -156,6 +158,7 @@ main section.wrap{padding-top:96px}
   <p class="fine">Giá trên là số tiền bạn chuyển. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT và không cộng VAT vào giá.</p>
  </div></div>
 </div></div>
+<a class="mbar" id="mbar" href="#receipt"><span>Mỗi tháng</span><b id="mbar-total">399.000đ</b><span class="go">Xem hoá đơn ↓</span></a>
 
 <main id="main">
 <section class="wrap" aria-labelledby="h-cmp"><h2 class="sec-h px" id="h-cmp">So ba gói</h2>
@@ -254,6 +257,7 @@ main section.wrap{padding-top:96px}
   $('#receipt').style.setProperty('--n', rows.length);
   prev = new Set(rows.map(r => r[0]));
   setOdo(monthly);
+  $('#mbar-total').textContent = vnd(monthly) + 'đ';
   $('#once').textContent = m > 1 ? 'Chuyển một lần ' + vnd(monthly * m) + 'đ cho ' + m + ' tháng' : 'Hoá đơn lặp lại mỗi tháng';
   $('#r-sub').textContent = '1 project, ' + (m > 1 ? 'trả trước ' + m + ' tháng' : 'trả hằng tháng');
   const stg = form.elements.staging; stg.disabled = !p.staging; if (!p.staging) { stg.checked = false; st.staging = false; }
@@ -281,6 +285,8 @@ main section.wrap{padding-top:96px}
   render();
  }
  mq.addEventListener('change', layout);
+ // The sticky total only matters while the receipt is off screen.
+ if ('IntersectionObserver' in window) new IntersectionObserver(es => $('#mbar').classList.toggle('away', es[0].isIntersecting)).observe($('#receipt'));
 
  form.addEventListener('change', e => { const t = e.target; if (t.name === 'plan') st.plan = t.value; if (t.name === 'months') st.months = +t.value; if (t.name === 'staging') st.staging = t.checked; render(); });
  form.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (!b) return; const k = b.dataset.step; st[k] = Math.max(0, Math.min(ADD[k].max, st[k] + +b.dataset.d)); render(); });
