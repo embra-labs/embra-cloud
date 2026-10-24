@@ -18,7 +18,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 
 ## Tính năng và mức sẵn sàng
 
-- Đã có trong beta (cập nhật 24/10/2026): deploy từ GitHub qua dashboard, Embra tự build từ source; PostgreSQL riêng; review migration; backup liên tục và restore theo thời điểm; worker, cron và bucket lưu file theo gói; domain riêng + HTTPS; log/metrics; CLI và MCP (`embra mcp`); export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
+- Đã có trong beta (cập nhật 24/10/2026): deploy từ GitHub qua dashboard, Embra tự build từ source; PostgreSQL riêng; review migration; backup liên tục và restore theo thời điểm; worker, cron và bucket lưu file theo gói; domain riêng + HTTPS; log/metrics; CLI và MCP (`embra mcp`: agent build, tạo plan, chạy thử migration và đọc log; không duyệt, xoá, export hay restore; production chờ owner duyệt); export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
 - Chưa có: queue, auth, email, realtime (roadmap).
 - Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL.
 - Màn hình demo trên trang chủ là minh hoạ, không phải giao diện phát hành. Không suy tính năng từ demo.
