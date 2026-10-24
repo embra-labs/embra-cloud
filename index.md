@@ -12,7 +12,7 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 ## Có gì trong beta (cập nhật 24/10/2026)
 
-Deploy từ GitHub qua dashboard, Embra tự build từ source. PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm. Worker, cron và bucket lưu file theo từng gói. Domain riêng + HTTPS, log và metrics, CLI và MCP (sắp phát hành công khai; `embra mcp`: agent đề xuất và đọc trạng thái, chỉ owner duyệt production), tự xuất dữ liệu bằng `embra export`. Máy chủ tại TP.HCM.
+Deploy từ GitHub qua dashboard, Embra tự build từ source. PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm. Worker, cron và bucket lưu file theo từng gói. Domain riêng + HTTPS, log và metrics, CLI và MCP (sắp phát hành công khai; `embra mcp`: agent đề xuất và đọc trạng thái, chỉ owner duyệt production), tự xuất app và dữ liệu trên dashboard (Cài đặt → Export). Máy chủ tại TP.HCM.
 
 Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Chưa có: queue, auth, email, realtime (roadmap).
 
@@ -49,7 +49,7 @@ Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân
 
 Rollback code và restore database là hai việc khác nhau. Restore về mốc cũ có thể bỏ các lần ghi sau mốc đó.
 
-Owner tự xuất app và dữ liệu bằng `embra export`. Mỗi lần đội Embra truy cập log, metrics hay database của bạn để hỗ trợ đều được ghi lại kèm lý do.
+Owner tự xuất app và dữ liệu trên dashboard (Cài đặt → Export): image, manifest, pg_dump và danh sách object, không kèm giá trị secret. Mỗi lần đội Embra truy cập log, metrics hay database của bạn để hỗ trợ đều được ghi lại kèm lý do.
 
 Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực tiếp support; hỗ trợ qua hello@embra.cloud; beta chưa có SLA. [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md).
 

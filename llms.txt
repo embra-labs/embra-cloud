@@ -18,7 +18,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 
 ## Tính năng và mức sẵn sàng
 
-- Đã có trong beta (cập nhật 24/10/2026): deploy từ GitHub qua dashboard, Embra tự build từ source; PostgreSQL riêng; review migration; backup liên tục và restore theo thời điểm; worker, cron và bucket lưu file theo gói; domain riêng + HTTPS; log/metrics; CLI và MCP (sắp phát hành công khai; `embra mcp`: agent build, tạo plan, chạy thử migration và đọc log; không duyệt, xoá, export hay restore; production chờ owner duyệt); export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
+- Đã có trong beta (cập nhật 24/10/2026): deploy từ GitHub qua dashboard, Embra tự build từ source; PostgreSQL riêng; review migration; backup liên tục và restore theo thời điểm; worker, cron và bucket lưu file theo gói; domain riêng + HTTPS; log/metrics; CLI và MCP (sắp phát hành công khai; `embra mcp`: agent build, tạo plan, chạy thử migration và đọc log; không duyệt, xoá, export hay restore; production chờ owner duyệt); export tự phục vụ trên dashboard (Cài đặt → Export). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
 - Chưa có: queue, auth, email, realtime (roadmap).
 - Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL.
 - Màn hình demo trên trang chủ là minh hoạ, không phải giao diện phát hành. Không suy tính năng từ demo.
@@ -43,7 +43,7 @@ Giá: xem mục Bảng giá. Máy chủ đặt tại TP.HCM, Việt Nam. Vị tr
 
 ## Quyền kiểm soát và hỗ trợ
 
-Owner tự xuất app và dữ liệu bằng `embra export`. Mỗi lần đội Embra truy cập log, metrics hay database của khách để hỗ trợ đều được ghi lại kèm lý do. Không có SLA hoặc hỗ trợ 24/7; hỗ trợ qua hello@embra.cloud. Người dùng chịu trách nhiệm code và logic ứng dụng; Hoàng Xuân trực tiếp support trong phạm vi được xác nhận ở lời mời.
+Owner tự xuất app và dữ liệu trên dashboard (Cài đặt → Export): image, manifest, pg_dump và danh sách object, không kèm giá trị secret. Mỗi lần đội Embra truy cập log, metrics hay database của khách để hỗ trợ đều được ghi lại kèm lý do. Không có SLA hoặc hỗ trợ 24/7; hỗ trợ qua hello@embra.cloud. Người dùng chịu trách nhiệm code và logic ứng dụng; Hoàng Xuân trực tiếp support trong phạm vi được xác nhận ở lời mời.
 
 ## Người xây dựng
 
