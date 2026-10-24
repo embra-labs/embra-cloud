@@ -127,4 +127,4 @@ Bộ kiểm này giúp tìm các lỗ hổng thường gặp, chưa chứng minh
 - **Đang chuẩn bị backfill bảng lớn:** [Backfill tám triệu dòng: dữ liệu đúng, nhưng latency không đạt](https://embra.cloud/engineering/backfill-8m/). Bài thử cho thấy vì sao dữ liệu đúng và app đáp ứng được là hai tiêu chí riêng.
 - **Muốn tự kiểm cơ chế tiếp tục sau ngắt:** [backfill-demo](https://github.com/embra-labs/backfill-demo), ví dụ độc lập 1.000 dòng, có đối chứng sai.
 
-Embra đang xây dựng hosting app và PostgreSQL, chuẩn bị closed alpha theo lời mời. Guide này là hướng dẫn chung, không phải danh sách tính năng đã phát hành. Xem [phạm vi hiện tại](https://embra.cloud/#trang-thai) nếu muốn tìm hiểu sản phẩm.
+Embra đang xây dựng hosting app và PostgreSQL, đang ở beta trả phí từ 25/10/2026 ([bảng giá](https://embra.cloud/bang-gia/)). Guide này là hướng dẫn chung, không phải danh sách tính năng đã phát hành. Xem [phạm vi hiện tại](https://embra.cloud/#trang-thai) nếu muốn tìm hiểu sản phẩm.

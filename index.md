@@ -4,11 +4,11 @@ Embra đang xây dựng hosting app và PostgreSQL cho developer và team nhỏ 
 
 ## Có phù hợp với dự án của bạn?
 
-Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend; alpha dành cho project thử nghiệm, chưa nhận app production.
+Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend.
 
-**Cập nhật 09/10/2026:** đang phát triển và nhận đăng ký quan tâm closed alpha. Ngày mở đợt thử chưa chốt; onboarding thủ công theo lời mời.
+**Cập nhật 25/10/2026:** beta trả phí, nhận app production trong giới hạn từng gói; onboarding trực tiếp từng khách. Giá từ 249.000đ mỗi project mỗi tháng: [bảng giá](https://embra.cloud/bang-gia/).
 
-[Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Đăng ký quan tâm](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
+[Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
 ## Từ nền tảng đến trải nghiệm sản phẩm
 
@@ -51,16 +51,16 @@ Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân
 
 Rollback code và restore database là hai việc khác nhau. Restore về mốc cũ có thể bỏ các lần ghi sau mốc đó.
 
-Cơ chế quyền truy cập dữ liệu và quy trình export của bản alpha chưa được công bố đầy đủ. Trước khi thử, Embra sẽ xác nhận ai có quyền truy cập, phạm vi quyền và cách lấy dữ liệu ra khi kết thúc.
+Owner tự xuất app và dữ liệu bằng `embra export`. Mỗi lần đội Embra truy cập log, metrics hay database của bạn để hỗ trợ đều được ghi lại kèm lý do.
 
-Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực tiếp support; phạm vi hỗ trợ nền tảng, thời gian hỗ trợ và cách xử lý sự cố được xác nhận trong lời mời. [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md).
+Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực tiếp support; hỗ trợ qua hello@embra.cloud; beta chưa có SLA. [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md).
 
-## Đăng ký quan tâm alpha
+## Bắt đầu với beta
 
 1. [Đăng ký quan tâm](https://embra.cloud/#join) và xác nhận email; bước này chưa cấp quyền truy cập.
-2. Khi có đợt phù hợp, Embra liên hệ để xác nhận stack, giới hạn, chi phí và cách hỗ trợ.
+2. Embra liên hệ để xác nhận stack, gói phù hợp ([bảng giá](https://embra.cloud/bang-gia/)) và cách hỗ trợ.
 3. Trước khi thử, bạn nhận hướng dẫn truy cập, phiên bản được hỗ trợ và cách lấy dữ liệu ra khi kết thúc.
 
-Đăng ký không tạo tài nguyên hoặc phát sinh phí. CLI chưa có bản public; chưa nhận app production. Giá chưa chốt. Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt; vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp.
+Đăng ký không tạo tài nguyên hoặc phát sinh phí. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
 
 [Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md) · [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md) · [hello@embra.cloud](mailto:hello@embra.cloud) · [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html) · [Thông tin cho agent](https://embra.cloud/llms.txt)

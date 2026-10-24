@@ -20,7 +20,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
   plausible.init()
 </script>
 </head>
-<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
+<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/bang-gia/">Bảng giá</a></nav></header>
 <main id="main"><p class="kicker">Engineering / Hướng dẫn thực hành</p><article><h1>Chuyển app Next.js có Postgres khỏi Vercel: kiểm gì trước ngày đổi DNS?</h1>
 <p><em>Hoàng Xuân · Embra Engineering · Xuất bản 21/10/2026 · Đối chiếu tài liệu Next.js, Vercel và PostgreSQL cùng ngày.</em></p>
 <p>Phần khó của việc rời Vercel thường không phải build app ở nơi khác. Phần khó là những việc Vercel đang làm thay bạn mà không ai ghi lại, và database phải chuyển sang mà không mất đơn hàng được ghi trong lúc chuyển. Bài này đi qua bốn bước: kiểm kê, build chạy ngoài Vercel, chuyển database có diễn tập, đổi DNS có đường quay lại.</p>
@@ -107,5 +107,5 @@ pg_restore --no-owner --no-privileges --exit-on-error --single-transaction \
 <p>Thời gian restore của database thử nhỏ không dự báo đúng cho database lớn hơn; đo lại với dữ liệu cỡ thật nếu được.</p>
 
 <hr>
-<p>Đang cân nhắc nơi chạy mới cho app có người dùng tại Việt Nam? <a href="/so-sanh/">Bảng so sánh Vercel, Railway, Mắt Bão Vibe Host và VPS</a> đặt các lựa chọn cạnh nhau theo vị trí server, cách trả tiền và trách nhiệm database. Embra đang xây hosting app và PostgreSQL tập trung vào migration và restore, hiện ở closed alpha; bài này là hướng dẫn chung, không phải danh sách tính năng đã phát hành.</p>
+<p>Đang cân nhắc nơi chạy mới cho app có người dùng tại Việt Nam? <a href="/so-sanh/">Bảng so sánh Vercel, Railway, Mắt Bão Vibe Host và VPS</a> đặt các lựa chọn cạnh nhau theo vị trí server, cách trả tiền và trách nhiệm database. Embra đang xây hosting app và PostgreSQL tập trung vào migration và restore, hiện ở beta trả phí (<a href="/bang-gia/">bảng giá</a>); bài này là hướng dẫn chung, không phải danh sách tính năng đã phát hành.</p>
 </article></main><footer class="site-foot">Embra · Hosting app và PostgreSQL đang phát triển<br><a href="/engineering/">Engineering</a> · <a href="/so-sanh/">So sánh</a> · <a href="/#nguoi-lam">Người xây dựng</a> · <a href="https://github.com/embra-labs/embra-cloud">Mã nguồn website</a> · <a href="mailto:hello@embra.cloud">Liên hệ</a></footer></body></html>

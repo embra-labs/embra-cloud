@@ -1,17 +1,27 @@
 # Embra
 
-> Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, hướng tới build, deploy và theo dõi app trong cùng một project. Cập nhật 09/10/2026: đang phát triển và nhận đăng ký quan tâm closed alpha; onboarding thủ công theo lời mời, ngày mở đợt thử chưa chốt.
+> Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, hướng tới build, deploy và theo dõi app trong cùng một project. Cập nhật 25/10/2026: beta trả phí, nhận app production trong giới hạn từng gói; onboarding trực tiếp từng khách. Giá từ 249.000đ mỗi project mỗi tháng.
 
 ## Tình huống phù hợp
 
-Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend; alpha dành cho project thử nghiệm, chưa nhận app production.
+Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend. Beta nhận app production có người dùng thật trong giới hạn gói; chưa có SLA.
+
+## Bảng giá (beta, từ 25/10/2026)
+
+Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT; giá niêm yết là số tiền chuyển, không cộng VAT. Chi tiết: https://embra.cloud/bang-gia/
+
+- Start 249.000đ: app 512 MiB / 0,5 vCPU, PostgreSQL 256 MiB / 2 GiB, worker 1, cron 2, 1 domain riêng, bucket 1 GiB, log/metrics 7 ngày, không có staging.
+- Build 399.000đ: app 1 GiB / 1 vCPU, PostgreSQL 512 MiB / 5 GiB, worker 2, cron 5, 3 domain, 1 preview theo PR, bucket 2 GiB, log/metrics 14 ngày; staging +149.000đ.
+- Grow 749.000đ: app 2 GiB / 2 vCPU, PostgreSQL 1 GiB / 10 GiB, worker 4, cron 10, 5 domain, 3 preview, bucket 5 GiB, log/metrics 30 ngày; staging +299.000đ.
+- Add-on mỗi tháng: RAM app 99.000đ / 512 MiB, PostgreSQL 9.800đ / GB, bucket 4.900đ / GB. Trả trước 3/6/12 tháng giảm 5/10/20% (làm thủ công qua email).
+- Hoá đơn theo ngày bắt đầu, lặp lại hằng tháng; đổi gói tính theo ngày vào hoá đơn sau; xác nhận chuyển khoản tự động.
 
 ## Lộ trình và mức sẵn sàng
 
 - M1 xây nền tảng: CLI, deploy container image ghim theo digest, PostgreSQL và migration gate. Build image bên ngoài.
 - M2 tiếp tục flow sản phẩm minh hoạ trên website: build, deploy, review và recovery. Giao diện, build từ source và MCP là hướng phát triển tiếp theo.
 - Hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, worker, queue, auth, email, realtime là roadmap mở rộng.
-- Khả năng dùng thử thực tế được ghi trong lời mời. CLI chưa có bản public hay lệnh cài được hỗ trợ; chưa có dịch vụ self-service và chưa nhận app production.
+- Beta: deploy từ GitHub qua dashboard, PostgreSQL riêng, review migration, backup liên tục và restore theo thời điểm, domain riêng + HTTPS, log/metrics, export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
 - Màn hình demo là flow định hướng M2, không phải giao diện phát hành hay hợp đồng hành vi của M1. Không suy tính năng đã sẵn sàng từ demo/spec.
 
 ## Bằng chứng công khai
@@ -28,13 +38,13 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 ## Đăng ký và giới hạn
 
-Đăng ký quan tâm và xác nhận email chưa cấp quyền truy cập, không tạo tài nguyên hoặc phát sinh phí. Khi có đợt phù hợp, Embra liên hệ và xác nhận stack, giới hạn, chi phí, hỗ trợ, hướng dẫn truy cập và cách lấy dữ liệu ra.
+Đăng ký và xác nhận email chưa cấp quyền truy cập, không tạo tài nguyên hoặc phát sinh phí. Embra liên hệ để xác nhận stack, gói, hỗ trợ và cách lấy dữ liệu ra trước khi bắt đầu.
 
-Giá chưa chốt. Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
+Giá: xem mục Bảng giá. Máy chủ đặt tại Việt Nam. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
 
 ## Quyền kiểm soát và hỗ trợ
 
-Cơ chế quyền truy cập dữ liệu và quy trình export alpha chưa được công bố đầy đủ; phải xác nhận trước khi thử. Không suy có self-service export, SLA hoặc hỗ trợ 24/7. Người dùng chịu trách nhiệm code và logic ứng dụng; Hoàng Xuân trực tiếp support trong phạm vi được xác nhận ở lời mời.
+Owner tự xuất app và dữ liệu bằng `embra export`. Mỗi lần đội Embra truy cập log, metrics hay database của khách để hỗ trợ đều được ghi lại kèm lý do. Không có SLA hoặc hỗ trợ 24/7; hỗ trợ qua hello@embra.cloud. Người dùng chịu trách nhiệm code và logic ứng dụng; Hoàng Xuân trực tiếp support trong phạm vi được xác nhận ở lời mời.
 
 ## Người xây dựng
 
@@ -42,7 +52,8 @@ Hoàng Xuân, founder; dự án cá nhân, chưa có pháp nhân. [GitHub](https
 
 ## Điểm bắt đầu và liên hệ
 
-- [Website / đăng ký quan tâm](https://embra.cloud/#join)
+- [Bảng giá](https://embra.cloud/bang-gia/)
+- [Website / đăng ký](https://embra.cloud/#join)
 - [Bắt đầu với Embra](https://github.com/embra-labs/.github/blob/main/docs/start-here.md)
 - [Website dạng Markdown](https://embra.cloud/index.md)
 - [CLI — đang phát triển](https://github.com/embra-labs/cli)

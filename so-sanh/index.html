@@ -20,7 +20,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
   plausible.init()
 </script>
 </head>
-<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/#join">Closed alpha ↗</a></nav></header>
+<body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="/so-sanh/">So sánh</a><a href="https://github.com/embra-labs">GitHub</a><a href="/bang-gia/">Bảng giá</a></nav></header>
 <main id="main"><p class="kicker">So sánh / Đối chiếu 21/10/2026, thêm Render, Supabase, Neon 24/10/2026</p><article><h1>Vercel, Supabase, Neon, Railway, Render hay VPS: chạy app có Postgres cho người dùng Việt Nam ở đâu?</h1>
 <p><em>Hoàng Xuân · Embra · Xuất bản 21/10/2026, thêm Render, Supabase, Neon 24/10/2026 · Giá và region lấy từ trang chính thức của từng bên trong ngày đối chiếu; có thể đã đổi khi bạn đọc.</em></p>
 <p>Nếu người dùng ở Việt Nam và app ghi dữ liệu vào Postgres, ba câu hỏi quyết định lựa chọn là: server đặt ở đâu, bạn trả tiền bằng gì, và khi migration hỏng thì ai restore. Bài này đặt các lựa chọn phổ biến cạnh nhau theo ba câu hỏi đó. Embra cũng có trong bảng, kèm mức sẵn sàng thật của nó.</p>
@@ -51,7 +51,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 <tr><td><a href="https://neon.com/pricing">Neon</a></td><td>Không, chỉ database; app chạy ở nơi khác</td><td>Postgres serverless, tự tắt khi không dùng; khôi phục về thời điểm cũ: Free 6 giờ (giới hạn 1 GB), Launch tới 7 ngày, Scale tới 30 ngày</td><td>Singapore (AWS); ngoài ra Sydney (<a href="https://neon.com/docs/introduction/regions">danh sách region</a>)</td><td>Free 0 USD (1 GB và 100 CU-giờ mỗi project, tự tắt sau 5 phút); Launch trả theo mức dùng: 0,106 USD/CU-giờ, 0,35 USD/GB-tháng, không có mức tối thiểu</td><td>Giá niêm yết bằng $; trang giá không ghi cách trả</td></tr>
 <tr><td><a href="https://www.matbao.net/hosting/vibe-hosting.html">Mắt Bão Vibe Host</a></td><td>Có, tự deploy khi push</td><td>Có (PostgreSQL, MySQL, MongoDB, Redis), backup tự động theo lịch</td><td>Không công bố trên trang sản phẩm</td><td>Giá niêm yết 79.000 / 149.000 / 290.000 VND/tháng, chưa VAT, mua tối thiểu 3 tháng (đang giảm 20% tới 31/10/2026)</td><td>VND; trang hiển thị ZaloPay, MoMo, Visa, Mastercard, JCB</td></tr>
 <tr><td>VPS tại Việt Nam, ví dụ <a href="https://azdigi.com/pro-vps/">AZDIGI Pro VPS Platinum-1</a></td><td>Tự dựng (GitHub Actions, Coolify, Dokploy…)</td><td>Tự cài và tự vận hành</td><td>Việt Nam</td><td>1 vCPU, 1 GB RAM: 79.000–119.000 VND/tháng tuỳ kỳ hạn 36–3 tháng, chưa VAT</td><td>VND</td></tr>
-<tr><td>Embra</td><td>Đang xây trong M2</td><td>PostgreSQL theo môi trường, có migration gate và restore point là trọng tâm thiết kế</td><td>Hạ tầng dự kiến tại TP.HCM, địa điểm chưa chốt</td><td>Chưa chốt</td><td>Chưa chốt; Embra là dự án cá nhân, chưa có pháp nhân</td></tr>
+<tr><td><a href="/bang-gia/">Embra</a> (beta)</td><td>Có</td><td>PostgreSQL riêng theo môi trường; review migration trước khi chạy; backup liên tục, restore theo thời điểm trong 7 ngày</td><td>Việt Nam</td><td>Start 249.000đ/project/tháng; Build 399.000đ; Grow 749.000đ</td><td>VND, chuyển khoản VietQR; chưa xuất hoá đơn VAT (chưa có pháp nhân)</td></tr>
 </tbody></table></div>
 <p>Embra chưa phát hành công khai; dòng Embra mô tả hướng thiết kế và trạng thái hiện tại, không phải tính năng đã mua được. Chi tiết ở <a href="#embra">mục cuối</a>.</p>
 
@@ -94,8 +94,8 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 
 <h2 id="embra">Embra đang ở đâu</h2>
 <p>Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, tập trung vào câu hỏi 6 và 7 ở trên: thấy rủi ro của migration trước khi chạy, có bước review, và chuẩn bị restore point trước khi cần. <a href="/engineering/how-embra-works/">Bài kiến trúc</a> mô tả cách một lần deploy đi qua kế hoạch, migration và chuyển traffic.</p>
-<p>Mức sẵn sàng hiện tại: Embra đang nhận đăng ký closed alpha, onboarding thủ công theo lời mời. Chưa có bản public để tự deploy, giá chưa chốt, chưa cam kết SLA. Kết quả lab như <a href="/engineering/backfill-8m/">bài thử backfill 8 triệu dòng</a> không phải cam kết production. Xem <a href="/#trang-thai">trạng thái mới nhất</a>.</p>
-<p>Nếu bạn có project thử nghiệm và muốn thử cùng Embra, <a href="/#join">đăng ký quan tâm</a>; alpha chưa nhận app production. Lời mời sẽ ghi rõ stack, giới hạn, chi phí và cách lấy dữ liệu ra trước khi bạn bắt đầu.</p>
+<p>Mức sẵn sàng hiện tại: Embra đang ở beta trả phí từ 25/10/2026, nhận app production trong giới hạn từng gói, onboarding trực tiếp từng khách. Giá từ 249.000đ mỗi project mỗi tháng (<a href="/bang-gia/">bảng giá</a>), trả bằng VietQR; chưa xuất hoá đơn VAT vì chưa có pháp nhân; chưa cam kết SLA. Kết quả lab như <a href="/engineering/backfill-8m/">bài thử backfill 8 triệu dòng</a> không phải cam kết production. Xem <a href="/#trang-thai">trạng thái mới nhất</a>.</p>
+<p>Muốn thử cùng Embra? Nhắn <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> hoặc <a href="/#join">đăng ký</a>; mình xác nhận stack, gói phù hợp và cách lấy dữ liệu ra trước khi bạn bắt đầu.</p>
 
 <h2 id="nguon">Nguồn</h2>
 <p>Truy cập ngày 21/10/2026; nguồn Render, Supabase, Neon truy cập ngày 24/10/2026.</p>
