@@ -1,6 +1,6 @@
 # Embra · Mỗi lần deploy đều có đường lui
 
-Embra đang xây dựng hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: build, deploy và theo dõi app trong cùng một project, với review thay đổi database và chuẩn bị phục hồi.
+Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: build, deploy và theo dõi app trong cùng một project, với review thay đổi database và chuẩn bị phục hồi.
 
 ## Có phù hợp với dự án của bạn?
 
@@ -10,13 +10,11 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 [Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
-## Từ nền tảng đến trải nghiệm sản phẩm
+## Có gì trong beta (cập nhật 24/10/2026)
 
-**M1** xây nền tảng: CLI, app đóng gói thành container image, PostgreSQL và migration gate. Image được build bằng công cụ bên ngoài và ghim theo digest.
+Deploy từ GitHub qua dashboard, Embra tự build từ source. PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm. Worker, cron và bucket lưu file theo từng gói. Domain riêng + HTTPS, log và metrics, CLI và MCP (`embra mcp`: agent đề xuất và đọc trạng thái, chỉ owner duyệt production), tự xuất dữ liệu bằng `embra export`. Máy chủ tại TP.HCM.
 
-**M2** tiếp tục flow sản phẩm đang minh hoạ trên website: build, deploy, review và recovery. Giao diện, build từ source và MCP là hướng phát triển tiếp theo. Khả năng dùng thử thực tế được xác nhận trong lời mời, không suy từ phạm vi M1 hoặc màn hình demo.
-
-Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, worker, queue, auth, email và realtime là roadmap mở rộng.
+Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Chưa có: queue, auth, email, realtime (roadmap).
 
 ## Có thể kiểm chứng ngay
 
@@ -29,7 +27,7 @@ Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, w
 | [Một lần deploy ở Embra đi qua những đâu?](https://embra.cloud/engineering/how-embra-works/) | Kiến trúc đối chiếu ngày 09/10/2026: kế hoạch, migration, chuyển traffic và giới hạn phục hồi |
 | [Backfill 8 triệu dòng](https://embra.cloud/engineering/backfill-8m/) | Lab 28–30/09/2026: toàn vẹn đạt trong fixture; mục tiêu latency chưa đạt |
 | [backfill-demo](https://github.com/embra-labs/backfill-demo) | Fixture riêng 1.000 dòng, code + CI, kill trước/sau commit và đối chứng sai; không tái lập benchmark cũ |
-| [Flow sản phẩm](https://embra.cloud/#stage) | Minh hoạ hướng tới M2; chưa phải giao diện phát hành, không chạy trên app thật |
+| [Flow sản phẩm](https://embra.cloud/#stage) | Minh hoạ flow sản phẩm; chưa phải giao diện phát hành, không chạy trên app thật |
 
 Các thử nghiệm dùng dữ liệu tổng hợp. Số thời gian và chi phí trong minh hoạ là ví dụ. Restore về mốc cũ có thể bỏ các lần ghi sau mốc đó; kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu.
 

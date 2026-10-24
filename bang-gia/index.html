@@ -82,6 +82,8 @@ main section.wrap{padding-top:96px}
 .pick button[aria-pressed=true]{background:var(--lime);color:var(--char);border-color:var(--lime)}
 .compare .last{border-bottom:0}
 .note{font-size:14px;color:var(--grey);margin:14px 0 0}
+.specs-wrap{margin:22px 0 0}.specs-wrap summary{cursor:pointer;font:500 15px/1.5 var(--sans);text-decoration:underline;text-underline-offset:3px}.specs{width:100%;border-collapse:collapse;margin:18px 0 0;font:15px/1.5 var(--sans)}.specs caption{text-align:left;font-size:14px;color:var(--grey);padding:0 0 10px}.specs th,.specs td{text-align:left;padding:10px 12px;border-top:1px solid var(--rule)}.specs thead th{border-top:1px solid var(--char);font-weight:600}.specs tbody th{font-weight:500;color:var(--grey)}
+@media(max-width:760px){.specs{font-size:13px}.specs th,.specs td{padding:8px 6px}}
 
 .inc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--char)}
 .inc div{padding:22px 24px 26px 0;border-bottom:1px solid var(--rule)}.inc div:nth-child(3n+2),.inc div:nth-child(3n){padding-left:24px;border-left:1px solid var(--rule)}
@@ -160,6 +162,23 @@ main section.wrap{padding-top:96px}
 <p class="sec-p">Mỗi ô vuông là một phần tài nguyên. Bấm một gói để xem nó lớn tới đâu; hoá đơn phía trên đổi theo.</p>
 <div class="compare" id="compare"></div>
 <p class="note">App: 1 ô = 256 MiB RAM. PostgreSQL: 1 ô = 1 GiB đĩa. Preview theo PR tạo môi trường tạm cho mỗi pull request.</p>
+<details class="specs-wrap"><summary>Xem thông số ba gói dạng bảng</summary>
+<table class="specs">
+<caption>Thông số ba gói (giá mỗi project mỗi tháng, VND, không cộng VAT)</caption>
+<thead><tr><th scope="col"></th><th scope="col">Start</th><th scope="col">Build</th><th scope="col">Grow</th></tr></thead>
+<tbody>
+<tr><th scope="row">Giá</th><td>249.000đ</td><td>399.000đ</td><td>749.000đ</td></tr>
+<tr><th scope="row">App</th><td>512 MiB RAM, 0,5 vCPU</td><td>1 GiB RAM, 1 vCPU</td><td>2 GiB RAM, 2 vCPU</td></tr>
+<tr><th scope="row">PostgreSQL</th><td>256 MiB RAM, 2 GiB</td><td>512 MiB RAM, 5 GiB</td><td>1 GiB RAM, 10 GiB</td></tr>
+<tr><th scope="row">Worker, cron</th><td>1 worker, 2 cron</td><td>2 worker, 5 cron</td><td>4 worker, 10 cron</td></tr>
+<tr><th scope="row">Domain riêng</th><td>1</td><td>3</td><td>5</td></tr>
+<tr><th scope="row">Preview theo PR</th><td>Không có</td><td>1</td><td>3</td></tr>
+<tr><th scope="row">Bucket lưu file</th><td>1 GiB</td><td>2 GiB</td><td>5 GiB</td></tr>
+<tr><th scope="row">Giữ log, metrics</th><td>7 ngày</td><td>14 ngày</td><td>30 ngày</td></tr>
+<tr><th scope="row">Staging</th><td>Không có</td><td>+149.000đ</td><td>+299.000đ</td></tr>
+</tbody>
+</table>
+</details>
 </section>
 
 <section class="wrap" aria-labelledby="h-inc"><h2 class="sec-h px" id="h-inc">Gói nào cũng có</h2>

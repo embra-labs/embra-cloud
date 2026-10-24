@@ -16,13 +16,12 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 - Add-on mỗi tháng: RAM app 99.000đ / 512 MiB, PostgreSQL 9.800đ / GB, bucket 4.900đ / GB. Trả trước 3/6/12 tháng giảm 5/10/20% (làm thủ công qua email).
 - Hoá đơn theo ngày bắt đầu, lặp lại hằng tháng; đổi gói tính theo ngày vào hoá đơn sau; xác nhận chuyển khoản tự động.
 
-## Lộ trình và mức sẵn sàng
+## Tính năng và mức sẵn sàng
 
-- M1 xây nền tảng: CLI, deploy container image ghim theo digest, PostgreSQL và migration gate. Build image bên ngoài.
-- M2 tiếp tục flow sản phẩm minh hoạ trên website: build, deploy, review và recovery. Giao diện, build từ source và MCP là hướng phát triển tiếp theo.
-- Hướng tới frontend, Node.js / Next.js và PostgreSQL. File storage, worker, queue, auth, email, realtime là roadmap mở rộng.
-- Beta: deploy từ GitHub qua dashboard, PostgreSQL riêng, review migration, backup liên tục và restore theo thời điểm, domain riêng + HTTPS, log/metrics, export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
-- Màn hình demo là flow định hướng M2, không phải giao diện phát hành hay hợp đồng hành vi của M1. Không suy tính năng đã sẵn sàng từ demo/spec.
+- Đã có trong beta (cập nhật 24/10/2026): deploy từ GitHub qua dashboard, Embra tự build từ source; PostgreSQL riêng; review migration; backup liên tục và restore theo thời điểm; worker, cron và bucket lưu file theo gói; domain riêng + HTTPS; log/metrics; CLI và MCP (`embra mcp`: agent build, tạo plan, chạy thử migration và đọc log; không duyệt, xoá, export hay restore; production chờ owner duyệt); export tự phục vụ (`embra export`). Onboarding trực tiếp; chưa mở đăng ký tự phục vụ.
+- Chưa có: queue, auth, email, realtime (roadmap).
+- Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL.
+- Màn hình demo trên trang chủ là minh hoạ, không phải giao diện phát hành. Không suy tính năng từ demo.
 
 ## Bằng chứng công khai
 
@@ -40,7 +39,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 
 Đăng ký và xác nhận email chưa cấp quyền truy cập, không tạo tài nguyên hoặc phát sinh phí. Embra liên hệ để xác nhận stack, gói, hỗ trợ và cách lấy dữ liệu ra trước khi bắt đầu.
 
-Giá: xem mục Bảng giá. Máy chủ đặt tại Việt Nam. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
+Giá: xem mục Bảng giá. Máy chủ đặt tại TP.HCM, Việt Nam. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
 
 ## Quyền kiểm soát và hỗ trợ
 
