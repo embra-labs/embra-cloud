@@ -1,6 +1,6 @@
 # Một lần deploy ở Embra đi qua những đâu?
 
-*Embra Engineering · Xuất bản 09/10/2026 · Đối chiếu mã nguồn cùng ngày.*
+*Embra Engineering · Xuất bản 09/10/2026 · Đối chiếu mã nguồn cùng ngày · Cập nhật trạng thái beta 25/10/2026.*
 
 Lấy một app quản lý đơn hàng làm ví dụ. Bản mới thêm cột `note` vào bảng `orders`, rồi đọc cột đó khi trả kết quả. File SQL chạy thành công. Container mới khởi động, nhưng không qua health check.
 
@@ -8,7 +8,7 @@ Lúc này, database đã đổi còn code cũ vẫn phục vụ. Chạy lại im
 
 Đó là tình huống kiến trúc deploy của Embra phải biểu diễn được. Một nhãn “deploy failed” chưa nói đủ chuyện gì đã xảy ra với app và dữ liệu.
 
-Embra đang xây dựng hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Bài này đi qua nền tảng hiện có trong code, từ yêu cầu deploy đến lúc chuyển lưu lượng truy cập. Giao diện, build từ mã nguồn và MCP là hướng M2; website đang minh hoạ trải nghiệm đó. Sản phẩm chưa có bản phát hành công khai để bạn tự cài và thử toàn bộ luồng dưới đây.
+Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, đang ở beta trả phí từ 25/10/2026. Bài này đi qua nền tảng trong code tại ngày 09/10/2026, từ yêu cầu deploy đến lúc chuyển lưu lượng truy cập. Sau ngày đó, beta đã thêm giao diện web, build từ mã nguồn trên GitHub và MCP ở phía trước luồng này; bài chưa mô tả chi tiết các phần đó.
 
 ## Request của người dùng đi một đường, lệnh deploy đi một đường
 
@@ -18,13 +18,13 @@ Lệnh deploy được gửi tới `embrad`. Tiến trình này nhận yêu cầ
 
 ![Hai đường đi trong Embra: CLI tới API và worker để điều khiển deploy; request qua edge tới app và PostgreSQL. Agent quản lý tài nguyên host, clone dùng cho diễn tập nằm riêng.](assets/architecture.svg)
 
-*Sơ đồ nền tảng M1, lược bỏ chi tiết mạng và backup. Các khối biểu diễn vai trò của từng thành phần. Hiện chúng cùng chạy trên một máy chủ. Mũi tên nét đứt chỉ lệnh điều khiển; nét liền chỉ đường request và dữ liệu. [Mở sơ đồ lớn](assets/architecture.svg).*
+*Sơ đồ nền tảng ngày 09/10/2026, lược bỏ chi tiết mạng và backup. Các khối biểu diễn vai trò của từng thành phần. Hiện chúng cùng chạy trên một máy chủ. Mũi tên nét đứt chỉ lệnh điều khiển; nét liền chỉ đường request và dữ liệu. [Mở sơ đồ lớn](assets/architecture.svg).*
 
 Edge lưu bảng route trên đĩa để đường phục vụ app không phải hỏi API điều khiển ở mỗi request. Tách hai đường này giúp giảm phụ thuộc khi quản lý deploy gặp lỗi. Tuy nhiên, các thành phần vẫn chung một miền sự cố: mất máy chủ có thể ảnh hưởng cả app, database lẫn phần điều khiển. Sơ đồ này chưa phải thiết kế HA nhiều máy.
 
 ## Chốt thứ sẽ chạy trước khi chạy nó
 
-Đầu vào hiện tại là container image đã build, ghim bằng digest — mã định danh nội dung image. Bộ build từ mã nguồn sẽ được nối vào phía trước trong M2. Dùng digest ở nền tảng giúp kế hoạch deploy trỏ vào đúng bản image đã chọn, tránh việc tag như `latest` đổi nội dung sau khi người dùng đã xem kế hoạch.
+Đầu vào của nền tảng là container image đã build, ghim bằng digest — mã định danh nội dung image. Trong beta, Embra build image này từ repository GitHub của bạn trước khi tới bước này. Dùng digest ở nền tảng giúp kế hoạch deploy trỏ vào đúng bản image đã chọn, tránh việc tag như `latest` đổi nội dung sau khi người dùng đã xem kế hoạch.
 
 Manifest mô tả image, cấu hình và các tham chiếu secret theo phiên bản. Khi có migration, nội dung các file cũng tham gia vào mã ràng buộc của kế hoạch, gọi là *binding*. Sau diễn tập, binding còn gắn với kết quả diễn tập được chọn.
 
@@ -34,7 +34,7 @@ Khi duyệt kế hoạch, người dùng gửi kèm binding ấy. Server kiểm 
 
 ## Thử migration trên bản sao, rồi kiểm lại trước khi áp
 
-Bộ kiểm soát migration phân loại các file được hỗ trợ và chạy diễn tập trên một bản sao database. Nền tảng M1 dùng ZFS snapshot/clone trên cùng node, với mạng diễn tập riêng. Cách bố trí này khác với [lab backfill đã công bố](/engineering/backfill-8m/), vốn tạo clone từ replica. Không thể dùng kết quả của lab đó để mặc nhiên kết luận chi phí diễn tập trong M1.
+Bộ kiểm soát migration phân loại các file được hỗ trợ và chạy diễn tập trên một bản sao database. Nền tảng dùng ZFS snapshot/clone trên cùng node, với mạng diễn tập riêng. Cách bố trí này khác với [lab backfill đã công bố](/engineering/backfill-8m/), vốn tạo clone từ replica. Không thể dùng kết quả của lab đó để mặc nhiên kết luận chi phí diễn tập trên nền tảng này.
 
 Diễn tập ghi nhận thay đổi schema, lỗi và thời gian chạy. Nó có thể phát hiện một câu SQL không chạy được trên bản sao hiện tại. Nó chưa chứng minh mọi nhánh code của app tương thích với schema mới, cũng chưa bảo đảm latency khi production có truy vấn đồng thời. Clone cùng host vẫn chia sẻ tài nguyên vật lý.
 
@@ -74,7 +74,7 @@ Code hiện có đã nối các bước: nhận lệnh CLI, theo dõi deploy, di
 
 Một vướng mắc gần đây cho thấy khoảng cách ấy khá cụ thể. Trong bài thử nội bộ với bảng năm triệu dòng, diễn tập qua nhưng backfill thật gặp timeout ở từng lô với cấu hình mặc định. Tăng timeout trong một thí nghiệm giúp lượt đó hoàn tất; điều này chưa quyết định được quy tắc phù hợp cho sản phẩm. Nhận định này dựa trên báo cáo nội bộ ngày 09/10, chưa có bộ số liệu công khai để người đọc tái lập.
 
-Phần M2 sẽ đưa build từ mã nguồn, giao diện và MCP vào luồng này. Các câu hỏi về timeout, ảnh hưởng lên app đang chạy và phục hồi vẫn phải được giải quyết ở nền tảng. Một giao diện dễ hiểu cần phản ánh đúng những trạng thái đó, nhất là khi code và database không cùng quay lại được một mốc.
+Beta đã đưa build từ mã nguồn, giao diện và MCP vào luồng này. Các câu hỏi về timeout, ảnh hưởng lên app đang chạy và phục hồi vẫn phải được giải quyết ở nền tảng. Một giao diện dễ hiểu cần phản ánh đúng những trạng thái đó, nhất là khi code và database không cùng quay lại được một mốc.
 
 Nếu đang chuẩn bị deploy app của mình, [guide deploy với Postgres](https://embra.cloud/engineering/deploy-with-postgres/) có các bước diễn tập và checklist để ghi kết quả.
 
