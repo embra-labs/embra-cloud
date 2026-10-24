@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Embra đang xây dựng hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: build, deploy, theo dõi app và review thay đổi database.">
+<meta name="description" content="Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, database riêng có review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta name="theme-color" content="#232323">
-<title>EMBRA · Hosting app và PostgreSQL tại Việt Nam</title>
+<title>Embra · Hosting app và PostgreSQL tại Việt Nam</title>
 <link rel="canonical" href="https://embra.cloud/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Embra">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:url" content="https://embra.cloud/">
 <meta property="og:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
-<meta property="og:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Đang xây dựng flow build, deploy và vận hành, với review migration và chuẩn bị phục hồi.">
+<meta property="og:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta property="og:image" content="https://embra.cloud/og-beta-launch.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="EMBRA: Mỗi lần deploy đều có đường lui.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
-<meta name="twitter:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Đang xây dựng flow build, deploy và vận hành, với review migration và chuẩn bị phục hồi.">
+<meta name="twitter:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta name="twitter:image" content="https://embra.cloud/og-beta-launch.png">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -33,7 +33,7 @@
  {"@type":"WebSite","@id":"https://embra.cloud/#website","url":"https://embra.cloud/","name":"Embra","inLanguage":"vi"},
  {"@type":"Organization","@id":"https://embra.cloud/#org","name":"Embra","url":"https://embra.cloud/","logo":"https://embra.cloud/apple-touch-icon.png","email":"hello@embra.cloud","areaServed":"VN","founder":{"@id":"https://embra.cloud/#founder"},"sameAs":["https://github.com/embra-labs"]},
  {"@type":"Person","@id":"https://embra.cloud/#founder","name":"Hoàng Xuân","jobTitle":"Founder","url":"https://embra.cloud/#nguoi-lam","sameAs":["https://github.com/hxuan190","https://www.linkedin.com/in/hxuan190"]},
- {"@type":"FAQPage","@id":"https://embra.cloud/#faq","inLanguage":"vi","isPartOf":{"@id":"https://embra.cloud/#website"},"mainEntity":[{"@type":"Question","name":"Embra dành cho dự án nào?","acceptedAnswer":{"@type":"Answer","text":"Embra hướng tới website, web app và API của developer, team nhỏ và agency. Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Lời mời sẽ ghi rõ stack và tính năng bạn có thể thử."}},{"@type":"Question","name":"Chỉ làm frontend thì có dùng được không?","acceptedAnswer":{"@type":"Answer","text":"Có thể đăng ký với landing page, portfolio hoặc SPA; bạn không cần có backend hay database. Nếu chưa chắc stack của bạn chạy được, nhắn hello@embra.cloud để mình kiểm tra trước."}},{"@type":"Question","name":"Đăng ký là dùng được ngay chưa?","acceptedAnswer":{"@type":"Answer","text":"Beta trả phí mở từ 25/10/2026. Mình onboarding từng khách trực tiếp: gửi email hello@embra.cloud hoặc đăng ký bên dưới, mình liên hệ để setup cùng bạn. Bạn biết rõ giới hạn và chi phí của gói trước khi deploy; đăng ký không tạo tài nguyên hay phát sinh phí."}},{"@type":"Question","name":"Auth, email, queue và realtime đã có chưa?","acceptedAnswer":{"@type":"Answer","text":"Chưa, các dịch vụ này nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team dùng beta."}},{"@type":"Question","name":"Có cần dùng AI agent không?","acceptedAnswer":{"@type":"Answer","text":"Không cần. CLI là phần nền tảng đang triển khai; giao diện và MCP là hướng phát triển tiếp theo. Bạn có thể thao tác trực tiếp; quyền và bước duyệt của từng luồng sẽ được công bố cùng phiên bản dùng thử."}},{"@type":"Question","name":"Giá và vị trí hạ tầng thế nào?","acceptedAnswer":{"@type":"Answer","text":"Beta có ba gói: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng, trả bằng chuyển khoản VietQR (xem bảng giá tại embra.cloud/bang-gia). Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT. App, PostgreSQL, backup và log chạy trên máy chủ tại Việt Nam."}},{"@type":"Question","name":"Có thể đưa app production lên ngay không?","acceptedAnswer":{"@type":"Answer","text":"Có, trong giới hạn của từng gói (xem bảng giá). Trước khi chuyển dữ liệu, mình cùng bạn thử restore trên bản sao database và thống nhất cách lấy dữ liệu ra (embra export). Beta chưa có SLA hay cam kết uptime bằng con số."}},{"@type":"Question","name":"Restore có giữ mọi dữ liệu mới không?","acceptedAnswer":{"@type":"Answer","text":"Không. Rollback code và restore database là hai việc khác nhau. Restore database về một mốc cũ có thể bỏ các lần ghi sau mốc đó. Trong minh hoạ, nút restore ghi rõ khoảng dữ liệu có thể mất; kết quả lab chưa phải cam kết phục hồi cho app của bạn."}},{"@type":"Question","name":"Tôi kiểm soát dữ liệu và kết thúc dùng thử thế nào?","acceptedAnswer":{"@type":"Answer","text":"Trước khi thử, bạn cần biết ai có quyền truy cập dữ liệu, phạm vi quyền đó và cách lấy dữ liệu ra khi kết thúc. Bạn tự xuất app và dữ liệu bất cứ lúc nào bằng embra export (chỉ owner). Khi đội Embra cần xem log, metrics hay database để hỗ trợ, mỗi lần truy cập đều được ghi lại kèm lý do."}},{"@type":"Question","name":"Ai hỗ trợ khi gặp sự cố?","acceptedAnswer":{"@type":"Answer","text":"Hoàng Xuân trực tiếp xây dựng và support Embra. Bạn chịu trách nhiệm code và logic ứng dụng; phạm vi Embra hỗ trợ về nền tảng, thời gian hỗ trợ và cách xử lý sự cố sẽ được xác nhận trong lời mời. Xem cách liên hệ và báo lỗi; không gửi token, mật khẩu hoặc dữ liệu khách hàng qua issue công khai."}}]}
+ {"@type":"FAQPage","@id":"https://embra.cloud/#faq","inLanguage":"vi","isPartOf":{"@id":"https://embra.cloud/#website"},"mainEntity":[{"@type":"Question","name":"Embra dành cho dự án nào?","acceptedAnswer":{"@type":"Answer","text":"Embra hướng tới website, web app và API của developer, team nhỏ và agency. Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Lời mời sẽ ghi rõ stack và tính năng bạn có thể thử."}},{"@type":"Question","name":"Chỉ làm frontend thì có dùng được không?","acceptedAnswer":{"@type":"Answer","text":"Có thể đăng ký với landing page, portfolio hoặc SPA; bạn không cần có backend hay database. Nếu chưa chắc stack của bạn chạy được, nhắn hello@embra.cloud để mình kiểm tra trước."}},{"@type":"Question","name":"Đăng ký là dùng được ngay chưa?","acceptedAnswer":{"@type":"Answer","text":"Beta trả phí mở từ 25/10/2026. Mình onboarding từng khách trực tiếp: gửi email hello@embra.cloud hoặc đăng ký bên dưới, mình liên hệ để setup cùng bạn. Bạn biết rõ giới hạn và chi phí của gói trước khi deploy; đăng ký không tạo tài nguyên hay phát sinh phí."}},{"@type":"Question","name":"Auth, email, queue và realtime đã có chưa?","acceptedAnswer":{"@type":"Answer","text":"Chưa. Beta đã có worker, cron và bucket lưu file theo từng gói; queue, auth, email và realtime nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team dùng beta."}},{"@type":"Question","name":"Có cần dùng AI agent không?","acceptedAnswer":{"@type":"Answer","text":"Không cần. Dashboard và CLI đủ để deploy và vận hành. Nếu muốn, AI agent có thể dùng Embra qua MCP (embra mcp), với quyền theo vai trò của bạn và vẫn phải qua bước duyệt như khi bạn tự làm."}},{"@type":"Question","name":"Giá và vị trí hạ tầng thế nào?","acceptedAnswer":{"@type":"Answer","text":"Beta có ba gói: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng, trả bằng chuyển khoản VietQR (xem bảng giá tại embra.cloud/bang-gia). Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT. App, PostgreSQL, backup và log chạy trên máy chủ tại TP.HCM, Việt Nam."}},{"@type":"Question","name":"Có thể đưa app production lên ngay không?","acceptedAnswer":{"@type":"Answer","text":"Có, trong giới hạn của từng gói (xem bảng giá). Trước khi chuyển dữ liệu, mình cùng bạn thử restore trên bản sao database và thống nhất cách lấy dữ liệu ra (embra export). Beta chưa có SLA hay cam kết uptime bằng con số."}},{"@type":"Question","name":"Restore có giữ mọi dữ liệu mới không?","acceptedAnswer":{"@type":"Answer","text":"Không. Rollback code và restore database là hai việc khác nhau. Restore database về một mốc cũ có thể bỏ các lần ghi sau mốc đó. Trong minh hoạ, nút restore ghi rõ khoảng dữ liệu có thể mất; kết quả lab chưa phải cam kết phục hồi cho app của bạn."}},{"@type":"Question","name":"Tôi kiểm soát dữ liệu và kết thúc dùng thử thế nào?","acceptedAnswer":{"@type":"Answer","text":"Trước khi thử, bạn cần biết ai có quyền truy cập dữ liệu, phạm vi quyền đó và cách lấy dữ liệu ra khi kết thúc. Bạn tự xuất app và dữ liệu bất cứ lúc nào bằng embra export (chỉ owner). Khi đội Embra cần xem log, metrics hay database để hỗ trợ, mỗi lần truy cập đều được ghi lại kèm lý do."}},{"@type":"Question","name":"Ai hỗ trợ khi gặp sự cố?","acceptedAnswer":{"@type":"Answer","text":"Hoàng Xuân trực tiếp xây dựng và support Embra. Bạn chịu trách nhiệm code và logic ứng dụng; phạm vi Embra hỗ trợ về nền tảng, thời gian hỗ trợ và cách xử lý sự cố sẽ được xác nhận trong lời mời. Xem cách liên hệ và báo lỗi; không gửi token, mật khẩu hoặc dữ liệu khách hàng qua issue công khai."}}]}
 ]}
 </script>
 <style>
@@ -672,7 +672,7 @@
       <p class="caps rv">HOSTING APP TẠI VIỆT NAM · NODE.JS / NEXT.JS + POSTGRESQL</p>
       <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
       <h1 class="hero-h rv">Mỗi lần deploy<br><span>đều có đường lui.</span></h1>
-      <p class="hero-copy rv">Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Embra đang xây dựng một nơi để bạn build, deploy và theo dõi app — với bước review thay đổi database và chuẩn bị phục hồi.</p>
+      <p class="hero-copy rv">Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Embra là nơi bạn build, deploy và theo dõi app — với bước review thay đổi database và chuẩn bị phục hồi.</p>
       <p class="hero-scope rv">BETA TRẢ PHÍ · TỪ 249.000Đ / PROJECT / THÁNG · <a href="/bang-gia/">XEM BẢNG GIÁ</a></p>
       <form class="wl-hero rv" id="wl-hero" novalidate>
         <label class="vh" for="hero-email">Email</label>
@@ -715,8 +715,8 @@
         <div class="project-node"><span class="node-icon" aria-hidden="true">↗</span><div><h3>Frontend</h3><p>Website · storefront · dashboard</p></div><span class="node-type">WEB</span></div>
         <div class="project-node"><span class="node-icon" aria-hidden="true">{ }</span><div><h3>Backend</h3><p>API và logic ứng dụng</p></div><span class="node-type">APP</span></div>
         <div class="project-node"><span class="node-icon" aria-hidden="true">≡</span><div><h3>Database</h3><p>Đơn hàng và dữ liệu của bạn</p></div><span class="node-type">DATA</span></div>
-        <div class="map-next"><span>ROADMAP / DỊCH VỤ MỞ RỘNG</span><p>File storage · Worker · Queue<br>Auth · Email · Realtime</p></div>
-        <p class="map-foot">Sơ đồ mô tả hướng phát triển của Embra.<br>Xem tiến độ từng phần ở bên dưới.</p>
+        <div class="map-next"><span>CÓ THEO GÓI / ROADMAP</span><p>Worker · Cron · Bucket<br>Queue · Auth · Email · Realtime (roadmap)</p></div>
+        <p class="map-foot">Sơ đồ mô tả một project trên Embra.<br>Xem tiến độ từng phần ở bên dưới.</p>
       </figure>
     </div>
   </section>
@@ -724,10 +724,10 @@
   <!-- ============ PARTNERS (dark): quyền + cửa sổ sản phẩm ============ -->
   <section class="partners dark" id="quyen">
     <div class="in">
-      <p class="eyebrow rv">02 / Đang phát triển</p>
+      <p class="eyebrow rv">02 / Có trong beta</p>
       <h2 class="h-display rv">Từ code đến app.<br>Theo dõi mỗi lần deploy.</h2>
       <div class="tiles">
-        <article class="tile rv"><span class="lab">001 / BUILD &amp; DEPLOY</span><h3>Đưa code<br>thành app.</h3><p>Luồng đang xây dựng: cấu hình environment, build từ source và deploy app. Build logs giúp bạn tìm chỗ cần sửa nếu một bước không thành công.</p></article>
+        <article class="tile rv"><span class="lab">001 / BUILD &amp; DEPLOY</span><h3>Đưa code<br>thành app.</h3><p>Chọn repository trên GitHub, Embra tự build từ source và deploy app. Build logs giúp bạn tìm chỗ cần sửa nếu một bước không thành công.</p></article>
         <article class="tile rv"><span class="lab">002 / CHI PHÍ</span><h3>Hiểu chi phí<br>trước khi chạy</h3><p>Xem tài nguyên dự kiến, cách tính phí và giới hạn sử dụng trước khi deploy. Giá từ 249.000đ mỗi project mỗi tháng, trả bằng VietQR: <a href="/bang-gia/">xem bảng giá</a>.</p></article>
         <article class="tile rv"><span class="lab">003 / VẬN HÀNH</span><h3>Theo dõi app<br>ở một nơi.</h3><p>Xem logs, health checks và lịch sử deploy của các service trong cùng một project, để dễ đối chiếu khi có sự cố.</p></article>
       </div>
@@ -796,7 +796,7 @@
             <div class="btns"><span>bỏ qua</span><span class="go" id="toast-go">MỞ RELEASE</span></div>
           </div>
         </div>
-        <p class="caption">[ Minh hoạ flow sản phẩm hướng tới M2, không chạy trên app thật. Thời gian và chi phí hiển thị là ví dụ; chưa phải giao diện phát hành. ]</p>
+        <p class="caption">[ Minh hoạ flow sản phẩm, không chạy trên app thật. Thời gian và chi phí hiển thị là ví dụ; chưa phải giao diện phát hành. ]</p>
       </div>
     </div>
     <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
@@ -804,37 +804,37 @@
 
   <!-- ============ DEST: thông số ============ -->
   <section class="dest" id="thong-so" aria-labelledby="h-dest">
-    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi <span class="mark rv">beta</span></h2><p class="scope-intro">Embra hướng tới frontend, Node.js / Next.js và PostgreSQL. M1 xây nền tảng; M2 tiếp tục flow sản phẩm minh hoạ ở trên. Các thẻ là định hướng phát triển; phạm vi dùng thử thực tế được xác nhận trong lời mời.</p></div>
-    <div class="cards" id="cards" role="region" aria-label="Phạm vi dự kiến, cuộn ngang để xem thêm" tabindex="0">
+    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi <span class="mark rv">beta</span></h2><p class="scope-intro">Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Giới hạn từng gói ở <a href="/bang-gia/">bảng giá</a>; stack của bạn được xác nhận trước khi bắt đầu.</p></div>
+    <div class="cards" id="cards" role="region" aria-label="Phạm vi beta, cuộn ngang để xem thêm" tabindex="0">
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="120" y="330" width="96" height="130"/><path d="M132 0 V519 M152 0 V519 M30 300 H320"/><rect x="152" y="372" width="40" height="40"/></g></svg>
         <div class="top"><span class="num">001</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="34"/><ellipse cx="54" cy="40" rx="15" ry="34"/><path d="M20 40 H88 M26 22 H82 M26 58 H82"/><circle cx="54" cy="40" r="3" fill="currentColor"/></g></svg></div>
         <h3><small>FRONTEND</small>Website của bạn</h3>
-        <p>Landing page, portfolio, SPA. Ưu tiên luồng build, domain và HTTPS.<br><span class="st plan">ưu tiên beta</span></p>
+        <p>Landing page, portfolio, SPA. Build từ GitHub, domain riêng và HTTPS.<br><span class="st plan">có trong beta</span></p>
       </article>
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="220" cy="90" r="70"/><path d="M60 40 H330 V160 H60 Z M80 200 V519"/></g></svg>
         <div class="top"><span class="num">002</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="54" cy="14" rx="36" ry="9"/><ellipse cx="54" cy="32" rx="36" ry="9"/><ellipse cx="54" cy="50" rx="36" ry="9"/><ellipse cx="54" cy="68" rx="36" ry="9"/><path d="M54 5 V77"/></g></svg></div>
         <h3><small>BACKEND</small>App &amp; API</h3>
-        <p>Bắt đầu với Node.js / Next.js. Config, logs và health checks theo từng service.<br><span class="st plan">ưu tiên beta</span></p>
+        <p>Bắt đầu với Node.js / Next.js. Config, logs, metrics và health checks theo từng service.<br><span class="st plan">có trong beta</span></p>
       </article>
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M20 260 L200 120 L370 300 M200 120 V519"/><circle cx="200" cy="120" r="4"/></g></svg>
         <div class="top"><span class="num">003</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M54 6 L98 28 L54 50 L10 28 Z M10 40 L54 62 L98 40 M10 52 L54 74 L98 52"/><path d="M32 17 L76 39 M76 17 L32 39"/></g></svg></div>
         <h3><small>DATABASE</small>PostgreSQL</h3>
-        <p>Kết nối database với app, kiểm tra migration và thử restore trước khi đưa vào sử dụng.<br><span class="st plan">đang kiểm chứng</span></p>
+        <p>PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm.<br><span class="st plan">có trong beta</span></p>
       </article>
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="60" y="360" width="120" height="159"/><path d="M280 0 V519 M300 0 V519 M0 330 H389"/></g></svg>
         <div class="top"><span class="num">004</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="32"/><path d="M54 18 V40 L70 50"/><path d="M22 40 A32 32 0 0 1 40 12 M36 6 L40 12 L33 15"/></g></svg></div>
         <h3><small>DỊCH VỤ</small>Thêm service</h3>
-        <p>File storage, worker và queue. Tiếp theo là tích hợp auth, email, realtime theo nhu cầu.<br><span class="st plan">roadmap</span></p>
+        <p>Worker, cron và bucket lưu file theo từng gói. Queue, auth, email, realtime là roadmap.<br><span class="st plan">có trong beta · queue sau</span></p>
       </article>
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M40 80 H340 M40 100 H340 M190 100 V519"/><rect x="140" y="220" width="100" height="70"/></g></svg>
         <div class="top"><span class="num">005</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="14" y="12" width="80" height="56"/><path d="M26 32 L40 40 L26 48 M48 50 H70"/></g></svg></div>
         <h3><small>VIỆT NAM</small>Server ở TP.HCM</h3>
-        <p>Hạ tầng dự kiến tại TP.HCM, trải nghiệm tiếng Việt và chi phí bằng VND.<br><span class="st plan">địa điểm chưa chốt</span></p>
+        <p>App, PostgreSQL, backup và log chạy trên máy chủ tại TP.HCM; giao diện tiếng Việt, trả bằng VND.<br><span class="st plan">TP.HCM</span></p>
       </article>
       <article class="card dark">
         <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="190" cy="300" r="120"/><path d="M0 300 H389"/></g></svg>
@@ -848,14 +848,13 @@
   <!-- ============ TRẠNG THÁI ============ -->
   <section class="status-board grid-paper" id="trang-thai" aria-labelledby="h-status">
     <div class="sb-in">
-      <p class="eyebrow">03 / Tiến độ và bằng chứng · 09.10.2026</p>
+      <p class="eyebrow">03 / Tiến độ và bằng chứng · 24.10.2026</p>
       <h2 class="h-display rv" id="h-status">Embra đang <span class="mark rv">ở đâu?</span></h2>
       <table>
         <tr><th scope="row">Đọc và chạy ngay</th><td><a href="/engineering/backfill-8m/">Backfill 8 triệu dòng</a>: toàn vẹn đạt trong fixture, latency chưa đạt mục tiêu. <a href="https://github.com/embra-labs/backfill-demo">Demo checkpoint 1.000 dòng</a>: tự chạy ca ngắt trước/sau commit và đối chứng sai; fixture riêng, không tái lập benchmark.</td></tr>
         <tr><th scope="row">Đã thử trong lab</th><td>Diễn tập migration trên clone từ replica · restore PITR từ backup. Kết quả thử nghiệm dùng dữ liệu tổng hợp.</td></tr>
-        <tr><th scope="row">Nền tảng · M1</th><td>Đang triển khai CLI, app container image, PostgreSQL và migration gate</td></tr>
-        <tr><th scope="row">Flow sản phẩm · M2</th><td>Tiếp tục flow build, deploy, review và recovery trên giao diện minh hoạ.</td></tr>
-        <tr><th scope="row">Roadmap mở rộng</th><td>File storage · worker · queue · auth · email · realtime</td></tr>
+        <tr><th scope="row">Có trong beta</th><td>Deploy từ GitHub qua dashboard · PostgreSQL riêng · review migration · backup và restore theo thời điểm · worker, cron, bucket · domain + HTTPS · log/metrics · CLI và MCP · embra export</td></tr>
+        <tr><th scope="row">Roadmap mở rộng</th><td>Queue · auth · email · realtime</td></tr>
       </table>
       <p class="sb-note">Beta trả phí từ 25/10/2026: nhận app production trong giới hạn từng gói, onboarding trực tiếp từng khách. Xem <a href="/bang-gia/">bảng giá</a>.</p>
       <p class="surface-links"><a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">Bắt đầu với Embra →</a><a href="https://github.com/embra-labs/.github/blob/main/docs/changelog.md">Changelog →</a><a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">Hỗ trợ / báo lỗi →</a></p>
@@ -869,9 +868,9 @@
       <details><summary><span class="n">01</span><span>Embra dành cho dự án nào?</span></summary><p>Embra hướng tới website, web app và API của developer, team nhỏ và agency. Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Lời mời sẽ ghi rõ stack và tính năng bạn có thể thử.</p></details>
       <details><summary><span class="n">02</span><span>Chỉ làm frontend thì có dùng được không?</span></summary><p>Có thể đăng ký với landing page, portfolio hoặc SPA; bạn không cần có backend hay database. Nếu chưa chắc stack của bạn chạy được, nhắn hello@embra.cloud để mình kiểm tra trước.</p></details>
       <details><summary><span class="n">03</span><span>Đăng ký là dùng được ngay chưa?</span></summary><p>Beta trả phí mở từ 25/10/2026. Mình onboarding từng khách trực tiếp: gửi email hello@embra.cloud hoặc đăng ký bên dưới, mình liên hệ để setup cùng bạn. Bạn biết rõ giới hạn và chi phí của gói trước khi deploy; đăng ký không tạo tài nguyên hay phát sinh phí.</p></details>
-      <details><summary><span class="n">04</span><span>Auth, email, queue và realtime đã có chưa?</span></summary><p>Chưa, các dịch vụ này nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team dùng beta.</p></details>
-      <details><summary><span class="n">05</span><span>Có cần dùng AI agent không?</span></summary><p>Không cần. CLI là phần nền tảng đang triển khai; giao diện và MCP là hướng phát triển tiếp theo. Bạn có thể thao tác trực tiếp; quyền và bước duyệt của từng luồng sẽ được công bố cùng phiên bản dùng thử.</p></details>
-      <details><summary><span class="n">06</span><span>Giá và vị trí hạ tầng thế nào?</span></summary><p>Beta có ba gói: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng, trả bằng chuyển khoản VietQR (xem bảng giá tại embra.cloud/bang-gia). Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT. App, PostgreSQL, backup và log chạy trên máy chủ tại Việt Nam.</p></details>
+      <details><summary><span class="n">04</span><span>Auth, email, queue và realtime đã có chưa?</span></summary><p>Chưa. Beta đã có worker, cron và bucket lưu file theo từng gói; queue, auth, email và realtime nằm trong roadmap. Embra sẽ ưu tiên dựa trên nhu cầu của những team dùng beta.</p></details>
+      <details><summary><span class="n">05</span><span>Có cần dùng AI agent không?</span></summary><p>Không cần. Dashboard và CLI đủ để deploy và vận hành. Nếu muốn, AI agent có thể dùng Embra qua MCP (embra mcp), với quyền theo vai trò của bạn và vẫn phải qua bước duyệt như khi bạn tự làm.</p></details>
+      <details><summary><span class="n">06</span><span>Giá và vị trí hạ tầng thế nào?</span></summary><p>Beta có ba gói: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng, trả bằng chuyển khoản VietQR (xem bảng giá tại embra.cloud/bang-gia). Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT. App, PostgreSQL, backup và log chạy trên máy chủ tại TP.HCM, Việt Nam.</p></details>
       <details><summary><span class="n">07</span><span>Có thể đưa app production lên ngay không?</span></summary><p>Có, trong giới hạn của từng gói (xem bảng giá). Trước khi chuyển dữ liệu, mình cùng bạn thử restore trên bản sao database và thống nhất cách lấy dữ liệu ra (embra export). Beta chưa có SLA hay cam kết uptime bằng con số.</p></details>
       <details><summary><span class="n">08</span><span>Restore có giữ mọi dữ liệu mới không?</span></summary><p>Không. Rollback code và restore database là hai việc khác nhau. Restore database về một mốc cũ có thể bỏ các lần ghi sau mốc đó. Trong minh hoạ, nút restore ghi rõ khoảng dữ liệu có thể mất; kết quả lab chưa phải cam kết phục hồi cho app của bạn.</p></details>
       <details><summary><span class="n">09</span><span>Tôi kiểm soát dữ liệu và kết thúc dùng thử thế nào?</span></summary><p>Trước khi thử, bạn cần biết ai có quyền truy cập dữ liệu, phạm vi quyền đó và cách lấy dữ liệu ra khi kết thúc. Bạn tự xuất app và dữ liệu bất cứ lúc nào bằng embra export (chỉ owner). Khi đội Embra cần xem log, metrics hay database để hỗ trợ, mỗi lần truy cập đều được ghi lại kèm lý do.</p></details>
