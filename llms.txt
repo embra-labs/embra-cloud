@@ -10,7 +10,7 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT; giá niêm yết là số tiền chuyển, không cộng VAT. Chi tiết: https://embra.cloud/bang-gia/
 
-- Start 249.000đ: app 512 MiB / 0,5 vCPU, PostgreSQL 256 MiB / 2 GiB, worker 1, cron 2, 1 domain riêng, bucket 1 GiB, log/metrics 7 ngày, không có staging.
+- Start 249.000đ: app 512 MiB / 0,5 vCPU, PostgreSQL 256 MiB / 2 GiB, worker 1, cron 2, 2 domain riêng (tên gốc + www), bucket 1 GiB, log/metrics 7 ngày, không có staging.
 - Build 399.000đ: app 1 GiB / 1 vCPU, PostgreSQL 512 MiB / 5 GiB, worker 2, cron 5, 3 domain, 1 preview theo PR, bucket 2 GiB, log/metrics 14 ngày; staging +149.000đ.
 - Grow 749.000đ: app 2 GiB / 2 vCPU, PostgreSQL 1 GiB / 10 GiB, worker 4, cron 10, 5 domain, 3 preview, bucket 5 GiB, log/metrics 30 ngày; staging +299.000đ.
 - Add-on mỗi tháng: RAM app 99.000đ / 512 MiB, PostgreSQL 9.800đ / GB, bucket 4.900đ / GB. Trả trước 3/6/12 tháng giảm 5/10/20% (làm thủ công qua email).
