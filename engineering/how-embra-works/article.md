@@ -8,7 +8,7 @@ Lúc này, database đã đổi còn code cũ vẫn phục vụ. Chạy lại im
 
 Đó là tình huống kiến trúc deploy của Embra phải biểu diễn được. Một nhãn “deploy failed” chưa nói đủ chuyện gì đã xảy ra với app và dữ liệu.
 
-Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, đang ở beta trả phí từ 25/10/2026. Bài này đi qua nền tảng trong code tại ngày 09/10/2026, từ yêu cầu deploy đến lúc chuyển lưu lượng truy cập. Sau ngày đó, beta đã thêm giao diện web, build từ mã nguồn trên GitHub và MCP ở phía trước luồng này; bài chưa mô tả chi tiết các phần đó.
+Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, đang ở beta trả phí từ 25/10/2026. Bài này đi qua nền tảng trong code tại ngày 09/10/2026, từ yêu cầu deploy đến lúc chuyển lưu lượng truy cập. Sau ngày đó, beta đã thêm giao diện web và build từ mã nguồn trên GitHub ở phía trước luồng này, còn MCP sắp phát hành công khai; bài chưa mô tả chi tiết các phần đó.
 
 ## Request của người dùng đi một đường, lệnh deploy đi một đường
 
@@ -74,7 +74,7 @@ Code hiện có đã nối các bước: nhận lệnh CLI, theo dõi deploy, di
 
 Một vướng mắc gần đây cho thấy khoảng cách ấy khá cụ thể. Trong bài thử nội bộ với bảng năm triệu dòng, diễn tập qua nhưng backfill thật gặp timeout ở từng lô với cấu hình mặc định. Tăng timeout trong một thí nghiệm giúp lượt đó hoàn tất; điều này chưa quyết định được quy tắc phù hợp cho sản phẩm. Nhận định này dựa trên báo cáo nội bộ ngày 09/10, chưa có bộ số liệu công khai để người đọc tái lập.
 
-Beta đã đưa build từ mã nguồn, giao diện và MCP vào luồng này. Các câu hỏi về timeout, ảnh hưởng lên app đang chạy và phục hồi vẫn phải được giải quyết ở nền tảng. Một giao diện dễ hiểu cần phản ánh đúng những trạng thái đó, nhất là khi code và database không cùng quay lại được một mốc.
+Beta đã đưa build từ mã nguồn và giao diện vào luồng này; MCP sắp phát hành công khai. Các câu hỏi về timeout, ảnh hưởng lên app đang chạy và phục hồi vẫn phải được giải quyết ở nền tảng. Một giao diện dễ hiểu cần phản ánh đúng những trạng thái đó, nhất là khi code và database không cùng quay lại được một mốc.
 
 Nếu đang chuẩn bị deploy app của mình, [guide deploy với Postgres](https://embra.cloud/engineering/deploy-with-postgres/) có các bước diễn tập và checklist để ghi kết quả.
 
