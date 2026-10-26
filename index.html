@@ -1313,10 +1313,10 @@ const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : ""
     } catch { res = null; }
     btn.disabled = false; btn.textContent = "[Đăng ký dùng beta]";
     if (!res || !res.ok || !data.ok) { showErr(data.error || "Chưa gửi được. Kiểm tra mạng rồi thử lại, hoặc email hello@embra.cloud."); return; }
-    const lines = [`<p>Mình vừa gửi email xác nhận tới <b>${esc(email)}</b>. Bấm link trong email để xác nhận đăng ký.</p>`];
+    const lines = [data.mailed ? `<p>Mình vừa gửi email xác nhận tới <b>${esc(email)}</b>. Bấm link trong email để xác nhận đăng ký.</p>` : `<p>Mình đã nhận đăng ký của <b>${esc(email)}</b>.</p>`];
     if (data.qualified && body.talk) lines.push(`<p>App của bạn đã có user thật, phù hợp với beta. Mình sẽ liên hệ để trao đổi khi có lịch phù hợp. Gấp thì nhắn Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>`);
     else if (data.qualified) lines.push(`<p>App của bạn đã có user thật, nên bạn nằm trong nhóm được ưu tiên ở đợt mời đầu.</p>`);
-    else lines.push(`<p>Mình đã nhận đăng ký và sẽ liên hệ để setup beta cùng bạn.</p>`);
+    else lines.push(`<p>Mình sẽ liên hệ để setup beta cùng bạn.</p>`);
     done.innerHTML = `<h3>${data.existing ? "Đã cập nhật" : "Đã nhận"}</h3>${lines.join("")}`;
     if (!data.existing) window.plausible("Waitlist");
     form.hidden = true; done.hidden = false; done.focus({ preventScroll: true });
