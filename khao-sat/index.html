@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khảo sát trước đợt thử · Embra</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261007">
+<style>
+  :root { --char: #232323; --cream: #F6F6EA; --grey: #5A5A5A; --lime: #D3F28C; --err: #B3261E; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--char); font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--char); outline-offset: 3px; }
+  header { background: var(--char); color: #FAFAFA; }
+  header .in { max-width: 760px; margin: 0 auto; padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  header a { font-family: "IBM Plex Mono", monospace; font-size: 14px; text-decoration: none; color: var(--lime); }
+  header b { font-weight: 400; letter-spacing: .2em; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 24px 96px; }
+  h1 { font-family: "Embra Display", "IBM Plex Mono", monospace; font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 430; font-weight: 430; text-transform: uppercase; font-size: clamp(34px, 5vw, 52px); line-height: 1.04; margin: 0 0 16px; }
+  .lead { font-size: 17px; line-height: 1.7; margin: 0 0 40px; max-width: 62ch; }
+  fieldset { border: 0; border-top: 1px solid rgba(35,35,35,.25); margin: 0; padding: 22px 0 18px; }
+  legend { font-family: "IBM Plex Mono", monospace; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; padding: 0 0 12px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(35,35,35,.35); padding: 8px 12px; font-size: 15.5px; cursor: pointer; background: #fff; }
+  .opts input { accent-color: var(--char); }
+  .opts label:has(input:checked) { background: var(--char); color: var(--cream); border-color: var(--char); }
+  textarea { width: 100%; min-height: 110px; font: inherit; font-size: 15.5px; padding: 10px 12px; border: 1px solid rgba(35,35,35,.35); background: #fff; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.6; margin: 18px 0 24px; }
+  button { font-family: "IBM Plex Mono", monospace; font-size: 16px; background: var(--char); color: var(--cream); border: 0; padding: 14px 22px; cursor: pointer; }
+  button[disabled] { opacity: .5; cursor: wait; }
+  .msg { font-size: 16px; line-height: 1.6; margin: 18px 0 0; min-height: 1.6em; }
+  .msg.err { color: var(--err); }
+  .hint { color: var(--grey); font-size: 14px; }
+  .done h2 { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 18px; margin: 0 0 10px; }
+</style>
+</head>
+<body>
+<header><div class="in"><b>EMBRA</b><a href="/">[ VỀ TRANG CHỦ ]</a></div></header>
+<main>
+  <h1>7 câu trước đợt thử</h1>
+  <p class="lead">Khoảng 2 phút. Câu trả lời giúp mình chọn đợt thử hợp với project của bạn và quyết định giá, cách thanh toán. Câu nào không muốn trả lời thì bỏ qua.</p>
+
+  <div id="no-token" hidden>
+    <p class="lead">Link này cần mã trong email xác nhận waitlist. Mở lại link trong email, hoặc <a href="/#join">đăng ký waitlist</a> trước.</p>
+  </div>
+
+  <form id="survey" hidden novalidate>
+    <fieldset><legend>1. App của bạn đã có người dùng chưa?</legend><div class="opts">
+      <label><input type="radio" name="production" value="paying">Có, có người trả tiền</label>
+      <label><input type="radio" name="production" value="free">Có người dùng, chưa thu tiền</label>
+      <label><input type="radio" name="production" value="not_yet">Chưa, đang xây</label>
+    </div></fieldset>
+
+    <fieldset><legend>2. Mỗi tháng bạn đang trả bao nhiêu cho hosting và database?</legend><div class="opts">
+      <label><input type="radio" name="monthly_cost" value="zero">0đ (gói miễn phí)</label>
+      <label><input type="radio" name="monthly_cost" value="lt200k">Dưới 200.000đ</label>
+      <label><input type="radio" name="monthly_cost" value="200k_500k">200.000–500.000đ</label>
+      <label><input type="radio" name="monthly_cost" value="500k_2m">500.000đ–2 triệu</label>
+      <label><input type="radio" name="monthly_cost" value="gt2m">Trên 2 triệu</label>
+      <label><input type="radio" name="monthly_cost" value="unknown">Không rõ</label>
+    </div></fieldset>
+
+    <fieldset><legend>3. Bạn muốn trả tiền bằng cách nào?</legend><div class="opts">
+      <label><input type="radio" name="pay" value="transfer">Chuyển khoản / VietQR</label>
+      <label><input type="radio" name="pay" value="wallet">Ví điện tử (MoMo, ZaloPay…)</label>
+      <label><input type="radio" name="pay" value="card">Thẻ Visa / Mastercard</label>
+      <label><input type="radio" name="pay" value="company">Công ty thanh toán theo hợp đồng</label>
+      <label><input type="radio" name="pay" value="any">Cách nào cũng được</label>
+    </div></fieldset>
+
+    <fieldset><legend>4. Bạn có cần hoá đơn VAT không?</legend><div class="opts">
+      <label><input type="radio" name="need_vat" value="yes">Có</label>
+      <label><input type="radio" name="need_vat" value="no">Không</label>
+      <label><input type="radio" name="need_vat" value="unknown">Chưa biết</label>
+    </div></fieldset>
+
+    <fieldset><legend>5. Điều gì làm bạn lo nhất khi chạy app hiện tại?</legend><div class="opts">
+      <label><input type="radio" name="top_pain" value="migration">Migration làm hỏng dữ liệu</label>
+      <label><input type="radio" name="top_pain" value="restore">Không chắc restore được</label>
+      <label><input type="radio" name="top_pain" value="usd_bill">Hoá đơn USD khó đoán</label>
+      <label><input type="radio" name="top_pain" value="card">Thẻ bị từ chối</label>
+      <label><input type="radio" name="top_pain" value="latency">App chậm với người dùng Việt Nam</label>
+      <label><input type="radio" name="top_pain" value="ops">Tự vận hành server tốn thời gian</label>
+      <label><input type="radio" name="top_pain" value="other">Khác</label>
+    </div></fieldset>
+
+    <fieldset><legend>6. Với 1 app + 1 PostgreSQL riêng + backup, mức giá nào bạn sẽ cân nhắc?</legend><div class="opts">
+      <label><input type="radio" name="willing_price" value="lt100k">Dưới 100.000đ/tháng</label>
+      <label><input type="radio" name="willing_price" value="100k_200k">100.000–200.000đ</label>
+      <label><input type="radio" name="willing_price" value="200k_400k">200.000–400.000đ</label>
+      <label><input type="radio" name="willing_price" value="400k_1m">400.000đ–1 triệu</label>
+      <label><input type="radio" name="willing_price" value="gt1m">Trên 1 triệu</label>
+    </div><p class="hint">Giá Embra chưa chốt; câu này không phải báo giá.</p></fieldset>
+
+    <fieldset><legend>7. Khi nào bạn muốn thử?</legend><div class="opts">
+      <label><input type="radio" name="when" value="now">Ngay khi có đợt</label>
+      <label><input type="radio" name="when" value="1m">Trong 1 tháng</label>
+      <label><input type="radio" name="when" value="3m">Trong 3 tháng</label>
+      <label><input type="radio" name="when" value="later">Chỉ muốn theo dõi</label>
+    </div></fieldset>
+
+    <fieldset><legend>Muốn kể thêm? (không bắt buộc)</legend>
+      <textarea name="pain_text" maxlength="1000" placeholder="Ví dụ: lần gần nhất migration chạy lỗi, bạn mất bao lâu để khôi phục?"></textarea>
+      <p class="hint">Đừng gửi password, API key hay dữ liệu của khách hàng.</p>
+    </fieldset>
+
+    <label class="consent"><input type="checkbox" name="consent" required><span>Mình đồng ý để Embra lưu câu trả lời này cùng đăng ký waitlist, theo <a href="/chinh-sach-du-lieu.html">thông báo xử lý dữ liệu</a>. Xoá đăng ký là xoá cả khảo sát.</span></label>
+    <button type="submit">[ GỬI KHẢO SÁT ]</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="done" id="done" hidden>
+    <h2>Cảm ơn bạn, đã lưu câu trả lời.</h2>
+    <p class="lead">Mở lại link trong email để sửa câu trả lời. Nếu bạn sẵn sàng nói chuyện 15 phút, trả lời email xác nhận waitlist là mình đọc được.</p>
+  </div>
+</main>
+<script>
+const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : "";
+(function () {
+  var token = new URLSearchParams(location.search).get("token") || "";
+  var form = document.getElementById("survey");
+  if (!/^[0-9a-f]{48}$/.test(token)) { document.getElementById("no-token").hidden = false; return; }
+  // Keep the token out of history and any later Referer once it has been read.
+  history.replaceState(null, "", location.pathname);
+  form.hidden = false;
+  var msg = document.getElementById("msg");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(form);
+    var body = { token: token, consent: fd.get("consent") === "on" };
+    ["production", "monthly_cost", "pay", "need_vat", "top_pain", "willing_price", "when", "pain_text"].forEach(function (k) {
+      body[k] = fd.get(k) || "";
+    });
+    msg.className = "msg";
+    if (!body.consent) { msg.className = "msg err"; msg.textContent = "Cần tick ô đồng ý để gửi khảo sát."; return; }
+    var btn = form.querySelector("button");
+    btn.disabled = true; msg.textContent = "Đang gửi…";
+    fetch(API + "/api/waitlist/survey", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (out) {
+        if (out.ok) { form.hidden = true; document.getElementById("done").hidden = false; window.scrollTo(0, 0); return; }
+        msg.className = "msg err"; msg.textContent = out.error || "Chưa gửi được. Thử lại sau ít phút.";
+      })
+      .catch(function () { msg.className = "msg err"; msg.textContent = "Mất kết nối. Thử lại sau ít phút."; })
+      .finally(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

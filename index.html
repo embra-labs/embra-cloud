@@ -1034,6 +1034,7 @@
 </footer>
 
 <script>
+const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : "";
 (() => {
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -1307,7 +1308,7 @@
     btn.disabled = true; btn.textContent = "[ĐANG GỬI…]";
     let res, data = {};
     try {
-      res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      res = await fetch(API + "/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       data = await res.json().catch(() => ({}));
     } catch { res = null; }
     btn.disabled = false; btn.textContent = "[Đăng ký dùng beta]";
