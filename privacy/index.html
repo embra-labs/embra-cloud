@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Chính sách quyền riêng tư cho người dùng dịch vụ Embra: Embra lưu dữ liệu nào từ GitHub, Google, thanh toán và app của bạn, lưu ở đâu, giữ bao lâu, ai truy cập được và cách yêu cầu xoá.">
+<meta name="theme-color" content="#232323">
+<title>Quyền riêng tư · Embra</title>
+<link rel="canonical" href="https://embra.cloud/privacy/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261007">
+<style>
+  /* Mỗi câu trên trang này phải đúng với code ở embra-labs/embra (origin/main) tại ngày ghi trong dòng "Phiên bản".
+     Sửa nội dung thì đổi dòng Phiên bản. */
+  :root { --char: #232323; --cream: #F6F6EA; --ink: #232323; --grey: #5A5A5A; --lime: #D3F28C; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  :focus-visible { outline: 2px solid var(--char); outline-offset: 3px; }
+  header { background: var(--char); color: #FAFAFA; }
+  header .in { max-width: 860px; margin: 0 auto; padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  header a { font-family: "IBM Plex Mono", monospace; font-size: 14px; text-decoration: none; color: var(--lime); }
+  header b { font-family: "IBM Plex Sans", sans-serif; font-weight: 400; letter-spacing: .2em; }
+  main { max-width: 860px; margin: 0 auto; padding: 72px 24px 110px; }
+  h1 { font-family: "Embra Display", "IBM Plex Mono", monospace; font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 430; font-weight: 430; text-transform: uppercase; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: .01em; margin: 0 0 18px; text-wrap: balance; }
+  .meta { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--grey); margin: 0 0 40px; }
+  h2 { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; margin: 44px 0 14px; padding-top: 18px; border-top: 1px solid rgba(35,35,35,.25); }
+  h3 { font-size: 17px; font-weight: 600; margin: 24px 0 8px; }
+  p, li { font-size: 17px; line-height: 1.75; max-width: 70ch; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 22px; }
+  code { font-family: "IBM Plex Mono", monospace; font-size: .9em; overflow-wrap: anywhere; }
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; margin: 6px 0 12px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid rgba(35,35,35,.15); line-height: 1.6; }
+  th { font-family: "IBM Plex Mono", monospace; font-weight: 400; font-size: 12.5px; color: var(--grey); text-transform: uppercase; letter-spacing: .05em; }
+  .wrap { overflow-x: auto; }
+  .toc { font-family: "IBM Plex Mono", monospace; font-size: 14px; line-height: 1.9; margin: 0 0 8px; padding-left: 22px; }
+  .toc li { font-size: 14px; line-height: 1.9; }
+  .note { border-left: 3px solid var(--char); padding: 4px 0 4px 16px; }
+  .en p, .en li { font-size: 15.5px; }
+  footer { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--grey); max-width: 860px; margin: 0 auto; padding: 0 24px 48px; line-height: 1.9; }
+  footer a { margin-right: 14px; }
+  @media (max-width: 600px) {
+    main { padding: 48px 16px 80px; }
+    header .in, footer { padding-left: 16px; padding-right: 16px; }
+    p, li { font-size: 16px; }
+    /* Bảng hẹp: mỗi dòng thành một khối, nhãn cột hiện trước từng ô. */
+    table.stack thead { display: none; }
+    table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+    table.stack tr { padding: 10px 0; border-bottom: 1px solid rgba(35,35,35,.15); }
+    table.stack td { border: 0; padding: 2px 0; }
+    table.stack td[data-k]::before { content: attr(data-k); display: block; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--grey); text-transform: uppercase; letter-spacing: .05em; margin-top: 6px; }
+  }
+</style>
+</head>
+<body>
+<header><div class="in"><b>EMBRA</b><a href="/">[ VỀ TRANG CHỦ ]</a></div></header>
+<main>
+  <h1>Embra giữ dữ liệu của bạn thế nào?</h1>
+  <p>Trang này dành cho người dùng dịch vụ Embra: người đăng nhập vào console, dùng CLI <code>embra</code> hoặc MCP, và khách hàng trả phí chạy app trên Embra. Trang nói rõ Embra lưu gì, lưu ở đâu, giữ bao lâu, ai truy cập được và bạn yêu cầu xem hay xoá dữ liệu bằng cách nào.</p>
+  <p>Nếu bạn chỉ đăng ký waitlist, xem <a href="/chinh-sach-du-lieu.html">thông báo xử lý dữ liệu của waitlist</a>. Điều kiện dùng dịch vụ nằm ở <a href="/terms/">Điều khoản sử dụng</a>.</p>
+  <p class="meta">Áp dụng cho dịch vụ Embra (console, CLI, API, app chạy trên Embra) · Phiên bản 2026-10-27 · Theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP</p>
+
+  <ol class="toc">
+    <li><a href="#ai">Ai chịu trách nhiệm</a></li>
+    <li><a href="#vai-tro">Dữ liệu của bạn và dữ liệu trong app của bạn</a></li>
+    <li><a href="#tai-khoan">Dữ liệu tài khoản</a></li>
+    <li><a href="#app">Dữ liệu của app chạy trên Embra</a></li>
+    <li><a href="#backup">Bản sao lưu</a></li>
+    <li><a href="#thanh-toan">Thanh toán</a></li>
+    <li><a href="#ip-cookie">Địa chỉ IP, cookie và bộ nhớ trình duyệt</a></li>
+    <li><a href="#truy-cap">Ai truy cập được dữ liệu</a></li>
+    <li><a href="#ben-thu-ba">Bên thứ ba và nơi lưu dữ liệu</a></li>
+    <li><a href="#xoa">Giữ bao lâu và khi nào bị xoá</a></li>
+    <li><a href="#quyen">Quyền của bạn</a></li>
+    <li><a href="#su-co">Bảo vệ dữ liệu và sự cố</a></li>
+    <li><a href="#thay-doi">Thay đổi chính sách</a></li>
+    <li><a href="#google">Summary in English: Google user data</a></li>
+  </ol>
+
+  <h2 id="ai">1. Ai chịu trách nhiệm về dữ liệu?</h2>
+  <p>Mình là Hoàng Xuân, người xây dựng và vận hành Embra. Embra hiện là dịch vụ beta trả phí do mình vận hành với tư cách cá nhân, chưa có pháp nhân (<a href="https://github.com/hxuan190">github.com/hxuan190</a>).</p>
+  <p>Liên hệ về dữ liệu: <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> · Zalo <a href="https://zalo.me/0329589421">0329589421</a>.</p>
+
+  <h2 id="vai-tro">2. Dữ liệu của bạn và dữ liệu trong app của bạn</h2>
+  <p>Embra giữ hai loại dữ liệu, với hai vai trò khác nhau:</p>
+  <ul>
+    <li><strong>Dữ liệu về bạn</strong>, người dùng Embra: tài khoản, thành viên workspace, lịch sử thao tác, thanh toán. Với loại này, Embra là bên kiểm soát và xử lý dữ liệu.</li>
+    <li><strong>Dữ liệu trong app của bạn</strong>: mã nguồn, database Postgres, file trong bucket, secret, log mà app ghi ra. Dữ liệu này là của bạn. Embra chỉ lưu và xử lý thay mặt bạn để chạy dịch vụ, không dùng cho mục đích khác. Nếu app của bạn lưu dữ liệu cá nhân của người dùng cuối, bạn là bên chịu trách nhiệm với họ; Embra là bên xử lý theo yêu cầu của bạn.</li>
+  </ul>
+  <p>Embra không bán, cho thuê hay chia sẻ dữ liệu cho bên thứ ba để quảng cáo.</p>
+
+  <h2 id="tai-khoan">3. Dữ liệu tài khoản</h2>
+  <div class="wrap"><table class="stack">
+    <thead><tr><th>Nguồn</th><th>Embra lưu</th><th>Để làm gì</th></tr></thead>
+    <tbody>
+      <tr><td data-k="Nguồn">Đăng nhập bằng GitHub</td><td data-k="Embra lưu">ID và tên đăng nhập GitHub (dùng làm tên hiển thị), email chính đã xác minh. Nếu GitHub không cho đọc email, Embra dùng địa chỉ noreply của GitHub. Ngày tạo tài khoản GitHub chỉ được đọc để xét điều kiện dùng thử (tài khoản từ 30 ngày tuổi), không lưu lại.</td><td data-k="Để làm gì">Đăng nhập, nhận diện bạn trong workspace</td></tr>
+      <tr><td data-k="Nguồn">Đăng nhập bằng Google (chỉ dành cho người được mời)</td><td data-k="Embra lưu">Mã tài khoản Google (<code>sub</code>), email đã xác minh và tên. Embra chỉ xin quyền <code>openid email profile</code>.</td><td data-k="Để làm gì">Đăng nhập vào workspace đã mời đúng email đó</td></tr>
+      <tr><td data-k="Nguồn">Workspace và thành viên</td><td data-k="Embra lưu">Tên workspace, vai trò của từng thành viên, email được mời, người mời, thời điểm mời và nhận lời mời</td><td data-k="Để làm gì">Phân quyền trong workspace</td></tr>
+      <tr><td data-k="Nguồn">Phiên đăng nhập và token</td><td data-k="Embra lưu">Chỉ lưu bản hash của cookie phiên và token (CLI, MCP, CI), không lưu giá trị gốc. Token GitHub hay Google nhận được lúc đăng nhập chỉ dùng một lần để đọc thông tin ở hai dòng trên rồi bỏ.</td><td data-k="Để làm gì">Xác thực mỗi request</td></tr>
+      <tr><td data-k="Nguồn">Đăng nhập CLI (<code>embra login</code>)</td><td data-k="Embra lưu">Địa chỉ IP và quốc gia của máy xin đăng nhập, tên máy khách</td><td data-k="Để làm gì">Cho bạn thấy ai đang xin quyền và chặn lạm dụng. Xoá sau 24 giờ nếu yêu cầu bị từ chối hoặc hết hạn, sau 30 ngày nếu đã được duyệt.</td></tr>
+      <tr><td data-k="Nguồn">Lịch sử hoạt động</td><td data-k="Embra lưu">Thao tác nào được làm, khi nào, bởi thành viên hay token nào (deploy, duyệt, xoá, đổi secret…)</td><td data-k="Để làm gì">Cho workspace xem lại và để kiểm tra khi có sự cố</td></tr>
+    </tbody>
+  </table></div>
+  <p>Thành viên trong cùng workspace thấy email, tên GitHub và vai trò của nhau trong danh sách thành viên.</p>
+
+  <h2 id="app">4. Dữ liệu của app chạy trên Embra</h2>
+  <h3>Mã nguồn và build</h3>
+  <ul>
+    <li>Khi bạn kết nối repo, GitHub App của Embra chỉ xin token <strong>đọc nội dung</strong> của đúng repo đó, token sống tối đa 1 giờ và không được lưu. Embra lưu tên repo, branch và mã commit (SHA) của mỗi lần build, không lưu tên hay email tác giả commit.</li>
+    <li>Mã nguồn upload trực tiếp được giữ tối đa 7 ngày (24 giờ nếu chưa dùng cho lần build nào).</li>
+    <li>Image đã build (chứa code của bạn) nằm trong registry riêng trên máy chủ Embra.</li>
+    <li>Log build được giữ 30 ngày sau khi build kết thúc.</li>
+  </ul>
+  <h3>Secret, database và file</h3>
+  <ul>
+    <li>Secret (biến môi trường bí mật) được mã hoá (AES-GCM) trước khi lưu.</li>
+    <li>Mỗi environment có Postgres riêng. Database và file trong bucket nằm trên máy chủ Embra tại Việt Nam.</li>
+  </ul>
+  <h3>Log</h3>
+  <ul>
+    <li>Embra lưu những gì app ghi ra stdout/stderr (web, worker, cron) để bạn tìm lại sau này. Log có thể chứa mọi thứ app in ra, nên <strong>đừng in password, token, API key hay dữ liệu cá nhân không cần thiết vào log</strong>.</li>
+    <li>Kho log giữ tối đa 30 ngày; khi kho gần đầy, ngày cũ nhất bị xoá trước, nên log có thể mất sớm hơn. Bạn tìm được trong 1 ngày (dùng thử), 7 ngày (Start), 14 ngày (Build) hoặc 30 ngày (Grow).</li>
+    <li>Nếu app ghi log nhanh hơn 256 KiB mỗi giây, phần vượt không vào lịch sử và Embra ghi một dòng báo trong log.</li>
+    <li>File log thô trên máy chủ (dùng cho xem log trực tiếp) bị xoá khi bạn xoá environment, hoặc 30 ngày sau khi container của nó bị gỡ.</li>
+  </ul>
+  <h3>Metrics</h3>
+  <ul>
+    <li>Embra đo CPU, RAM, số lần app hết RAM hoặc khởi động lại, số request HTTP theo nhóm mã trả về (2xx, 4xx, 5xx…), thời gian trả lời và dung lượng đĩa Postgres. Metrics <strong>không chứa URL, địa chỉ IP, header hay nội dung request</strong>.</li>
+    <li>Metrics được giữ 30 ngày. Bạn xem được 1, 7, 14 hoặc 30 ngày theo gói, giống log.</li>
+  </ul>
+  <h3>Bản export</h3>
+  <p>Owner hoặc admin có thể export một environment: bản export gồm dump database, image app, cấu hình và (nếu chọn) file trong bucket. Link tải được giữ 24 giờ rồi tự xoá.</p>
+
+  <h2 id="backup">5. Bản sao lưu</h2>
+  <ul>
+    <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất.</li>
+    <li>Sau khi khôi phục về một thời điểm, bản database cũ được giữ thêm 72 giờ để có thể quay lại.</li>
+    <li class="note"><strong>Hiện tại bản sao lưu nằm trên cùng máy chủ với database, tại Việt Nam. Embra chưa có bản sao lưu đặt ở nơi khác.</strong> Nếu máy chủ hỏng nặng, cả database và bản sao lưu có thể mất cùng lúc. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</li>
+  </ul>
+
+  <h2 id="thanh-toan">6. Thanh toán</h2>
+  <ul>
+    <li><strong>Tài khoản thanh toán:</strong> tên người trả tiền bạn nhập khi chọn gói (nếu để trống, Embra dùng mã người dùng của bạn), gói đã chọn, hoá đơn, mã thanh toán, số tiền, ngày trả.</li>
+    <li><strong>Chuyển khoản:</strong> bạn chuyển khoản VietQR vào tài khoản TPBank của Embra. SePay đọc giao dịch đến tài khoản đó và gửi cho Embra: số tiền, ngày giao dịch, mã tham chiếu của ngân hàng và <strong>nội dung chuyển khoản</strong> (ngân hàng có thể tự thêm tên hoặc số tài khoản người chuyển vào nội dung). Embra lưu các thông tin này để đối soát và không ghi chúng vào log, lịch sử hoạt động hay cảnh báo.</li>
+    <li>Embra không nhận số thẻ, thông tin đăng nhập ngân hàng hay số dư tài khoản của bạn.</li>
+  </ul>
+
+  <h2 id="ip-cookie">7. Địa chỉ IP, cookie và bộ nhớ trình duyệt</h2>
+  <h3>Cookie của console</h3>
+  <div class="wrap"><table class="stack">
+    <thead><tr><th>Cookie</th><th>Để làm gì</th><th>Thời hạn</th></tr></thead>
+    <tbody>
+      <tr><td data-k="Cookie"><code>__Host-embra_session</code></td><td data-k="Để làm gì">Giữ phiên đăng nhập</td><td data-k="Thời hạn">7 ngày, hoặc tới khi đăng xuất</td></tr>
+      <tr><td data-k="Cookie"><code>__Host-embra_csrf</code></td><td data-k="Để làm gì">Chống giả mạo request (CSRF)</td><td data-k="Thời hạn">7 ngày, hoặc tới khi đăng xuất</td></tr>
+      <tr><td data-k="Cookie"><code>__Host-embra_oauth_state</code></td><td data-k="Để làm gì">Kiểm tra bước đăng nhập GitHub/Google</td><td data-k="Thời hạn">10 phút</td></tr>
+    </tbody>
+  </table></div>
+  <p>Console không dùng cookie quảng cáo hay theo dõi và không tải công cụ phân tích của bên thứ ba. Console có lưu vài tuỳ chọn giao diện (ví dụ vị trí các ô trên sơ đồ) trong bộ nhớ trình duyệt của bạn; dữ liệu này không gửi về Embra.</p>
+  <h3>Địa chỉ IP</h3>
+  <ul>
+    <li>Edge của Embra dùng địa chỉ IP trong bộ nhớ để giới hạn tốc độ request và không ghi access log. Máy chủ điều khiển của Embra không ghi IP của bạn vào log.</li>
+    <li>Ngoại lệ: đăng nhập CLI lưu IP và quốc gia như ở <a href="#tai-khoan">mục 3</a>. Báo cáo lạm dụng chỉ lưu HMAC một chiều của IP người báo, không lưu IP gốc.</li>
+    <li>Request từ người dùng cuối tới app của bạn đi qua edge của Embra rồi tới app. App của bạn nhận địa chỉ IP của họ; app lưu gì là do bạn quyết định.</li>
+  </ul>
+  <h3>Website embra.cloud</h3>
+  <p>Website này được phục vụ qua GitHub Pages, nên GitHub nhận địa chỉ IP của người xem theo chính sách của GitHub. Để đếm lượt xem bài viết, Embra tự chạy Plausible tại stats.embra.cloud, không đặt cookie và không lưu IP, như mô tả ở <a href="/chinh-sach-du-lieu.html">thông báo của waitlist</a>.</p>
+
+  <h2 id="truy-cap">8. Ai truy cập được dữ liệu?</h2>
+  <h3>Trong workspace của bạn</h3>
+  <div class="wrap"><table class="stack">
+    <thead><tr><th>Dữ liệu</th><th>Ai xem hoặc làm được</th></tr></thead>
+    <tbody>
+      <tr><td data-k="Dữ liệu">Environment, lịch sử hoạt động, log, metrics</td><td data-k="Ai">Mọi thành viên (owner, admin, developer, viewer) và token của workspace, kể cả token cho AI agent và CI</td></tr>
+      <tr><td data-k="Dữ liệu">URL kết nối database, đặt secret</td><td data-k="Ai">Owner, admin, developer</td></tr>
+      <tr><td data-k="Dữ liệu">Thanh toán</td><td data-k="Ai">Owner và admin xem; chỉ owner đổi gói và trả tiền</td></tr>
+      <tr><td data-k="Dữ liệu">Export, xoá environment</td><td data-k="Ai">Owner và admin, phải là người thật (phiên web hoặc đăng nhập CLI gần đây)</td></tr>
+      <tr><td data-k="Dữ liệu">Xoá workspace</td><td data-k="Ai">Chỉ owner, phải là người thật</td></tr>
+    </tbody>
+  </table></div>
+  <p>Workspace khác không đọc được dữ liệu của bạn.</p>
+  <h3>Người vận hành Embra</h3>
+  <ul>
+    <li>Người vận hành Embra hiện chỉ có mình. Mình chỉ xem dữ liệu của bạn khi cần xử lý sự cố, khi bạn yêu cầu hỗ trợ, hoặc khi xử lý báo cáo lạm dụng.</li>
+    <li>Khi xem qua công cụ của Embra, mình phải dùng token vận hành có ghi lý do. Mỗi lần token đó đọc log, lịch sử log, metrics, log build, URL database, bản export, bản xem trước hoàn tác hoặc khoá truy cập fork, lịch sử hoạt động của workspace hiện một dòng cảnh báo kèm lý do (các lần đọc cùng loại trong 10 phút được gộp làm một). Nếu không ghi được dòng này, Embra từ chối lần đọc đó.</li>
+    <li>Khi sự cố nằm ở hạ tầng, mình có thể phải truy cập trực tiếp máy chủ hoặc database. Những lần truy cập này <strong>không</strong> hiện trong lịch sử hoạt động của bạn.</li>
+  </ul>
+
+  <h2 id="ben-thu-ba">9. Bên thứ ba và nơi lưu dữ liệu</h2>
+  <p>Máy chủ chạy Embra, app, database, bản sao lưu, log và metrics của bạn được thuê từ nhà cung cấp máy chủ tại Việt Nam. Các bên dưới đây nhận một phần dữ liệu khi bạn dùng Embra:</p>
+  <div class="wrap"><table class="stack">
+    <thead><tr><th>Bên</th><th>Nhận gì</th><th>Ở đâu</th></tr></thead>
+    <tbody>
+      <tr><td data-k="Bên">GitHub</td><td data-k="Nhận gì">Đăng nhập bằng GitHub, quyền đọc repo qua GitHub App, phục vụ website embra.cloud</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+      <tr><td data-k="Bên">Google</td><td data-k="Nhận gì">Đăng nhập bằng Google cho người được mời. Hộp thư hello@embra.cloud gửi và nhận qua Gmail, nên email bạn gửi cho Embra đi qua Google.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+      <tr><td data-k="Bên">SePay</td><td data-k="Nhận gì">Đọc giao dịch đến tài khoản TPBank của Embra và báo cho Embra (số tiền, ngày, nội dung chuyển khoản)</td><td data-k="Ở đâu">Việt Nam</td></tr>
+      <tr><td data-k="Bên">TPBank</td><td data-k="Nhận gì">Nhận tiền chuyển khoản của bạn, như mọi giao dịch ngân hàng</td><td data-k="Ở đâu">Việt Nam</td></tr>
+      <tr><td data-k="Bên">Let's Encrypt</td><td data-k="Nhận gì">Tên miền của app (kể cả tên miền riêng) để cấp chứng chỉ HTTPS. Tên miền này được công khai trong nhật ký Certificate Transparency, ai cũng tra được.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+      <tr><td data-k="Bên">Cloudflare</td><td data-k="Nhận gì">Quản lý DNS cho onembra.com. Chỉ phân giải tên miền, không chuyển tiếp lưu lượng tới app của bạn.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+      <tr><td data-k="Bên">Telegram</td><td data-k="Nhận gì">Cảnh báo vận hành gửi cho mình: mã workspace, environment, tài khoản thanh toán, giao dịch, số tiền, loại báo cáo lạm dụng. Không chứa email, tên người trả, nội dung chuyển khoản hay dữ liệu app.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+    </tbody>
+  </table></div>
+  <p>Nếu Embra thêm hoặc đổi một bên ở trên, mình cập nhật trang này trước khi áp dụng.</p>
+
+  <h2 id="xoa">10. Giữ bao lâu và khi nào bị xoá?</h2>
+  <h3>Khi bạn xoá một environment</h3>
+  <p>Embra xoá database Postgres và ổ đĩa của nó, bản sao lưu, bucket, tên miền riêng, mã nguồn đã upload, lịch sử log, file log thô và log build của environment. Giá trị secret bị xoá, chỉ giữ lại tên và phiên bản để biết secret nào từng tồn tại. Việc xoá chạy nền và thường xong trong vài phút.</p>
+  <p>Những thứ <strong>không</strong> bị xoá ngay:</p>
+  <ul>
+    <li>Metrics: tự hết hạn sau 30 ngày.</li>
+    <li>Image đã build trong registry: hiện chưa tự xoá. Gửi yêu cầu tới hello@embra.cloud, mình xoá giúp.</li>
+    <li>Lịch sử hoạt động và operation của environment: giữ lại để kiểm tra về sau.</li>
+  </ul>
+  <h3>Khi owner xoá workspace</h3>
+  <p>Mọi token của workspace bị thu hồi ngay và mọi environment bị xoá như trên. Tài khoản của bạn (email, ID GitHub hoặc Google), lịch sử hoạt động và hồ sơ thanh toán vẫn được giữ. Nếu muốn xoá cả tài khoản, gửi yêu cầu theo <a href="#quyen">mục 11</a>.</p>
+  <h3>Khi hết hạn dùng thử</h3>
+  <p>Gói dùng thử kéo dài 7 ngày. Khoảng 24 giờ trước khi hết hạn, lịch sử hoạt động của workspace hiện cảnh báo. Khi hết hạn, bạn không đăng nhập hay export được nữa, và hệ thống <strong>tự xoá cả workspace cùng toàn bộ dữ liệu</strong> như khi xoá environment, thường trong vòng 10 phút. Hãy export dữ liệu cần giữ trước thời điểm đó.</p>
+  <p>Ngoại lệ: nếu bạn đã chuyển tiền cho một gói nhưng gói chưa được kích hoạt, workspace không bị xoá; mình sẽ liên hệ để kích hoạt hoặc trả lại tiền.</p>
+  <h3>Khi bị tạm ngưng vì lạm dụng</h3>
+  <p>App bị gỡ khỏi Internet và dừng chạy, workspace chỉ đọc được, nhưng dữ liệu và bản sao lưu được giữ nguyên. Embra không tự xoá dữ liệu của workspace bị tạm ngưng.</p>
+  <h3>Dữ liệu tài khoản và thanh toán</h3>
+  <p>Hiện Embra giữ dữ liệu tài khoản cho tới khi bạn yêu cầu xoá, và giữ hồ sơ thanh toán để đối soát. Hệ thống chưa tự xoá các dữ liệu này theo thời hạn.</p>
+
+  <h2 id="quyen">11. Quyền của bạn</h2>
+  <ul>
+    <li>Biết dữ liệu của mình được sử dụng thế nào, xem và nhận bản sao. Dữ liệu app bạn tự lấy được bằng export; dữ liệu tài khoản và thanh toán, mình gửi bạn khi bạn yêu cầu.</li>
+    <li>Yêu cầu sửa thông tin chưa đúng.</li>
+    <li>Yêu cầu xoá dữ liệu, kể cả xoá tài khoản. Mình xoá hoặc ẩn danh dữ liệu tài khoản và báo bạn những gì phải giữ lại (ví dụ hồ sơ thanh toán) cùng lý do.</li>
+    <li>Rút lại sự đồng ý, phản đối hoặc yêu cầu hạn chế việc xử lý dữ liệu; khiếu nại tới cơ quan có thẩm quyền.</li>
+  </ul>
+  <p>Gửi yêu cầu tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> từ email gắn với tài khoản Embra của bạn. Mình phản hồi trong 72 giờ và hoàn tất yêu cầu trong thời hạn luật định. Với dữ liệu cá nhân của người dùng cuối trong app của bạn, họ liên hệ với bạn; mình hỗ trợ bạn thực hiện yêu cầu đó.</p>
+
+  <h2 id="su-co">12. Bảo vệ dữ liệu và sự cố</h2>
+  <p>Mọi kết nối tới console, API và app đều qua HTTPS. Token và cookie phiên chỉ lưu dạng hash, secret được mã hoá, mỗi environment chạy trong mạng và Postgres riêng. Embra vẫn đang ở giai đoạn beta, nên không hệ thống nào an toàn tuyệt đối.</p>
+  <p>Nếu phát hiện dữ liệu bị rò rỉ hoặc bị truy cập trái phép, Embra sẽ thông báo cho người bị ảnh hưởng và cơ quan có thẩm quyền theo quy định.</p>
+
+  <h2 id="thay-doi">13. Thay đổi chính sách</h2>
+  <p>Khi đổi nội dung, mình cập nhật dòng "Phiên bản" ở đầu trang. Thay đổi làm bất lợi cho bạn (thu thêm dữ liệu, thêm bên thứ ba, giữ lâu hơn) sẽ được báo qua email trước khi áp dụng.</p>
+
+  <section class="en" lang="en">
+    <h2 id="google">14. Summary in English: Google user data</h2>
+    <p>Embra is operated by Hoàng Xuân, an individual in Vietnam (contact: <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>). "Sign in with Google" is offered only to people a workspace owner has invited by email.</p>
+    <ul>
+      <li><strong>Scopes:</strong> <code>openid email profile</code> only.</li>
+      <li><strong>What we keep:</strong> your Google account ID (<code>sub</code>), your verified email address and your name. The access token from Google is used once to read these fields and is never stored.</li>
+      <li><strong>Use:</strong> solely to sign you in to the Embra workspace that invited you and to show your name and email to members of that workspace. We do not use Google user data for advertising, do not sell it, and do not share it with third parties except as required by law.</li>
+      <li><strong>Deletion:</strong> email hello@embra.cloud from the invited address and we delete or anonymise your account data.</li>
+    </ul>
+    <p>Embra's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+  </section>
+</main>
+<footer><a href="/terms/">Điều khoản sử dụng</a><a href="/chinh-sach-du-lieu.html">Dữ liệu waitlist</a><a href="mailto:hello@embra.cloud">hello@embra.cloud</a><br>Embra là dịch vụ beta trả phí do một cá nhân vận hành. © 2026 Embra.</footer>
+</body>
+</html>

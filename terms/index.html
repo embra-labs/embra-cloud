@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Điều khoản sử dụng dịch vụ Embra: giai đoạn beta, tài khoản, dùng thử, gói trả trước và thanh toán chuyển khoản, sử dụng hợp lệ, tạm ngưng, export và xoá dữ liệu, giới hạn trách nhiệm.">
+<meta name="theme-color" content="#232323">
+<title>Điều khoản sử dụng · Embra</title>
+<link rel="canonical" href="https://embra.cloud/terms/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261007">
+<style>
+  /* Không hứa điều code chưa làm. Sửa nội dung thì đổi dòng "Phiên bản". */
+  :root { --char: #232323; --cream: #F6F6EA; --ink: #232323; --grey: #5A5A5A; --lime: #D3F28C; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  :focus-visible { outline: 2px solid var(--char); outline-offset: 3px; }
+  header { background: var(--char); color: #FAFAFA; }
+  header .in { max-width: 860px; margin: 0 auto; padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  header a { font-family: "IBM Plex Mono", monospace; font-size: 14px; text-decoration: none; color: var(--lime); }
+  header b { font-family: "IBM Plex Sans", sans-serif; font-weight: 400; letter-spacing: .2em; }
+  main { max-width: 860px; margin: 0 auto; padding: 72px 24px 110px; }
+  h1 { font-family: "Embra Display", "IBM Plex Mono", monospace; font-variation-settings: "ELSH" 2, "ELGR" 1, "wght" 430; font-weight: 430; text-transform: uppercase; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: .01em; margin: 0 0 18px; text-wrap: balance; }
+  .meta { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--grey); margin: 0 0 40px; }
+  h2 { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; margin: 44px 0 14px; padding-top: 18px; border-top: 1px solid rgba(35,35,35,.25); }
+  p, li { font-size: 17px; line-height: 1.75; max-width: 70ch; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 22px; }
+  code { font-family: "IBM Plex Mono", monospace; font-size: .9em; overflow-wrap: anywhere; }
+  .toc { font-family: "IBM Plex Mono", monospace; font-size: 14px; line-height: 1.9; margin: 0 0 8px; padding-left: 22px; }
+  .toc li { font-size: 14px; line-height: 1.9; }
+  .note { border-left: 3px solid var(--char); padding: 4px 0 4px 16px; }
+  footer { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--grey); max-width: 860px; margin: 0 auto; padding: 0 24px 48px; line-height: 1.9; }
+  footer a { margin-right: 14px; }
+  @media (max-width: 600px) {
+    main { padding: 48px 16px 80px; }
+    header .in, footer { padding-left: 16px; padding-right: 16px; }
+    p, li { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<header><div class="in"><b>EMBRA</b><a href="/">[ VỀ TRANG CHỦ ]</a></div></header>
+<main>
+  <h1>Điều khoản sử dụng Embra</h1>
+  <p>Đây là thoả thuận giữa bạn và Embra khi bạn dùng console, CLI, API hoặc chạy app trên Embra. Khi tạo workspace, chọn gói hoặc tiếp tục dùng dịch vụ, bạn đồng ý với các điều khoản này. Cách Embra xử lý dữ liệu nằm ở <a href="/privacy/">Chính sách quyền riêng tư</a>.</p>
+  <p class="meta">Phiên bản 2026-10-27 · Áp dụng pháp luật Việt Nam</p>
+
+  <ol class="toc">
+    <li><a href="#dich-vu">Embra là gì, giai đoạn beta</a></li>
+    <li><a href="#tai-khoan">Tài khoản và vai trò</a></li>
+    <li><a href="#dung-thu">Dùng thử</a></li>
+    <li><a href="#goi">Gói, giá và thanh toán</a></li>
+    <li><a href="#su-dung">Sử dụng hợp lệ</a></li>
+    <li><a href="#trach-nhiem">Trách nhiệm của bạn</a></li>
+    <li><a href="#tam-ngung">Tạm ngưng và chấm dứt</a></li>
+    <li><a href="#du-lieu">Export và xoá dữ liệu</a></li>
+    <li><a href="#gioi-han">Giới hạn trách nhiệm</a></li>
+    <li><a href="#thay-doi">Thay đổi điều khoản</a></li>
+    <li><a href="#luat">Luật áp dụng và liên hệ</a></li>
+  </ol>
+
+  <h2 id="dich-vu">1. Embra là gì, giai đoạn beta</h2>
+  <p>Embra chạy app của bạn từ repo GitHub (hoặc mã nguồn upload): build trong microVM, deploy, cấp cho mỗi environment một database Postgres riêng, kiểm tra migration trước khi chạy, sao lưu và khôi phục database, cấp bucket lưu file, tên miền <code>*.onembra.com</code> và tên miền riêng. Máy chủ đặt tại Việt Nam.</p>
+  <p>Embra do Hoàng Xuân vận hành với tư cách cá nhân, chưa có pháp nhân. Dịch vụ đang ở giai đoạn <strong>beta trả phí</strong>:</p>
+  <ul>
+    <li>Embra <strong>không cam kết mức sẵn sàng (SLA)</strong> và không bồi hoàn khi dịch vụ gián đoạn. Trạng thái hệ thống xem ở <a href="https://status.embra.cloud">status.embra.cloud</a>.</li>
+    <li>Tính năng, giới hạn và giao diện có thể thay đổi. Thay đổi làm mất tính năng bạn đang dùng sẽ được báo trước.</li>
+    <li>Hiện Embra chạy trên một máy chủ và <strong>bản sao lưu nằm trên cùng máy chủ đó</strong>, chưa có bản sao ở nơi khác (xem <a href="/privacy/#backup">mục Bản sao lưu</a>).</li>
+  </ul>
+
+  <h2 id="tai-khoan">2. Tài khoản và vai trò</h2>
+  <ul>
+    <li>Bạn đăng nhập bằng GitHub. Người được owner mời vào workspace có thể đăng nhập bằng Google với đúng email được mời.</li>
+    <li>Workspace có bốn vai trò: owner, admin, developer, viewer. Owner chịu trách nhiệm về những ai được mời, những token được tạo và mọi việc làm bằng các tài khoản, token đó.</li>
+    <li>Giữ kín token CLI, MCP và CI. Nếu nghi token bị lộ, thu hồi ngay trong console và báo cho Embra.</li>
+    <li>Thông tin bạn cung cấp (email, tên người trả tiền) phải đúng để Embra liên hệ và đối soát thanh toán.</li>
+  </ul>
+
+  <h2 id="dung-thu">3. Dùng thử</h2>
+  <ul>
+    <li>Gói dùng thử miễn phí, kéo dài 7 ngày, gồm 1 app và 1 database, có giới hạn tài nguyên, không gắn được tên miền riêng và kết nối ra ngoài bị giới hạn. Tài khoản GitHub cần từ 30 ngày tuổi.</li>
+    <li class="note"><strong>Khi hết hạn dùng thử, workspace và toàn bộ dữ liệu bị xoá tự động.</strong> Khoảng 24 giờ trước đó, console hiện cảnh báo. Muốn giữ dữ liệu, hãy chọn gói trả phí và chuyển khoản trước khi hết hạn, hoặc export.</li>
+  </ul>
+
+  <h2 id="goi">4. Gói, giá và thanh toán</h2>
+  <ul>
+    <li>Giá các gói Start, Build, Grow và phần mua thêm ở <a href="/bang-gia/">Bảng giá</a>. Giá chưa gồm VAT. Embra hiện <strong>không xuất hoá đơn VAT</strong>.</li>
+    <li><strong>Trả trước theo tháng.</strong> Bạn chọn gói trong console và chuyển khoản qua VietQR, kèm mã thanh toán. Gói chỉ có hiệu lực khi tiền về tài khoản của Embra.</li>
+    <li>Mỗi kỳ, Embra tạo hoá đơn trả trước, hạn thanh toán 7 ngày. Khi còn hoá đơn chưa trả, console hiện thông báo cho owner và admin; quá hạn, mình liên hệ nhắc bạn. Hiện Embra không tự tạm ngưng dịch vụ khi chậm thanh toán.</li>
+    <li>Đổi gói hoặc phần mua thêm giữa kỳ được tính chênh lệch theo ngày vào hoá đơn sau. Hạ gói bị từ chối nếu workspace đang dùng vượt giới hạn của gói thấp hơn.</li>
+    <li>Tiền chuyển dư, và phần ngày đã trả mà chưa dùng khi hạ gói hoặc xoá workspace, được ghi thành số dư để trừ vào hoá đơn sau.</li>
+    <li>Embra chưa có quy trình hoàn tiền tự động. Nếu bạn ngừng dùng hẳn và muốn nhận lại số dư, hoặc chuyển nhầm tiền, gửi email tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> để mình xử lý.</li>
+    <li>Nếu bảng giá thay đổi, Embra báo trước khi áp dụng cho kỳ thanh toán tiếp theo của bạn.</li>
+  </ul>
+
+  <h2 id="su-dung">5. Sử dụng hợp lệ</h2>
+  <p>Bạn không được dùng Embra để:</p>
+  <ul>
+    <li>lừa đảo, giả mạo trang đăng nhập (phishing), phát tán mã độc;</li>
+    <li>gửi thư rác hoặc tin nhắn rác;</li>
+    <li>lưu hoặc phát tán nội dung vi phạm pháp luật Việt Nam, hoặc vi phạm bản quyền, quyền sở hữu trí tuệ của người khác;</li>
+    <li>tấn công, dò quét hoặc truy cập trái phép hệ thống khác, kể cả các workspace khác trên Embra;</li>
+    <li>tìm cách vượt giới hạn tài nguyên, vượt cách ly giữa các workspace, hoặc dùng tài nguyên theo cách làm ảnh hưởng tới khách hàng khác (ví dụ đào tiền mã hoá).</li>
+  </ul>
+  <p>Báo cáo lạm dụng gửi tới <a href="mailto:abuse@embra.cloud">abuse@embra.cloud</a>.</p>
+
+  <h2 id="trach-nhiem">6. Trách nhiệm của bạn</h2>
+  <ul>
+    <li><strong>Mã nguồn và nội dung:</strong> bạn có quyền dùng mã nguồn, dữ liệu và nội dung bạn đưa lên Embra, và chịu trách nhiệm về chúng.</li>
+    <li><strong>Dữ liệu người dùng cuối:</strong> nếu app của bạn thu thập dữ liệu cá nhân, bạn là bên chịu trách nhiệm theo pháp luật về bảo vệ dữ liệu cá nhân với người dùng đó. Embra xử lý dữ liệu này thay mặt bạn.</li>
+    <li><strong>Secret:</strong> đặt mật khẩu, API key trong secret của Embra, không đưa vào repo, và không in chúng ra log.</li>
+    <li><strong>Sao lưu của riêng bạn:</strong> vì bản sao lưu của Embra hiện nằm trên cùng máy chủ, hãy định kỳ export và giữ bản sao dữ liệu quan trọng ở nơi khác.</li>
+    <li><strong>Tên miền riêng:</strong> bạn quản lý DNS của tên miền mình gắn vào Embra.</li>
+  </ul>
+
+  <h2 id="tam-ngung">7. Tạm ngưng và chấm dứt</h2>
+  <ul>
+    <li>Khi nhận báo cáo lạm dụng, mình kiểm tra trước khi quyết định; Embra không tự quét nội dung của bạn và không tự động tạm ngưng. Nếu vi phạm mục 5, Embra có thể tạm ngưng một environment hoặc cả workspace.</li>
+    <li>Khi bị tạm ngưng: app bị gỡ khỏi Internet và dừng chạy, workspace chỉ đọc được, không export được trong thời gian tạm ngưng. Dữ liệu và bản sao lưu được giữ nguyên, không bị xoá tự động.</li>
+    <li>Nếu cho rằng bị tạm ngưng nhầm, gửi khiếu nại tới <a href="mailto:abuse@embra.cloud">abuse@embra.cloud</a>. Mình xem xét lại và gỡ tạm ngưng nếu báo cáo sai.</li>
+    <li>Bạn có thể ngừng dùng bất cứ lúc nào bằng cách xoá environment hoặc xoá workspace (owner). Embra ngừng tính tiền từ lúc xoá workspace.</li>
+    <li>Nếu Embra ngừng cung cấp dịch vụ, mình báo trước để bạn có thời gian export dữ liệu.</li>
+  </ul>
+
+  <h2 id="du-lieu">8. Export và xoá dữ liệu</h2>
+  <ul>
+    <li>Owner hoặc admin export được từng environment: dump database, image app, cấu hình và (nếu chọn) file trong bucket. Link tải có hiệu lực 24 giờ.</li>
+    <li>Xoá environment hoặc workspace sẽ xoá database, bản sao lưu, bucket và log của chúng. Sau khi xoá, Embra không khôi phục lại được. Chi tiết những gì bị xoá và những gì được giữ lại nằm ở <a href="/privacy/#xoa">Chính sách quyền riêng tư</a>.</li>
+  </ul>
+
+  <h2 id="gioi-han">9. Giới hạn trách nhiệm</h2>
+  <ul>
+    <li>Embra được cung cấp ở trạng thái beta, "như hiện có". Mình cố gắng giữ dịch vụ ổn định và dữ liệu an toàn, nhưng không bảo đảm dịch vụ không gián đoạn hay không có lỗi.</li>
+    <li>Trong phạm vi pháp luật cho phép, Embra không chịu trách nhiệm về thiệt hại gián tiếp như mất doanh thu, mất cơ hội kinh doanh hay mất dữ liệu mà bạn có thể tránh bằng cách giữ bản export riêng.</li>
+    <li>Trong phạm vi pháp luật cho phép, tổng trách nhiệm của Embra với bạn không vượt quá số tiền bạn đã trả cho Embra trong 3 tháng trước sự việc.</li>
+  </ul>
+
+  <h2 id="thay-doi">10. Thay đổi điều khoản</h2>
+  <p>Khi đổi điều khoản, mình cập nhật dòng "Phiên bản" ở đầu trang và báo trước qua email những thay đổi bất lợi cho bạn. Nếu không đồng ý, bạn có thể ngừng dùng và export dữ liệu trước ngày áp dụng.</p>
+
+  <h2 id="luat">11. Luật áp dụng và liên hệ</h2>
+  <p>Điều khoản này theo pháp luật Việt Nam. Khi có tranh chấp, hai bên thương lượng trước; nếu không thành, tranh chấp được giải quyết tại toà án có thẩm quyền tại Việt Nam.</p>
+  <p>Liên hệ: <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> · Zalo <a href="https://zalo.me/0329589421">0329589421</a> · Báo cáo lạm dụng: <a href="mailto:abuse@embra.cloud">abuse@embra.cloud</a>.</p>
+</main>
+<footer><a href="/privacy/">Quyền riêng tư</a><a href="/bang-gia/">Bảng giá</a><a href="mailto:hello@embra.cloud">hello@embra.cloud</a><br>Embra là dịch vụ beta trả phí do một cá nhân vận hành. © 2026 Embra.</footer>
+</body>
+</html>
