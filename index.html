@@ -651,19 +651,16 @@
   /* ---------- 03: PostgreSQL ---------- */
   .db-sheet { padding-block: 75px 60px; border-bottom: 1px solid var(--ink); }
   .db-sheet table { width: 100%; border-collapse: collapse; margin-top: 34px; border-top: 1px solid var(--ink); }
-  .db-sheet th, .db-sheet td { text-align: left; vertical-align: top; padding: 18px 0; border-bottom: 1px solid var(--ink); }
-  .db-sheet th { width: 300px; padding-right: 28px; font: 500 17px/1.35 var(--sans); }
-  .db-sheet th span { display: block; font: 500 12.5px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
-  .db-sheet td p { margin: 0 0 8px; font-size: 16px; line-height: 1.65; max-width: 46em; }
-  .db-sheet td p:last-child { margin-bottom: 0; }
+  .db-sheet th, .db-sheet td { text-align: left; vertical-align: baseline; padding: 15px 0; border-bottom: 1px solid var(--ink); }
+  .db-sheet th { width: 200px; padding-right: 28px; }
+  .db-sheet th span { font: 500 13px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--grey); }
+  .db-sheet td p { margin: 0; font-size: 17px; line-height: 1.55; }
   .db-sheet code { font: 14px var(--mono); }
-  .db-sheet q { quotes: none; display: inline; font: 14px/1.6 var(--mono); background: rgba(35,35,35,.07); padding: 1px 6px; }
-  .db-sheet td a { text-underline-offset: 4px; }
   .db-sheet tr.not th span { color: var(--red); }
   @media (max-width: 760px) {
     .db-sheet th, .db-sheet td { display: block; width: auto; }
-    .db-sheet th { padding: 16px 0 6px; border-bottom: 0; }
-    .db-sheet td { padding: 0 0 16px; }
+    .db-sheet th { padding: 14px 0 2px; border-bottom: 0; }
+    .db-sheet td { padding: 0 0 14px; }
     .db-sheet td p { font-size: 15px; }
   }
 </style>
@@ -905,26 +902,14 @@
       <p class="eyebrow">03 / PostgreSQL của bạn</p>
       <h2 class="h-display rv" id="h-db">Một PostgreSQL riêng,<br>từ lúc tạo tới lúc mang đi.</h2>
       <table>
-        <tr><th scope="row"><span>Tạo</span>Riêng từng environment</th><td>
-          <p>PostgreSQL 18 trên ổ riêng, không có địa chỉ public: chỉ app trong cùng environment kết nối được.</p>
-          <p><code>DATABASE_URL</code> được gắn sẵn vào app. App chạy bằng role chỉ đọc, ghi dữ liệu; đổi schema là việc của migration.</p></td></tr>
-        <tr><th scope="row"><span>Đổi</span>Migration có chốt</th><td>
-          <p>Diễn tập trên bản sao tách từ snapshot, không chạm production, rồi chấm lớp A–F cho từng câu lệnh. Embra chụp snapshot ngay trước khi áp.</p>
-          <p>Trước khi áp, schema production phải khớp lúc diễn tập: <q>Schema production đã đổi từ lúc diễn tập nên bằng chứng không còn đúng. Chưa áp file nào.</q></p>
-          <p>File đã áp thì khoá: <q>Không sửa migration đã áp; thêm file mới.</q></p></td></tr>
-        <tr><th scope="row"><span>Lưu</span>Backup tự kiểm chứng</th><td>
-          <p>WAL được lưu liên tục, bản đầy đủ chạy hằng tuần.</p>
-          <p>Embra định kỳ restore thử backup vào một ổ riêng và ghi kết quả lên dashboard: <q>Backup đã được restore thử thành công</q>. Lần thử nào hỏng thì đội Embra nhận cảnh báo ngay.</p></td></tr>
-        <tr><th scope="row"><span>Lùi</span>Restore về một thời điểm</th><td>
-          <p>Khôi phục ra một database chạy song song; app chỉ chuyển khi chủ workspace duyệt. Trong lúc chuyển, database cũ sang chỉ-đọc, rồi được giữ 72 giờ để còn đường quay lại. Xem <a href="#stage">demo ở trên</a>.</p></td></tr>
-        <tr><th scope="row"><span>Thử</span>Mỗi PR một database</th><td>
-          <p>Preview theo PR có database trống của riêng nó: chạy migration và seed của bạn, không có dữ liệu hay secret production, tự xoá sau 72 giờ. Staging có database riêng.</p></td></tr>
-        <tr><th scope="row"><span>Mang đi</span>Lấy dữ liệu ra lúc nào cũng được</th><td>
-          <p>Tự tải bundle trên dashboard: <code>pg_dump</code>, image của app và <code>compose.yaml</code> để chạy lại ở nơi khác. Bundle không chứa giá trị secret và tự xoá sau 24 giờ.</p></td></tr>
-        <tr><th scope="row"><span>Ai đụng vào</span>Truy cập nào cũng để lại dấu</th><td>
-          <p>Đội Embra muốn xem log, metrics, đường kết nối database hay bản export của bạn đều phải ghi lý do, và bạn thấy lần truy cập đó trong Activity.</p></td></tr>
-        <tr class="not"><th scope="row"><span>Chưa có</span>Nói trước để bạn tính</th><td>
-          <p>Extension (<code>CREATE EXTENSION</code> đang bị chặn), read replica, connection pooling, log và slow query của Postgres, tăng dung lượng khi database đang chạy.</p></td></tr>
+        <tr><th scope="row"><span>Tạo</span></th><td><p>PostgreSQL 18 riêng, không mở ra internet. <code>DATABASE_URL</code> gắn sẵn vào app.</p></td></tr>
+        <tr><th scope="row"><span>Đổi</span></th><td><p>Migration diễn tập trên bản sao, chấm rủi ro A–F, chụp snapshot rồi mới áp.</p></td></tr>
+        <tr><th scope="row"><span>Lưu</span></th><td><p>Backup liên tục, và được restore thử định kỳ.</p></td></tr>
+        <tr><th scope="row"><span>Lùi</span></th><td><p>Restore ra database mới, bạn duyệt rồi mới chuyển, bản cũ giữ 72 giờ.</p></td></tr>
+        <tr><th scope="row"><span>Thử</span></th><td><p>Mỗi PR một database trống, tự xoá sau 72 giờ.</p></td></tr>
+        <tr><th scope="row"><span>Mang đi</span></th><td><p>Tải <code>pg_dump</code>, image và <code>compose.yaml</code> để chạy ở nơi khác.</p></td></tr>
+        <tr><th scope="row"><span>Ai đụng vào</span></th><td><p>Đội Embra truy cập đều phải ghi lý do, bạn thấy trong Activity.</p></td></tr>
+        <tr class="not"><th scope="row"><span>Chưa có</span></th><td><p>Extension, read replica, connection pooling, slow query log, tăng dung lượng khi đang chạy.</p></td></tr>
       </table>
     </div>
   </section>
