@@ -158,7 +158,7 @@
 
   /* ---------- partners (dark): quyền của agent ---------- */
   .partners { padding-block: 128px 0; overflow: hidden; }
-  .partners .in { max-width: 1560px; margin: 0 auto; padding-inline: clamp(16px, 6.6vw, 119px); }
+  .partners > .in { max-width: 1560px; margin: 0 auto; padding-inline: clamp(16px, 6.6vw, 119px); }
   .partners h2 { font-family: var(--mono); font-weight: 400; font-size: clamp(18px, 1.5vw, 25px); letter-spacing: .02em; margin: 0 0 34px; text-transform: uppercase; }
   .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 52px; }
   .tile { border: 1px solid rgba(250,250,250,.5); padding: 26px 26px 30px; display: grid; gap: 16px; align-content: start; min-width: 0; }
@@ -251,7 +251,7 @@
 
   /* ---------- hỏi đáp ---------- */
   .faq { padding-block: 40px 120px; }
-  .faq .in { max-width: 1000px; margin: 0 auto; padding-inline: 24px; }
+  .faq > .in { max-width: 1000px; margin: 0 auto; padding-inline: 24px; }
   .faq .h-display { margin-bottom: 44px; }
   .faq details { border-top: 1px solid rgba(35,35,35,.3); }
   .faq details:last-of-type { border-bottom: 1px solid rgba(35,35,35,.3); }
@@ -474,7 +474,7 @@
     .project-map { padding: 18px; }
     .node-type { display: none; }
     .about { padding-block: 60px; }
-    .partners .in { padding-inline: 24px; }
+    .partners > .in { padding-inline: 24px; }
     .main { padding: 18px 14px; }
     .showcase h2 { line-height: 1.5; }
     .foot nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
@@ -596,6 +596,47 @@
   /* log nền: một dòng gate lớp B thật sự đọc được */
   .log-stream .gate-b { color: rgba(255,92,104,.95); background: linear-gradient(90deg, rgba(255,45,63,.10), rgba(255,45,63,0) 80%); box-shadow: inset 2px 0 0 rgba(255,45,63,.7); }
   .log-stream .gate-b b { font-weight: 500; color: #FFB000; }
+
+  /* ---------- 02: ba chốt chặn ---------- */
+  .weapon { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(28px, 5vw, 80px); align-items: center; margin-top: 88px; }
+  .weapon.flip { grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); }
+  .weapon.flip .w-copy { order: 2; }
+  .w-num { display: block; font: 14px/1.6 var(--mono); letter-spacing: .06em; color: var(--lime); }
+  .showcase > .w-num { margin-bottom: 14px; }
+  .weapon h3 { font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 480; text-transform: uppercase; font-size: clamp(30px, 2.8vw, 44px); line-height: 1.08; letter-spacing: .01em; color: var(--white); margin: 14px 0 20px; padding-top: .12em; }
+  .weapon .w-copy p { color: #C4C4B8; font-size: 17px; line-height: 1.7; max-width: 34em; margin: 0 0 12px; }
+  .w-ui { font-family: var(--mono); font-size: 13px; }
+  .w-tag { padding: 3px 8px; border: 1px solid currentColor; font-size: 11.5px; letter-spacing: .06em; }
+  .w-tag.f { color: var(--neon-red); } .w-tag.w { color: var(--amber); }
+  .gate { list-style: none; margin: 0; padding: 6px 18px; }
+  .gate li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-top: 1px solid rgba(250,250,250,.12); align-items: start; }
+  .gate li:first-child { border-top: 0; }
+  .gate code { display: block; color: var(--white); line-height: 1.5; overflow-wrap: anywhere; }
+  .gate small { display: block; color: rgba(250,250,250,.5); font-size: 12px; margin-top: 2px; }
+  .g { display: inline-grid; place-items: center; width: 26px; height: 26px; border: 1px solid rgba(250,250,250,.45); color: var(--white); font: 500 14px var(--mono); }
+  .g.a { color: var(--lime); border-color: var(--lime); }
+  .g.w { color: var(--amber); border-color: var(--amber); background: rgba(255,176,0,.08); }
+  .g.f { color: var(--neon-red); border-color: var(--neon-red); background: rgba(255,45,63,.08); }
+  .verdict { margin: 0 18px 10px; padding: 10px 14px; line-height: 1.55; border-left: 2px solid; }
+  .verdict.f { border-color: var(--neon-red); color: #FFB3BA; background: rgba(255,45,63,.07); }
+  .verdict.w { border-color: var(--amber); color: #FFE3A3; background: rgba(255,176,0,.06); }
+  .ladder { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 18px 16px; border-top: 1px solid rgba(250,250,250,.12); margin-top: 6px; color: rgba(250,250,250,.6); font-size: 12px; }
+  .ladder span { display: inline-flex; align-items: center; gap: 8px; }
+  .ladder .g { width: 20px; height: 20px; font-size: 11.5px; }
+  .term { padding: 16px 18px 18px; line-height: 1.65; color: #C4C4B8; }
+  .term p { margin: 0; }
+  .term .u { color: var(--white); } .term .u::before { content: "> "; color: var(--lime); }
+  .term .c { color: var(--lime); margin-top: 12px; } .term .c::before { content: "⏺ "; }
+  .term .r { padding-left: 14px; margin: 4px 0 0 5px; border-left: 1px solid rgba(250,250,250,.2); color: rgba(250,250,250,.55); }
+  .term .r b { color: var(--amber); font-weight: 400; }
+  .term .s { color: var(--white); margin-top: 12px; } .term .s::before { content: "⏺ "; }
+  .term .no { margin-top: 14px; padding-top: 10px; border-top: 1px dashed rgba(250,250,250,.2); color: rgba(250,250,250,.45); font-size: 12px; }
+  .verdict { max-width: none; }
+  .partners .showcase > h2 { font-family: var(--pixel); font-variation-settings: var(--px); font-weight: 480; text-transform: uppercase; font-size: clamp(30px, 2.8vw, 44px); line-height: 1.08; letter-spacing: .01em; margin: 14px 0 20px; padding-top: .12em; }
+  @media (max-width: 960px) {
+    .weapon, .weapon.flip { grid-template-columns: minmax(0, 1fr); margin-top: 64px; }
+    .weapon.flip .w-copy { order: 0; }
+  }
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://stats.embra.cloud/js/pa-oxyg6Tp26hm2eRS6x5TRV.js"></script>
@@ -676,7 +717,26 @@
       <g font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor"><text x="48" y="15">staging</text><text x="180" y="15">approve</text><text x="318" y="15">prod</text></g>
       <g fill="none" stroke="#D3F28C" stroke-width="1.1"><path d="M2 24 C-2 10 40 4 70 5 C104 6 130 14 127 26 C124 38 86 42 58 41 C26 40 4 34 8 20" /></g>
     </svg>
-    <a class="scroll-cue" href="#ve-embra">[ &nbsp;<span>CUỘN ĐỂ XEM</span>&nbsp; ]</a>
+    <a class="scroll-cue" href="#nguoi-lam">[ &nbsp;<span>CUỘN ĐỂ XEM</span>&nbsp; ]</a>
+  </section>
+
+  <!-- ============ VISION (dark): founder ============ -->
+  <section class="vision dark" id="nguoi-lam" aria-labelledby="h-founder">
+    <div class="founder-letter">
+      <p class="eyebrow rv">From the founder</p>
+      <h2 class="h-display rv" id="h-founder">Mình từng phá hỏng database của công ty.</h2>
+      <div class="founder-story">
+        <p class="body-copy rv">Khi xây Embra, mình luôn nghĩ về tình huống đó: app đang lỗi, mọi người chờ hệ thống hoạt động lại, còn người xử lý phải tìm xem dữ liệu nào đã mất, backup có dùng được không và restore sẽ mất bao lâu.</p>
+        <p class="body-copy rv">Với một team nhỏ, người viết code thường cũng là người deploy và xử lý sự cố. Bạn cần đưa tính năng mới lên, nhưng mỗi thay đổi database lại có thể ảnh hưởng tới dữ liệu đang chạy thật.</p>
+        <p class="body-copy rv">Đó là vấn đề mình muốn giải quyết với Embra: thấy rủi ro trước khi chạy migration, có bước review rõ ràng và chuẩn bị đường restore trước khi cần đến nó.</p>
+        <p class="body-copy rv">Tên Embra lấy từ <i>ember</i>: tro than hồng, nơi chim thiêng tái sinh. Hệ thống nào rồi cũng có lúc hỏng; Embra ở đó để app của bạn đứng dậy, và để bạn biết trước mình sẽ mất gì.</p>
+      </div>
+      <div class="founder-signature rv">
+        <p class="founder-name">Hoàng Xuân <span>· Founder, Embra</span></p>
+        <p class="fine">Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân, chưa có pháp nhân.</p>
+        <p class="founder-links"><a href="https://github.com/hxuan190">GitHub ↗</a><a href="https://www.linkedin.com/in/hxuan190">LinkedIn ↗</a><a href="mailto:hello@embra.cloud">hello@embra.cloud ↗</a></p>
+      </div>
+    </div>
   </section>
 
   <!-- ============ PROJECT OVERVIEW ============ -->
@@ -687,7 +747,7 @@
         <h2 class="h-display rv" id="h-project">Bắt đầu với frontend.<br>Thêm backend<br class="mobile-only"> khi cần.</h2>
         <p class="body-copy rv">Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc gom app, PostgreSQL và lịch sử deploy vào cùng một project, để bạn bớt phải tự nối các phần vận hành.</p>
         <p class="fine rv">Có thể bắt đầu từ landing page hoặc SPA, rồi thêm backend khi cần. Beta nhận app production trong giới hạn từng gói; mỗi khách được onboarding trực tiếp.</p>
-        <a class="bracket rv" href="#thong-so">[Xem bảng giá]</a>
+        <a class="bracket rv" href="/bang-gia/">[Xem bảng giá]</a>
       </div>
       <figure class="project-map rv">
         <figcaption><span>PROJECT / CỬA HÀNG CỦA BẠN</span><span class="map-badge">MINH HOẠ</span></figcaption>
@@ -703,15 +763,54 @@
   <!-- ============ PARTNERS (dark): quyền + cửa sổ sản phẩm ============ -->
   <section class="partners dark" id="quyen">
     <div class="in">
-      <p class="eyebrow rv">02 / Có trong beta</p>
-      <h2 class="h-display rv">Từ code đến app.<br>Theo dõi mỗi lần deploy.</h2>
-      <div class="tiles">
-        <article class="tile rv"><span class="lab">001 / BUILD &amp; DEPLOY</span><h3>Đưa code<br>thành app.</h3><p>Chọn repository trên GitHub, Embra tự build từ source và deploy app. Build logs giúp bạn tìm chỗ cần sửa nếu một bước không thành công.</p></article>
-        <article class="tile rv"><span class="lab">002 / CHI PHÍ</span><h3>Hiểu chi phí<br>trước khi chạy</h3><p>Xem tài nguyên dự kiến, cách tính phí và giới hạn sử dụng trước khi deploy. Giá từ 249.000đ mỗi project mỗi tháng, trả bằng VietQR: <a href="/bang-gia/">xem bảng giá</a>.</p></article>
-        <article class="tile rv"><span class="lab">003 / VẬN HÀNH</span><h3>Theo dõi app<br>ở một nơi.</h3><p>Xem logs, health checks và lịch sử deploy của các service trong cùng một project, để dễ đối chiếu khi có sự cố.</p></article>
+      <p class="eyebrow rv">02 / Cách Embra giữ dữ liệu của bạn</p>
+      <h2 class="h-display rv">Ba chốt chặn<br>trước khi dữ liệu mất.</h2>
+      <p class="section-note rv">Mỗi chốt là một hành vi có thật trong sản phẩm. Câu chữ trong các khung dưới đây lấy từ thông báo thật của Embra.</p>
+
+      <div class="weapon" id="gate">
+        <div class="w-copy">
+          <span class="w-num rv">001 / MIGRATION</span>
+          <h3 class="rv">Mỗi câu migration đều bị chấm điểm.</h3>
+          <p class="rv">Embra diễn tập file migration trên bản sao database và xếp từng câu lệnh vào sáu lớp, từ A tới F. Câu Embra không đọc hiểu được bị xếp lớp E: không chứng minh được an toàn thì không chạy.</p>
+          <p class="rv">Câu có thể xoá dữ liệu được ghi rõ sẽ xoá bao nhiêu giá trị, ở bảng nào. Production chỉ đổi khi chủ workspace duyệt.</p>
+        </div>
+        <div class="window w-ui rv" role="group" aria-label="Minh hoạ: plan migration 0013_orders.sql, bốn câu lệnh lớp A, C, B và E; câu lớp E làm cả file bị từ chối">
+          <div class="win-bar"><span>shop-vn / plan / <b>0013_orders.sql</b></span><span class="sp"></span><span class="w-tag f">BỊ TỪ CHỐI</span></div>
+          <ol class="gate">
+            <li><b class="g a">A</b><span><code>ALTER TABLE orders ADD COLUMN note text;</code><small>add column</small></span></li>
+            <li><b class="g">C</b><span><code>ALTER TABLE orders ALTER COLUMN status SET NOT NULL;</code><small>set not null (quét cả bảng dưới AccessExclusive)</small></span></li>
+            <li><b class="g w">B</b><span><code>ALTER TABLE orders DROP COLUMN legacy_ref;</code><small>drop column · có nguy cơ mất dữ liệu</small></span></li>
+            <li><b class="g f">E</b><span><code>DO $$ BEGIN … END $$;</code><small>DO block</small></span></li>
+          </ol>
+          <p class="verdict f">[✕] File 0013_orders.sql, câu lệnh #4 lớp E: DO block. Embra không chạy lớp E và F.</p>
+          <p class="verdict w">[‖] Bỏ câu #4, plan lại: lớp nặng nhất B, ghi rõ số giá trị sẽ xoá ở orders.legacy_ref. Plan production cần chủ workspace duyệt.</p>
+          <div class="ladder" aria-label="Sáu lớp rủi ro, từ nặng tới nhẹ"><span><b class="g f">F</b>bị cấm</span><span><b class="g f">E</b>không kiểm được</span><span><b class="g w">B</b>mất dữ liệu</span><span><b class="g">D</b>ngoài transaction</span><span><b class="g">C</b>khoá bảng lâu</span><span><b class="g a">A</b>rủi ro thấp</span></div>
+        </div>
+      </div>
+
+      <div class="weapon flip" id="agent">
+        <div class="w-copy">
+          <span class="w-num rv">002 / AI AGENT</span>
+          <h3 class="rv">Agent deploy được. Agent không duyệt được.</h3>
+          <p class="rv">Claude Code, Cursor hay Codex gọi Embra qua MCP để build, diễn tập migration và lên plan. Plan production dừng ở trạng thái chờ duyệt; agent chỉ nhận một link để đưa cho bạn.</p>
+          <p class="rv">Embra cố ý không có công cụ nào cho agent tự duyệt, huỷ, xoá, restore hay đổi quyền. Chữ lấy từ log và dữ liệu app được đánh dấu là dữ liệu, không phải lệnh.</p>
+        </div>
+        <div class="window w-ui rv" role="group" aria-label="Minh hoạ: agent gọi embra_plan, plan dừng ở awaiting_approval, agent báo người dùng cần duyệt">
+          <div class="win-bar"><span>claude code / <b>shop-vn</b></span><span class="sp"></span><span class="w-tag w">CHỜ DUYỆT</span></div>
+          <div class="term">
+            <p class="u">deploy nhánh feat/orders-note lên production</p>
+            <p class="c">embra_plan(environment: "shop-vn/production")</p>
+            <p class="r">state: <b>awaiting_approval</b><br>Production plans stop at awaiting_approval.</p>
+            <p class="c">embra_wait(operation: "op_7f3a…")</p>
+            <p class="r">A workspace owner must approve; agents cannot.<br>Share approval_url with the user.</p>
+            <p class="s">Plan đã diễn tập xong, lớp nặng nhất B. Chủ workspace cần duyệt trên web hoặc bằng CLI; agent không có quyền duyệt.</p>
+            <p class="no">Không có tool: approveOperation · cancelOperation · delete* · restore · đổi quyền</p>
+          </div>
+        </div>
       </div>
 
       <div class="showcase" id="stage">
+        <span class="w-num rv">003 / RESTORE</span>
         <h2 class="rv">Khi dữ liệu sai: khôi phục có ghi rõ phần mất</h2>
         <p class="section-note rv">Trong demo này, một job của bản mới chạy <code>UPDATE orders</code> thiếu <code>WHERE</code>. Health check vẫn xanh vì app không lỗi, chỉ dữ liệu sai. Bạn chọn một mốc trước sự cố; Embra khôi phục ra một database mới chạy song song, ghi rõ phần ghi sau mốc sẽ mất, và chỉ chuyển app khi owner duyệt. Code giữ nguyên, chỉ database đổi.</p>
         <div class="stage rv">
@@ -772,48 +871,6 @@
     <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
   </section>
 
-  <!-- ============ DEST: thông số ============ -->
-  <section class="dest" id="thong-so" aria-labelledby="h-dest">
-    <div class="dest-head grid-paper"><h2 class="h-display rv" id="h-dest">Phạm vi beta</h2><p class="scope-intro">Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Giới hạn từng gói ở <a href="/bang-gia/">bảng giá</a>; stack của bạn được xác nhận trước khi bắt đầu.</p></div>
-    <div class="cards" id="cards" role="region" aria-label="Phạm vi beta, cuộn ngang để xem thêm" tabindex="0">
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="120" y="330" width="96" height="130"/><path d="M132 0 V519 M152 0 V519 M30 300 H320"/><rect x="152" y="372" width="40" height="40"/></g></svg>
-        <div class="top"><span class="num">001</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="34"/><ellipse cx="54" cy="40" rx="15" ry="34"/><path d="M20 40 H88 M26 22 H82 M26 58 H82"/><circle cx="54" cy="40" r="3" fill="currentColor"/></g></svg></div>
-        <h3><small>FRONTEND</small>Website của bạn</h3>
-        <p>Landing page, portfolio, SPA. Build từ GitHub, domain riêng và HTTPS.<br><span class="st plan">có trong beta</span></p>
-      </article>
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="220" cy="90" r="70"/><path d="M60 40 H330 V160 H60 Z M80 200 V519"/></g></svg>
-        <div class="top"><span class="num">002</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="54" cy="14" rx="36" ry="9"/><ellipse cx="54" cy="32" rx="36" ry="9"/><ellipse cx="54" cy="50" rx="36" ry="9"/><ellipse cx="54" cy="68" rx="36" ry="9"/><path d="M54 5 V77"/></g></svg></div>
-        <h3><small>BACKEND</small>App &amp; API</h3>
-        <p>Bắt đầu với Node.js / Next.js. Config, logs, metrics và health checks theo từng service.<br><span class="st plan">có trong beta</span></p>
-      </article>
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M20 260 L200 120 L370 300 M200 120 V519"/><circle cx="200" cy="120" r="4"/></g></svg>
-        <div class="top"><span class="num">003</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M54 6 L98 28 L54 50 L10 28 Z M10 40 L54 62 L98 40 M10 52 L54 74 L98 52"/><path d="M32 17 L76 39 M76 17 L32 39"/></g></svg></div>
-        <h3><small>DATABASE</small>PostgreSQL</h3>
-        <p>PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm.<br><span class="st plan">có trong beta</span></p>
-      </article>
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="60" y="360" width="120" height="159"/><path d="M280 0 V519 M300 0 V519 M0 330 H389"/></g></svg>
-        <div class="top"><span class="num">004</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="54" cy="40" r="32"/><path d="M54 18 V40 L70 50"/><path d="M22 40 A32 32 0 0 1 40 12 M36 6 L40 12 L33 15"/></g></svg></div>
-        <h3><small>DỊCH VỤ</small>Thêm service</h3>
-        <p>Worker, cron và bucket lưu file theo từng gói. Queue, auth, email, realtime là roadmap.<br><span class="st plan">có trong beta · queue sau</span></p>
-      </article>
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M40 80 H340 M40 100 H340 M190 100 V519"/><rect x="140" y="220" width="100" height="70"/></g></svg>
-        <div class="top"><span class="num">005</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="14" y="12" width="80" height="56"/><path d="M26 32 L40 40 L26 48 M48 50 H70"/></g></svg></div>
-        <h3><small>VIỆT NAM</small>Server ở TP.HCM</h3>
-        <p>App, PostgreSQL, backup và log chạy trên máy chủ tại TP.HCM; giao diện tiếng Việt, trả bằng VND.<br><span class="st plan">TP.HCM</span></p>
-      </article>
-      <article class="card dark">
-        <svg class="bp" viewBox="0 0 389 519" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="190" cy="300" r="120"/><path d="M0 300 H389"/></g></svg>
-        <div class="top"><span class="num">006</span><svg class="ico" viewBox="0 0 108 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="38" cy="40" r="28"/><circle cx="70" cy="40" r="28"/><path d="M10 40 H98"/><circle cx="54" cy="40" r="3" fill="currentColor"/></g></svg></div>
-        <h3><small>BETA</small>Bắt đầu beta</h3>
-        <p>Onboarding thủ công, từng team một. Stack, giới hạn và chi phí được xác nhận trước khi bạn bắt đầu.<br><span class="st plan">từ 249.000đ / tháng</span></p>
-      </article>
-    </div>
-  </section>
 
   <!-- ============ TRẠNG THÁI ============ -->
   <section class="status-board grid-paper" id="trang-thai" aria-labelledby="h-status">
@@ -848,24 +905,6 @@
     </div>
   </section>
 
-  <!-- ============ VISION (dark): founder ============ -->
-  <section class="vision dark" id="nguoi-lam" aria-labelledby="h-founder">
-    <div class="founder-letter">
-      <p class="eyebrow rv">From the founder</p>
-      <h2 class="h-display rv" id="h-founder">Mình từng phá hỏng database của công ty.</h2>
-      <div class="founder-story">
-        <p class="body-copy rv">Khi xây Embra, mình luôn nghĩ về tình huống đó: app đang lỗi, mọi người chờ hệ thống hoạt động lại, còn người xử lý phải tìm xem dữ liệu nào đã mất, backup có dùng được không và restore sẽ mất bao lâu.</p>
-        <p class="body-copy rv">Với một team nhỏ, người viết code thường cũng là người deploy và xử lý sự cố. Bạn cần đưa tính năng mới lên, nhưng mỗi thay đổi database lại có thể ảnh hưởng tới dữ liệu đang chạy thật.</p>
-        <p class="body-copy rv">Đó là vấn đề mình muốn giải quyết với Embra: thấy rủi ro trước khi chạy migration, có bước review rõ ràng và chuẩn bị đường restore trước khi cần đến nó.</p>
-        <p class="body-copy rv">Mình kiểm tra riêng hai điều: dữ liệu có đúng và app có còn đáp ứng được khi migration chạy. Trong <a href="/engineering/backfill-8m/">lab backfill 8 triệu dòng</a>, phần toàn vẹn đạt trong fixture nhưng latency chưa đạt mục tiêu. Mình công bố cả kết quả và giới hạn phép đo để người đọc có thể đối chiếu trước khi cùng thử sản phẩm.</p>
-      </div>
-      <div class="founder-signature rv">
-        <p class="founder-name">Hoàng Xuân <span>· Founder, Embra</span></p>
-        <p class="fine">Mình trực tiếp xây dựng và support. Embra hiện là dự án cá nhân, chưa có pháp nhân.</p>
-        <p class="founder-links"><a href="https://github.com/hxuan190">GitHub ↗</a><a href="https://www.linkedin.com/in/hxuan190">LinkedIn ↗</a><a href="mailto:hello@embra.cloud">hello@embra.cloud ↗</a></p>
-      </div>
-    </div>
-  </section>
 
   <!-- ============ HOW TO JOIN ============ -->
   <section class="join" id="join" aria-labelledby="h-join">
@@ -1073,40 +1112,6 @@
   const tickClock = () => { const t = "HCM " + fmt.format(new Date()); clocks.forEach(c => (c.textContent = t)); };
   tickClock(); setInterval(tickClock, 1000);
 
-  /* ---------- thẻ thông số: nút kéo ngang ---------- */
-  const cards = document.getElementById("cards");
-  const moveCards = (direction) => {
-    const step = cards.querySelector(".card").getBoundingClientRect().width + parseFloat(getComputedStyle(cards).columnGap);
-    const end = cards.scrollWidth - cards.clientWidth;
-    const wraps = direction > 0 ? cards.scrollLeft >= end - 2 : cards.scrollLeft <= 2;
-    cards.scrollTo({
-      left: wraps ? (direction > 0 ? 0 : end) : cards.scrollLeft + direction * step,
-      behavior: still ? "auto" : "smooth"
-    });
-  };
-  // Auto-advance only while visible; leave time to read after manual interaction.
-  const carousel = cards.closest(".dest");
-  let carouselVisible = false, carouselHovered = false, carouselTouching = false;
-  let carouselResumeAt = 0;
-  const pauseCarousel = () => { carouselResumeAt = Date.now() + 8000; };
-  new IntersectionObserver(([entry]) => {
-    carouselVisible = entry.isIntersecting;
-  }, { threshold: .25 }).observe(cards);
-  carousel.addEventListener("pointerenter", (event) => {
-    if (event.pointerType === "mouse") carouselHovered = true;
-  });
-  carousel.addEventListener("pointerleave", () => { carouselHovered = false; pauseCarousel(); });
-  carousel.addEventListener("pointerdown", () => { carouselTouching = true; pauseCarousel(); });
-  window.addEventListener("pointerup", () => { if (carouselTouching) pauseCarousel(); carouselTouching = false; });
-  window.addEventListener("pointercancel", () => { carouselTouching = false; pauseCarousel(); });
-  carousel.addEventListener("wheel", pauseCarousel, { passive: true });
-  carousel.addEventListener("keydown", pauseCarousel);
-  carousel.addEventListener("click", pauseCarousel);
-  if (!still) setInterval(() => {
-    if (!carouselVisible || document.hidden || carouselHovered || carouselTouching ||
-        carousel.matches(":focus-within") || Date.now() < carouselResumeAt || cards.scrollWidth <= cards.clientWidth + 2) return;
-    moveCards(1);
-  }, 4000);
 
   /* ---------- nav: đánh dấu section đang xem ---------- */
   const links = [...document.querySelectorAll(".nav a[href^='#']:not(.join-btn)")];
