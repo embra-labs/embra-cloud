@@ -1,4 +1,4 @@
-# Embra · Mỗi lần deploy đều có đường lui
+# Embra · Production không phải chỗ để chạy thử
 
 Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: build, deploy và theo dõi app trong cùng một project, với review thay đổi database và chuẩn bị phục hồi.
 

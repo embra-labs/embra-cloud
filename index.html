@@ -11,14 +11,14 @@
 <meta property="og:site_name" content="Embra">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:url" content="https://embra.cloud/">
-<meta property="og:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
+<meta property="og:title" content="EMBRA · Production không phải chỗ để chạy thử.">
 <meta property="og:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta property="og:image" content="https://embra.cloud/og-beta-launch.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="EMBRA: Mỗi lần deploy đều có đường lui.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="EMBRA · Mỗi lần deploy đều có đường lui.">
+<meta name="twitter:title" content="EMBRA · Production không phải chỗ để chạy thử.">
 <meta name="twitter:description" content="Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta name="twitter:image" content="https://embra.cloud/og-beta-launch.png">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -598,6 +598,14 @@
   /* log nền: một dòng gate lớp B thật sự đọc được */
   .log-stream .gate-b { color: rgba(255,92,104,.95); background: linear-gradient(90deg, rgba(255,45,63,.10), rgba(255,45,63,0) 80%); box-shadow: inset 2px 0 0 rgba(255,45,63,.7); }
   .log-stream .gate-b b { font-weight: 500; color: #FFB000; }
+  /* Desktop: log stays bright at the edges, fades behind the centre column so it never fights the copy or the form. */
+  @media (min-width: 861px) {
+    .log-stream { -webkit-mask-image: linear-gradient(90deg, #000 0 24%, rgba(0,0,0,.22) 33% 67%, #000 76%); mask-image: linear-gradient(90deg, #000 0 24%, rgba(0,0,0,.22) 33% 67%, #000 76%); }
+  }
+  @media (max-width: 860px) {
+    .log-stream .gate-b { color: rgba(245,139,120,.17); background: none; box-shadow: none; }
+    .log-stream .gate-b b { color: inherit; font-weight: inherit; }
+  }
 
   /* ---------- 02: ba chốt chặn ---------- */
   .weapon { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(28px, 5vw, 80px); align-items: center; margin-top: 88px; }
@@ -712,24 +720,8 @@
     <div class="hero-center">
       <p class="caps rv">HOSTING APP TẠI VIỆT NAM · NODE.JS / NEXT.JS + POSTGRESQL</p>
       <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
-      <h1 class="hero-h rv">Mỗi lần deploy<br><span>đều có đường lui.</span></h1>
-      <p class="hero-copy rv">Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam. Embra là nơi bạn build, deploy và theo dõi app — với bước review thay đổi database và chuẩn bị phục hồi.</p>
-      <script>
-      // Preview only: ?h=1 | 9 | 10 swaps the hero hook. Remove once one is chosen.
-      (() => {
-        const v = {
-          "1": ["Production<br class=\"m\"> không phải<br><span>chỗ để chạy thử.</span>",
-                "Embra diễn tập migration trên bản sao database của bạn, chấm mức rủi ro A–F, rồi mới chạy trên production. Cần lùi thì restore ra database mới, bản cũ giữ 72 giờ. Hosting app và PostgreSQL, server tại TP.HCM."],
-          "9": ["Lần cuối bạn<br>restore thử backup<br><span>là khi nào?</span>",
-                "Embra định kỳ restore thử backup PostgreSQL của bạn và ghi kết quả lên dashboard. Cần lùi thì restore ra database mới, bản cũ giữ 72 giờ. Hosting app và PostgreSQL, server tại TP.HCM."],
-          "10": ["Cho AI deploy.<br><span>Đừng cho nó xoá database.</span>",
-                "Qua MCP của Embra (sắp phát hành), agent build, diễn tập migration và đọc log, nhưng không có tool để tự duyệt, restore hay xoá dữ liệu. Những bước đó chờ bạn duyệt. Hosting app và PostgreSQL, server tại TP.HCM."]
-        }[new URLSearchParams(location.search).get("h")];
-        if (!v) return;
-        document.querySelector(".hero-h").innerHTML = v[0];
-        document.querySelector(".hero-copy").textContent = v[1];
-      })();
-      </script>
+      <h1 class="hero-h rv">Production<br class="m"> không phải<br><span>chỗ để chạy thử.</span></h1>
+      <p class="hero-copy rv">Embra diễn tập migration trên bản sao database của bạn, chấm mức rủi ro A–F, rồi mới chạy trên production. Cần lùi thì restore ra database mới, bản cũ giữ 72 giờ. Hosting app và PostgreSQL, server tại TP.HCM.</p>
       <p class="hero-scope rv">BETA TRẢ PHÍ · TỪ 249.000Đ / PROJECT / THÁNG · <a href="/bang-gia/">XEM BẢNG GIÁ</a></p>
       <form class="wl-hero rv" id="wl-hero" novalidate>
         <label class="vh" for="hero-email">Email</label>
