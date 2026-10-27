@@ -53,7 +53,10 @@ Hoàng Xuân, founder; dự án cá nhân, chưa có pháp nhân. [GitHub](https
 
 - [Bảng giá](https://embra.cloud/bang-gia/)
 - [Website / đăng ký](https://embra.cloud/#join)
-- [Bắt đầu với Embra](https://github.com/embra-labs/.github/blob/main/docs/start-here.md)
+- [Bắt đầu với Embra](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/)
+- [Tài liệu](https://docs.embra.cloud/) (bản cho agent: https://docs.embra.cloud/llms.txt)
+- [Trạng thái hệ thống](https://status.embra.cloud/)
+- [Console (đăng nhập)](https://console.embra.cloud/)
 - [Website dạng Markdown](https://embra.cloud/index.md)
 - [CLI](https://github.com/embra-labs/cli)
 - [Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md)

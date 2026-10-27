@@ -332,6 +332,9 @@
 
 
   /* ---------- responsive ---------- */
+  .nav a { white-space: nowrap; }
+  @media (max-width: 1600px) { .nav { gap: clamp(20px, 2.6vw, 56px); } }
+  @media (max-width: 1180px) { .nav a:not(.join-btn) { display: none; } }
   @media (max-width: 1100px) {
     .nav a:not(.join-btn) { display: none; }
     .tiles { grid-template-columns: minmax(0, 1fr); gap: 20px; }
@@ -692,6 +695,8 @@
       <a href="#quyen">Cách hoạt động</a>
       <a href="/bang-gia/">Bảng giá</a>
       <a href="/engineering/">Engineering</a>
+      <a href="https://docs.embra.cloud/">Tài liệu</a>
+      <a href="https://console.embra.cloud/">Đăng nhập</a>
       <a class="join-btn" href="#join"><span class="star"><svg aria-hidden="true"><use href="#star" /></svg></span><span>Đăng ký dùng beta</span></a>
     </nav>
   </div>
@@ -726,7 +731,7 @@
         <button class="bracket" type="submit">[Đăng ký dùng beta]</button>
       </form>
       <p class="err" id="hero-err" role="alert" hidden></p>
-      <p class="hero-links rv"><a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">Bắt đầu ở đây</a><a href="#trang-thai">Xem bằng chứng kỹ thuật</a></p>
+      <p class="hero-links rv"><a href="https://docs.embra.cloud/bat-dau/bat-dau-nhanh/">Bắt đầu ở đây</a><a href="#trang-thai">Xem bằng chứng kỹ thuật</a></p>
       <a class="hero-more rv" href="#stage">Xem flow sản phẩm <span aria-hidden="true">↓</span></a>
     </div>
 
@@ -926,7 +931,7 @@
         <tr><th scope="row">Roadmap mở rộng</th><td>Queue · auth · email · realtime</td></tr>
       </table>
       <p class="sb-note">Beta trả phí từ 25/10/2026: nhận app production trong giới hạn từng gói, onboarding trực tiếp từng khách. Xem <a href="/bang-gia/">bảng giá</a>.</p>
-      <p class="surface-links"><a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">Bắt đầu với Embra →</a><a href="https://github.com/embra-labs/.github/blob/main/docs/changelog.md">Changelog →</a><a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">Hỗ trợ / báo lỗi →</a></p>
+      <p class="surface-links"><a href="https://docs.embra.cloud/bat-dau/bat-dau-nhanh/">Bắt đầu với Embra →</a><a href="https://docs.embra.cloud/">Tài liệu →</a><a href="https://status.embra.cloud/">Trạng thái hệ thống →</a><a href="https://github.com/embra-labs/.github/blob/main/docs/changelog.md">Changelog →</a><a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">Hỗ trợ / báo lỗi →</a></p>
     </div>
   </section>
 
@@ -1016,7 +1021,9 @@
       <p class="legal">© 2026 EMBRA · BETA TRẢ PHÍ</p>
     </div>
     <nav aria-label="Chân trang">
-      <a href="https://github.com/embra-labs/.github/blob/main/docs/start-here.md">[   BẮT ĐẦU   ]</a>
+      <a href="https://console.embra.cloud/">[   ĐĂNG NHẬP   ]</a>
+      <a href="https://docs.embra.cloud/">[   TÀI LIỆU   ]</a>
+      <a href="https://status.embra.cloud/">[   TRẠNG THÁI   ]</a>
       <a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">[   HỖ TRỢ   ]</a>
       <a href="/engineering/">[   ENGINEERING   ]</a>
       <a href="#quyen">[   CÁCH HOẠT ĐỘNG   ]</a>
