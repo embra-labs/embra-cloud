@@ -12,7 +12,7 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 ## Có gì trong beta (cập nhật 24/10/2026)
 
-Deploy từ GitHub qua dashboard, Embra tự build từ source. PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm. Worker, cron và bucket lưu file theo từng gói. Domain riêng + HTTPS, log và metrics, CLI và MCP (sắp phát hành công khai; `embra mcp`: agent đề xuất và đọc trạng thái, chỉ owner duyệt production), tự xuất app và dữ liệu trên dashboard (Cài đặt → Export). Máy chủ tại TP.HCM.
+Deploy từ GitHub qua dashboard, Embra tự build từ source. PostgreSQL riêng, review migration trước khi chạy, backup liên tục và restore theo thời điểm. Worker, cron và bucket lưu file theo từng gói. Domain riêng + HTTPS, log và metrics, CLI và MCP (`embra mcp`: agent đề xuất và đọc trạng thái, chỉ owner duyệt production), tự xuất app và dữ liệu trên dashboard (Cài đặt → Export). Máy chủ tại TP.HCM.
 
 Beta tập trung vào frontend, Node.js / Next.js và PostgreSQL. Chưa có: queue, auth, email, realtime (roadmap).
 
