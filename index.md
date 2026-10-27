@@ -8,7 +8,7 @@ Bạn đang xây website, web app hoặc API; người viết code cũng là ng�
 
 **Cập nhật 25/10/2026:** beta trả phí, nhận app production trong giới hạn từng gói; onboarding trực tiếp từng khách. Giá từ 249.000đ mỗi project mỗi tháng: [bảng giá](https://embra.cloud/bang-gia/).
 
-[Bắt đầu ở đây](https://github.com/embra-labs/.github/blob/main/docs/start-here.md) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
+[Bắt đầu ở đây](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/) · [Tài liệu](https://docs.embra.cloud/) · [Trạng thái hệ thống](https://status.embra.cloud/) · [Đăng nhập console](https://console.embra.cloud/) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
 ## Có gì trong beta (cập nhật 24/10/2026)
 
