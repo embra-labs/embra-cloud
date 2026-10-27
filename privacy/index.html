@@ -122,6 +122,7 @@
   <h3>Log</h3>
   <ul>
     <li>Embra lưu những gì app ghi ra stdout/stderr (web, worker, cron) để bạn tìm lại sau này. Log có thể chứa mọi thứ app in ra, nên <strong>đừng in password, token, API key hay dữ liệu cá nhân không cần thiết vào log</strong>.</li>
+    <li>Edge của Embra ghi thêm một dòng cho mỗi request tới app: phương thức, đường dẫn (không có query string), mã trạng thái, thời gian xử lý và dung lượng trả về. Dòng này không có địa chỉ IP, header, cookie hay nội dung request. Khi app nhận quá nhiều request, Embra chỉ ghi một phần và thêm một dòng tổng kết. Các dòng này nằm cùng chỗ và giữ cùng thời hạn với log của app.</li>
     <li>Kho log giữ tối đa 30 ngày; khi kho gần đầy, ngày cũ nhất bị xoá trước, nên log có thể mất sớm hơn. Bạn tìm được trong 1 ngày (dùng thử), 7 ngày (Start), 14 ngày (Build) hoặc 30 ngày (Grow).</li>
     <li>Nếu app ghi log nhanh hơn 256 KiB mỗi giây, phần vượt không vào lịch sử và Embra ghi một dòng báo trong log.</li>
     <li>File log thô trên máy chủ (dùng cho xem log trực tiếp) bị xoá khi bạn xoá environment, hoặc 30 ngày sau khi container của nó bị gỡ.</li>
@@ -161,7 +162,7 @@
   <p>Console không dùng cookie quảng cáo hay theo dõi và không tải công cụ phân tích của bên thứ ba. Console có lưu vài tuỳ chọn giao diện (ví dụ vị trí các ô trên sơ đồ) trong bộ nhớ trình duyệt của bạn; dữ liệu này không gửi về Embra.</p>
   <h3>Địa chỉ IP</h3>
   <ul>
-    <li>Edge của Embra dùng địa chỉ IP trong bộ nhớ để giới hạn tốc độ request và không ghi access log. Máy chủ điều khiển của Embra không ghi IP của bạn vào log.</li>
+    <li>Edge của Embra dùng địa chỉ IP trong bộ nhớ để giới hạn tốc độ request. Edge ghi một dòng cho mỗi request tới app của bạn (xem mục Log) nhưng không ghi địa chỉ IP. Máy chủ điều khiển của Embra không ghi IP của bạn vào log.</li>
     <li>Ngoại lệ: đăng nhập CLI lưu IP và quốc gia như ở <a href="#tai-khoan">mục 3</a>. Báo cáo lạm dụng chỉ lưu HMAC một chiều của IP người báo, không lưu IP gốc.</li>
     <li>Request từ người dùng cuối tới app của bạn đi qua edge của Embra rồi tới app. App của bạn nhận địa chỉ IP của họ; app lưu gì là do bạn quyết định.</li>
   </ul>
