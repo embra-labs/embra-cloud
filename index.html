@@ -122,6 +122,7 @@
   .rule::before, .rule::after { content: ""; width: 38px; height: 1px; background: currentColor; }
   .hero-h { font-family: var(--sans); font-weight: 400; font-size: clamp(19px, 1.5vw, 23px); line-height: 1.5; margin: 22px 0 0; max-width: 640px; }
   .tagbox { display: inline-block; background: var(--white); color: var(--char); font-family: var(--mono); font-style: italic; font-size: 15px; padding: 3px 12px; margin-top: 4px; }
+  .nw { white-space: nowrap; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline; justify-content: center; margin-top: 14px; }
   .hero-cta .bracket { color: var(--lime); font-size: 19px; }
   .join .join-go { font-size: 17px; }
@@ -674,6 +675,25 @@
     .db-sheet td { padding: 0 0 14px; }
     .db-sheet td p { font-size: 15px; }
   }
+  /* ---------- 01: ba chốt trong một khung có tab (bật bằng JS; không JS thì hiện cả ba) ---------- */
+  .g-tabs { display: flex; gap: 0; margin-top: 44px; border-bottom: 1px solid rgba(250,250,250,.16); overflow-x: auto; scrollbar-width: none; }
+  .g-tabs[hidden] { display: none; }
+  .g-tabs button { flex: 0 0 auto; font: 500 14px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: rgba(250,250,250,.55); background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 16px 22px 14px; cursor: pointer; white-space: nowrap; }
+  .g-tabs button span { color: rgba(250,250,250,.35); margin-right: 10px; }
+  .g-tabs button:hover { color: var(--white); }
+  .g-tabs button[aria-selected="true"] { color: var(--lime); border-bottom-color: var(--lime); }
+  .g-tabs button[aria-selected="true"] span { color: var(--lime); }
+  .g-tabs button:focus-visible { outline: 1px solid var(--lime); outline-offset: -4px; }
+  #quyen.tabbed .weapon, #quyen.tabbed .showcase { margin-top: 48px; }
+  #quyen.tabbed [role="tabpanel"][hidden] { display: none !important; }
+  @media (max-width: 520px) { .g-tabs { margin-top: 28px; } .g-tabs button { padding: 14px 14px 12px; font-size: 12.5px; } #quyen.tabbed .weapon, #quyen.tabbed .showcase { margin-top: 32px; } }
+  /* mobile: diff + dòng sự cố lên trước danh sách bước, để thấy nguyên nhân và hậu quả trong cùng một màn */
+  @media (max-width: 1100px) { .win-body .panel-r { order: -1; border-top: 0; border-bottom: 1px solid rgba(250,250,250,.16); } }
+  /* hero: log nền lùi hẳn sau cột chữ ở giữa */
+  @media (min-width: 861px) {
+    .log-stream { -webkit-mask-image: linear-gradient(90deg, #000 0 16%, rgba(0,0,0,.05) 30% 70%, #000 84%); mask-image: linear-gradient(90deg, #000 0 16%, rgba(0,0,0,.05) 30% 70%, #000 84%); }
+  }
+  @media (max-width: 860px) { .log-stream { color: rgba(250,250,250,.045); } }
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://stats.embra.cloud/js/pa-oxyg6Tp26hm2eRS6x5TRV.js"></script>
@@ -731,7 +751,7 @@
       <p class="caps rv">HOSTING APP · SERVER TẠI TP.HCM · NODE.JS&nbsp;/&nbsp;NEXT.JS&nbsp;+&nbsp;POSTGRESQL</p>
       <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
       <h1 class="hero-h rv">Production<br class="m"> không phải<br><span>chỗ để chạy thử.</span></h1>
-      <p class="hero-copy rv">Agent deploy được, chỉ bạn duyệt production. Migration diễn tập và chấm A–F trước; cần lùi thì restore, bản cũ giữ 72&nbsp;giờ.</p>
+      <p class="hero-copy rv">Agent deploy được, chỉ bạn duyệt production. Migration diễn tập và chấm <span class="nw">A–F</span> trước; cần lùi thì restore, bản cũ giữ 72&nbsp;giờ.</p>
       <p class="hero-scope rv">BETA TRẢ PHÍ · TỪ&nbsp;249.000Đ&nbsp;/&nbsp;PROJECT&nbsp;/&nbsp;THÁNG · TRẢ&nbsp;VIETQR · <a href="#gia">XEM&nbsp;BẢNG&nbsp;GIÁ</a></p>
       <div class="hero-cta rv">
         <a class="bracket" href="https://console.embra.cloud/">[Dùng thử 7 ngày bằng GitHub]</a>
@@ -777,6 +797,11 @@
     <div class="in">
       <p class="eyebrow rv">01 / Cách Embra giữ dữ liệu của bạn</p>
       <h2 class="h-display rv">Ba chốt chặn<br>trước khi dữ liệu&nbsp;mất.</h2>
+      <div class="g-tabs" role="tablist" aria-label="Ba chốt chặn" hidden>
+        <button type="button" role="tab" id="tab-gate" aria-controls="gate" aria-selected="true"><span>001</span>Migration</button>
+        <button type="button" role="tab" id="tab-agent" aria-controls="agent" aria-selected="false" tabindex="-1"><span>002</span>AI agent</button>
+        <button type="button" role="tab" id="tab-stage" aria-controls="stage" aria-selected="false" tabindex="-1"><span>003</span>Restore</button>
+      </div>
 
       <div class="weapon" id="gate">
         <div class="w-copy">
@@ -942,7 +967,7 @@
         <tr><th scope="row">Chưa cam kết</th><td>SLA · uptime bằng con số · nhiều máy chủ</td></tr>
         <tr><th scope="row">Bằng chứng</th><td>Số đo và giới hạn từng phần: <a href="/engineering/">Engineering →</a></td></tr>
       </table>
-      <p class="sb-note">Beta trả phí từ 25/10/2026, đã có khách trả phí đầu tiên đang chuyển app lên Embra. Nhận app production trong giới hạn từng gói, onboarding trực tiếp từng khách. Xem <a href="/bang-gia/">bảng giá</a>.</p>
+      <p class="sb-note">Beta trả phí từ 25/10/2026, khách trả phí đầu tiên đang chạy production trên Embra. Nhận app production trong giới hạn từng gói, onboarding trực tiếp từng khách. Xem <a href="/bang-gia/">bảng giá</a>.</p>
       <p class="surface-links"><a href="https://docs.embra.cloud/">Tài liệu →</a><a href="https://status.embra.cloud/">Trạng thái hệ thống →</a><a href="https://github.com/embra-labs/.github/blob/main/docs/changelog.md">Changelog →</a><a href="https://github.com/embra-labs/.github/blob/main/SUPPORT.md">Hỗ trợ / báo lỗi →</a></p>
     </div>
   </section>
@@ -1125,6 +1150,34 @@ const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : ""
   tickClock(); setInterval(tickClock, 1000);
 
 
+  /* ---------- 01: tab ba chốt (Migration / AI agent / Restore) ---------- */
+  (function tabs() {
+    const bar = document.querySelector(".g-tabs"), sec = document.getElementById("quyen");
+    if (!bar || !sec) return;
+    const btns = [...bar.querySelectorAll("[role=tab]")];
+    const panels = btns.map(b => document.getElementById(b.getAttribute("aria-controls")));
+    panels.forEach((p, i) => { p.setAttribute("role", "tabpanel"); p.setAttribute("aria-labelledby", btns[i].id); });
+    const show = (i, focus) => {
+      btns.forEach((b, k) => { const on = k === i; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; panels[k].hidden = !on; });
+      if (focus) btns[i].focus();
+      /* chữ .rv trong panel vừa hiện chưa qua IntersectionObserver lần nào */
+      panels[i].querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+    };
+    bar.hidden = false; sec.classList.add("tabbed"); show(0);
+    btns.forEach((b, i) => b.addEventListener("click", () => show(i)));
+    bar.addEventListener("keydown", (e) => {
+      const i = btns.indexOf(document.activeElement); if (i < 0) return;
+      const k = e.key === "ArrowRight" ? (i + 1) % 3 : e.key === "ArrowLeft" ? (i + 2) % 3 : e.key === "Home" ? 0 : e.key === "End" ? 2 : -1;
+      if (k >= 0) { e.preventDefault(); show(k, true); }
+    });
+    /* link tới #gate / #agent / #stage (vd "Xem flow sản phẩm") mở đúng tab trước khi cuộn */
+    const ids = panels.map(p => p.id);
+    const open = (hash) => { const i = ids.indexOf(hash.slice(1)); if (i >= 0) show(i); };
+    document.querySelectorAll("a[href^='#']").forEach(a => a.addEventListener("click", () => open(a.getAttribute("href"))));
+    if (location.hash) open(location.hash);
+    addEventListener("hashchange", () => open(location.hash));
+  })();
+
   /* ---------- đo chuyển đổi: click vào console ---------- */
   document.querySelectorAll("a[href^='https://console.embra.cloud']").forEach(a => a.addEventListener("click", () => window.plausible("Console")));
 
@@ -1225,6 +1278,15 @@ const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : ""
       restoreTry(10200);
       approve(14200);
     };
+    /* lần đầu thấy demo: bắt đầu ngay ở cảnh dữ liệu sai, không chờ build; các vòng sau chạy đủ */
+    let played = false;
+    const first = () => {
+      clear(); delete win.dataset.manual; win.classList.add("anim"); incident();
+      at(900, () => oBtn.classList.add("press"));
+      at(1150, () => panel("pick"));
+      restoreTry(2800);
+      approve(6800);
+    };
     const stop = () => { clear(); running = false; };
     /* người xem tự bấm: dừng vòng tự diễn, đi từng bước bằng nút (bàn phím dùng được) */
     oBtn.addEventListener("click", () => { clear(); win.dataset.manual = "1"; incident(); panel("pick"); rBtn.focus({ preventScroll: true }); });
@@ -1233,7 +1295,7 @@ const API = location.hostname === "embra.cloud" ? "https://api.embra.cloud" : ""
       if (phase === "pick") restoreTry(0); else if (phase === "wait") approve(0);
     });
     if (still || !("IntersectionObserver" in window)) return;
-    new IntersectionObserver(([e]) => { if (e.isIntersecting && !running) { running = true; if (!win.dataset.manual) play(); } else if (!e.isIntersecting && running) stop(); }, { threshold: 0.3 }).observe(stage);
+    new IntersectionObserver(([e]) => { if (e.isIntersecting && !running) { running = true; if (!win.dataset.manual) { played ? play() : first(); played = true; } } else if (!e.isIntersecting && running) stop(); }, { threshold: 0.3 }).observe(stage);
     document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
   })();
 
