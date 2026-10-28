@@ -55,10 +55,10 @@ Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực ti�
 
 ## Bắt đầu với beta
 
-1. [Đăng ký quan tâm](https://embra.cloud/#join) và xác nhận email; bước này chưa cấp quyền truy cập.
-2. Embra liên hệ để xác nhận stack, gói phù hợp ([bảng giá](https://embra.cloud/bang-gia/)) và cách hỗ trợ.
-3. Trước khi thử, bạn nhận hướng dẫn truy cập, phiên bản được hỗ trợ và cách lấy dữ liệu ra khi kết thúc.
+1. Đăng nhập [console](https://console.embra.cloud/) bằng GitHub; workspace dùng thử 7 ngày được tạo ngay.
+2. Deploy theo [Bắt đầu nhanh](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/).
+3. Chọn gói ([bảng giá](https://embra.cloud/bang-gia/)) và trả bằng VietQR khi muốn giữ app.
 
-Đăng ký không tạo tài nguyên hoặc phát sinh phí. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
+Backup hiện nằm cùng máy chủ với database; nên export định kỳ. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
 
 [Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md) · [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md) · [hello@embra.cloud](mailto:hello@embra.cloud) · [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html) · [Thông tin cho agent](https://embra.cloud/llms.txt)
