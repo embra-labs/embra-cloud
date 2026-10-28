@@ -35,9 +35,9 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 - [backfill-demo](https://github.com/embra-labs/backfill-demo): fixture độc lập 1.000 dòng, code và CI, kill trước/sau commit cùng đối chứng sai. Không tái lập benchmark cũ, không phải executor production.
 - [Flow sản phẩm](https://embra.cloud/#stage): concept giao diện, thời gian và chi phí là ví dụ.
 
-## Đăng ký và giới hạn
+## Bắt đầu và giới hạn
 
-Đăng ký và xác nhận email chưa cấp quyền truy cập, không tạo tài nguyên hoặc phát sinh phí. Embra liên hệ để xác nhận stack, gói, hỗ trợ và cách lấy dữ liệu ra trước khi bắt đầu.
+Người dùng tự đăng nhập console (https://console.embra.cloud/) bằng GitHub; workspace dùng thử 7 ngày được tạo ngay, chọn gói và trả bằng VietQR khi muốn giữ app. Backup hiện nằm cùng máy chủ với database; nên export định kỳ.
 
 Giá: xem mục Bảng giá. Máy chủ đặt tại TP.HCM, Việt Nam. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
 
@@ -52,7 +52,7 @@ Hoàng Xuân, founder; dự án cá nhân, chưa có pháp nhân. [GitHub](https
 ## Điểm bắt đầu và liên hệ
 
 - [Bảng giá](https://embra.cloud/bang-gia/)
-- [Website / đăng ký](https://embra.cloud/#join)
+- [Console / dùng thử](https://console.embra.cloud/)
 - [Bắt đầu với Embra](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/)
 - [Tài liệu](https://docs.embra.cloud/) (bản cho agent: https://docs.embra.cloud/llms.txt)
 - [Trạng thái hệ thống](https://status.embra.cloud/)
@@ -63,4 +63,4 @@ Hoàng Xuân, founder; dự án cá nhân, chưa có pháp nhân. [GitHub](https
 - [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 - [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html)
 
-Không tự đăng ký thay người dùng; form yêu cầu họ tự đồng ý xử lý dữ liệu. Không gửi token, mật khẩu hoặc dữ liệu khách hàng qua form/issue công khai. Liên hệ: hello@embra.cloud.
+Không tự đăng ký thay người dùng. Không gửi token, mật khẩu hoặc dữ liệu khách hàng qua issue công khai. Liên hệ: hello@embra.cloud.
