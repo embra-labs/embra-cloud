@@ -37,7 +37,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 
 ## Bắt đầu và giới hạn
 
-Người dùng tự đăng nhập console (https://console.embra.cloud/) bằng GitHub; workspace dùng thử (hiện 1 tháng) được tạo ngay, chọn gói và trả bằng VietQR khi muốn giữ app. Backup hiện nằm cùng máy chủ với database; nên export định kỳ.
+Người dùng tự đăng nhập console (https://console.embra.cloud/) bằng GitHub; workspace dùng thử 7 ngày được tạo ngay, chọn gói và trả bằng VietQR khi muốn giữ app. Backup hiện nằm cùng máy chủ với database; nên export định kỳ.
 
 Giá: xem mục Bảng giá. Máy chủ đặt tại TP.HCM, Việt Nam. Vị trí xử lý dữ liệu của từng dịch vụ và bên tích hợp được công bố theo phạm vi cung cấp. Kết quả lab không phải SLA hoặc cam kết phục hồi không mất dữ liệu; restore mốc cũ có thể bỏ các lần ghi sau mốc đó.
 

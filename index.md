@@ -55,7 +55,7 @@ Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực ti�
 
 ## Bắt đầu với beta
 
-1. Đăng nhập [console](https://console.embra.cloud/) bằng GitHub; workspace dùng thử (hiện 1 tháng) được tạo ngay.
+1. Đăng nhập [console](https://console.embra.cloud/) bằng GitHub; workspace dùng thử 7 ngày được tạo ngay.
 2. Deploy theo [Bắt đầu nhanh](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/).
 3. Chọn gói ([bảng giá](https://embra.cloud/bang-gia/)) và trả bằng VietQR khi muốn giữ app.
 
