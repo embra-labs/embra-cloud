@@ -55,7 +55,7 @@ a{color:inherit}:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
 .odo .cur{font-size:.42em;margin-left:5px;line-height:1.6}
 .once{font-size:13px;color:var(--grey);margin:8px 0 0;text-align:right;min-height:1.4em}
 .receipt .cta{display:block;margin-top:22px;text-align:center;background:var(--char);color:var(--lime);text-decoration:none;padding:15px 16px;font:500 15px/1 var(--mono);transition:transform .15s}
-.receipt .cta:hover{transform:translateY(-2px)}.receipt .cta:active{transform:none}
+.receipt .cta:hover{transform:translateY(-2px)}.receipt .cta.alt{margin-top:10px;background:none;color:var(--char);border:1px solid var(--char)}.receipt .cta:active{transform:none}
 .receipt .fine{font:12px/1.55 var(--sans);color:var(--grey);margin:14px 0 0}
 .print .lines li{animation:print .38s var(--ease) both;animation-delay:calc(var(--i) * 120ms + 250ms)}
 .print .total,.print .once,.print .cta,.print .fine{animation:print .4s var(--ease) both;animation-delay:calc(var(--n) * 120ms + 380ms)}
@@ -104,6 +104,7 @@ main section.wrap{padding-top:96px}
 
 .end{background:var(--char);color:#F2F2E6;margin-top:96px;padding:64px 0}.end .wrap{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap}
 .end h2{font-size:clamp(40px,5vw,64px);line-height:1;margin:0;text-transform:uppercase}.end p{margin:12px 0 0;color:#cfcfc2;font-size:17px;line-height:1.6;max-width:32em}
+.end p a{color:#F2F2E6}
 .end a.btn{background:var(--lime);color:var(--char);text-decoration:none;padding:17px 24px;font:500 16px/1 var(--mono)}
 .foot{padding:26px 24px;text-align:center;font:13px/1.8 var(--mono);color:#9c9c90;background:var(--char);border-top:1px solid #3a3a36}.foot a{margin:0 8px}
 
@@ -154,7 +155,8 @@ main section.wrap{padding-top:96px}
   <ul class="lines" id="lines"></ul>
   <div class="total"><span class="lbl">Mỗi tháng</span><span class="odo" id="odo"></span></div>
   <p class="once" id="once" aria-live="polite"></p>
-  <a class="cta" id="send" href="mailto:hello@embra.cloud">Gửi cấu hình này cho Embra</a>
+  <a class="cta" href="https://console.embra.cloud/">Dùng thử miễn phí bằng GitHub</a>
+   <a class="cta alt" id="send" href="mailto:hello@embra.cloud">Gửi cấu hình này cho Embra</a>
   <p class="fine">Giá trên là số tiền bạn chuyển. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT và không cộng VAT vào giá.</p>
  </div></div>
 </div></div>
@@ -210,12 +212,12 @@ main section.wrap{padding-top:96px}
 <details><summary>Trả trước được giảm bao nhiêu?<i aria-hidden="true">+</i></summary><div class="ans"><p>Trả 3, 6 hoặc 12 tháng một lần được giảm 5%, 10% hoặc 20% trên cả gói, staging và phần thêm; giá mỗi tháng làm tròn xuống 1.000đ. Trả trước hiện làm thủ công: bấm “Gửi cấu hình này cho Embra” để nhận hoá đơn.</p></div></details>
 <details><summary>Giá có thay đổi không?<i aria-hidden="true">+</i></summary><div class="ans"><p>Giá beta có thể thay đổi cho khách mới. Với khách đang dùng, Embra báo trước khi đổi giá, và phần đã trả trước giữ nguyên mức đã trả.</p></div></details>
 <details><summary>Một project gồm những gì?<i aria-hidden="true">+</i></summary><div class="ans"><p>Một project là một ứng dụng: app web, worker và cron theo giới hạn gói, một PostgreSQL và môi trường production. Staging là bản thứ hai của project để thử trước khi lên production.</p></div></details>
-<details><summary>Hỗ trợ qua kênh nào?<i aria-hidden="true">+</i></summary><div class="ans"><p>Email <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Trong beta, người trả lời là người xây Embra; Embra cố gắng phản hồi trong ngày làm việc, nhưng đây chưa phải cam kết SLA.</p></div></details>
+<details><summary>Hỗ trợ qua kênh nào?<i aria-hidden="true">+</i></summary><div class="ans"><p><a href="https://zalo.me/0329589421">Zalo</a>, <a href="https://t.me/hxuan190">Telegram</a> hoặc email <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Trong beta, người trả lời là người xây Embra; Embra cố gắng phản hồi trong ngày làm việc, nhưng đây chưa phải cam kết SLA.</p></div></details>
 <details><summary>Agency quản lý nhiều project cho khách?<i aria-hidden="true">+</i></summary><div class="ans"><p>Embra có chương trình đối tác cho agency: một hoá đơn gộp mỗi tháng cho các project bạn quản lý. Nhắn <a href="mailto:hello@embra.cloud?subject=%C4%90%E1%BB%91i%20t%C3%A1c%20agency">hello@embra.cloud</a> để nhận điều kiện.</p></div></details>
 </section>
 </main>
 
-<section class="end" aria-labelledby="h-end"><div class="wrap"><div><h2 class="px" id="h-end">Bắt đầu với Embra</h2><p>Gửi link repository và gói bạn chọn. Embra setup cùng bạn, thường trong một buổi.</p></div><a class="btn" href="mailto:hello@embra.cloud?subject=B%E1%BA%AFt%20%C4%91%E1%BA%A7u%20v%E1%BB%9Bi%20Embra">Nhắn hello@embra.cloud</a></div></section>
+<section class="end" aria-labelledby="h-end"><div class="wrap"><div><h2 class="px" id="h-end">Bắt đầu với Embra</h2><p>Đăng nhập console bằng GitHub, workspace dùng thử (hiện 1 tháng) tạo ngay. Muốn setup cùng Embra thì nhắn <a href="https://zalo.me/0329589421">Zalo</a>, <a href="https://t.me/hxuan190">Telegram</a> hoặc <a href="mailto:hello@embra.cloud?subject=B%E1%BA%AFt%20%C4%91%E1%BA%A7u%20v%E1%BB%9Bi%20Embra">hello@embra.cloud</a>.</p></div><a class="btn" href="https://console.embra.cloud/">Dùng thử miễn phí</a></div></section>
 <footer class="foot">© 2026 Embra, beta trả phí. <a href="/">Trang chủ</a><a href="/so-sanh/">So sánh</a><a href="/chinh-sach-du-lieu.html">Dữ liệu cá nhân</a><a href="/privacy/">Quyền riêng tư</a><a href="/terms/">Điều khoản</a><a href="https://docs.embra.cloud/">Tài liệu</a><a href="https://status.embra.cloud/">Trạng thái hệ thống</a><a href="https://console.embra.cloud/">Đăng nhập console</a></footer>
 
 <script>
