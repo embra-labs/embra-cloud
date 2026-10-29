@@ -233,7 +233,8 @@ main section.wrap{padding-top:96px}
  const $ = s => document.querySelector(s), form = $('#config');
  const st = {plan:'build',months:1,staging:false,ram:0,db:0,bucket:0};
  // Prepaid monthly price, rounded down to 1.000đ like the invoices Embra issues.
- const disc = (n, m) => Math.floor(n * (1 - OFF[m]) / 1000) * 1000;
+ // Same as the console (billing.TermPerMonth): integer percent, rounded down to 1.000đ; no float error at the boundary.
+ const disc = (n, m) => Math.floor(n * (100 - Math.round(OFF[m] * 100)) / 100 / 1000) * 1000;
 
  // Odometer: every digit is a reel of 0-9 that slides to its value, so a change reads as a count, not a swap.
  const odo = $('#odo');
@@ -252,7 +253,7 @@ main section.wrap{padding-top:96px}
  function render(){
   const p = P[st.plan], rows = [['plan:' + st.plan, 'Gói ' + p.name, p.price]];
   if (st.staging && p.staging) rows.push(['stg', 'Staging', p.staging]);
-  for (const k of ['ram','db','bucket']) if (st[k]) rows.push([k + st[k], ADD[k].label + ' ' + (k === 'ram' ? st[k] * 512 + ' MiB' : st[k] + ' GB'), st[k] * ADD[k].price]);
+  for (const k of ['ram','db','bucket']) if (st[k]) rows.push([k + st[k], ADD[k].label + ' ' + (k === 'ram' ? st[k] * 512 + ' MiB' : st[k] + ' GB'), Math.floor(st[k] * ADD[k].price / 1000) * 1000]); // each line rounded down to 1.000đ like the invoice (billing.Price)
   const sub = rows.reduce((a, r) => a + r[2], 0), m = st.months, monthly = disc(sub, m);
   if (m > 1) rows.push(['off' + m + ':' + sub, 'Trả trước ' + m + ' tháng, giảm ' + Math.round(OFF[m] * 100) + '%', monthly - sub]);
   linesEl.innerHTML = rows.map((r, i) => '<li style="--i:' + i + '" class="' + (r[2] < 0 ? 'minus ' : '') + (prev && !prev.has(r[0]) && !still ? 'enter' : '') + '"><span>' + r[1] + '</span><span>' + (r[2] < 0 ? '−' + vnd(-r[2]) : vnd(r[2])) + 'đ</span></li>').join('');
