@@ -14,7 +14,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 - Build 399.000đ: app 1 GiB / 1 vCPU, PostgreSQL 512 MiB / 5 GiB, worker 2, cron 5, 3 domain, 1 preview theo PR, bucket 2 GiB, log/metrics 14 ngày; staging +149.000đ.
 - Grow 749.000đ: app 2 GiB / 2 vCPU, PostgreSQL 1 GiB / 10 GiB, worker 4, cron 10, 5 domain, 3 preview, bucket 5 GiB, log/metrics 30 ngày; staging +299.000đ.
 - Add-on mỗi tháng: RAM app 99.000đ / 512 MiB, PostgreSQL 9.800đ / GB, bucket 4.900đ / GB. Trả trước 3/6/12 tháng giảm 5/10/20%: chọn trong console khi chọn gói lần đầu (kèm RAM thêm); chuyển từ trả tháng sang trả trước, hoặc thêm PostgreSQL/file, làm qua email.
-- Hoá đơn theo ngày bắt đầu, lặp lại hằng tháng; đổi gói tính theo ngày vào hoá đơn sau; xác nhận chuyển khoản tự động.
+- Hoá đơn theo ngày bắt đầu, lặp lại hằng tháng; nâng gói trả phần chênh lệch tới hết kỳ rồi mới đổi, hạ gói đổi từ đầu kỳ kế; xác nhận chuyển khoản tự động.
 
 ## Tính năng và mức sẵn sàng
 
