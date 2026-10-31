@@ -61,7 +61,7 @@
   <h1>Embra giữ dữ liệu của bạn thế nào?</h1>
   <p>Trang này dành cho người dùng dịch vụ Embra: người đăng nhập vào console, dùng CLI <code>embra</code> hoặc MCP, và khách hàng trả phí chạy app trên Embra. Trang nói rõ Embra lưu gì, lưu ở đâu, giữ bao lâu, ai truy cập được và bạn yêu cầu xem hay xoá dữ liệu bằng cách nào.</p>
   <p>Nếu bạn chỉ đăng ký waitlist, xem <a href="/chinh-sach-du-lieu.html">thông báo xử lý dữ liệu của waitlist</a>. Điều kiện dùng dịch vụ nằm ở <a href="/terms/">Điều khoản sử dụng</a>.</p>
-  <p class="meta">Áp dụng cho dịch vụ Embra (console, CLI, API, app chạy trên Embra) · Phiên bản 2026-10-27 · Theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP</p>
+  <p class="meta">Áp dụng cho dịch vụ Embra (console, CLI, API, app chạy trên Embra) · Phiên bản 2026-10-31 · Theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP</p>
 
   <ol class="toc">
     <li><a href="#ai">Ai chịu trách nhiệm</a></li>
@@ -200,6 +200,7 @@
       <tr><td data-k="Bên">TPBank</td><td data-k="Nhận gì">Nhận tiền chuyển khoản của bạn, như mọi giao dịch ngân hàng</td><td data-k="Ở đâu">Việt Nam</td></tr>
       <tr><td data-k="Bên">Let's Encrypt</td><td data-k="Nhận gì">Tên miền của app (kể cả tên miền riêng) để cấp chứng chỉ HTTPS. Tên miền này được công khai trong nhật ký Certificate Transparency, ai cũng tra được.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
       <tr><td data-k="Bên">Cloudflare</td><td data-k="Nhận gì">Quản lý DNS cho onembra.com. Chỉ phân giải tên miền, không chuyển tiếp lưu lượng tới app của bạn.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
+      <tr><td data-k="Bên">Resend</td><td data-k="Nhận gì">Gửi email thông báo của Embra cho bạn (token mới, lời mời và thay đổi thành viên, tạm ngưng, dùng thử sắp hết hạn): địa chỉ email người nhận, tên workspace và nội dung thư. Không gửi dữ liệu trong app của bạn.</td><td data-k="Ở đâu">Ngoài Việt Nam (Resend là công ty Mỹ, gửi thư qua hạ tầng Amazon)</td></tr>
       <tr><td data-k="Bên">Telegram</td><td data-k="Nhận gì">Cảnh báo vận hành gửi cho mình: mã workspace, environment, tài khoản thanh toán, giao dịch, số tiền, loại báo cáo lạm dụng. Không chứa email, tên người trả, nội dung chuyển khoản hay dữ liệu app.</td><td data-k="Ở đâu">Ngoài Việt Nam</td></tr>
     </tbody>
   </table></div>
@@ -217,12 +218,14 @@
   <h3>Khi owner xoá workspace</h3>
   <p>Mọi token của workspace bị thu hồi ngay và mọi environment bị xoá như trên. Tài khoản của bạn (email, ID GitHub hoặc Google), lịch sử hoạt động và hồ sơ thanh toán vẫn được giữ. Nếu muốn xoá cả tài khoản, gửi yêu cầu theo <a href="#quyen">mục 11</a>.</p>
   <h3>Khi hết hạn dùng thử</h3>
-  <p>Gói dùng thử kéo dài 7 ngày. Khoảng 24 giờ trước khi hết hạn, lịch sử hoạt động của workspace hiện cảnh báo. Khi hết hạn, bạn không đăng nhập hay export được nữa, và hệ thống <strong>tự xoá cả workspace cùng toàn bộ dữ liệu</strong> như khi xoá environment, thường trong vòng 10 phút. Hãy export dữ liệu cần giữ trước thời điểm đó.</p>
+  <p>Gói dùng thử kéo dài 7 ngày. Khoảng 3 ngày và 24 giờ trước khi hết hạn, Embra gửi email cho owner của workspace; lịch sử hoạt động của workspace cũng hiện cảnh báo. Khi hết hạn, bạn không đăng nhập hay export được nữa, và hệ thống <strong>tự xoá cả workspace cùng toàn bộ dữ liệu</strong> như khi xoá environment, thường trong vòng 10 phút. Hãy export dữ liệu cần giữ trước thời điểm đó.</p>
   <p>Ngoại lệ: nếu bạn đã chuyển tiền cho một gói nhưng gói chưa được kích hoạt, workspace không bị xoá; mình sẽ liên hệ để kích hoạt hoặc trả lại tiền.</p>
   <h3>Khi bị tạm ngưng vì lạm dụng</h3>
   <p>App bị gỡ khỏi Internet và dừng chạy, workspace chỉ đọc được, nhưng dữ liệu và bản sao lưu được giữ nguyên. Embra không tự xoá dữ liệu của workspace bị tạm ngưng.</p>
   <h3>Dữ liệu tài khoản và thanh toán</h3>
   <p>Hiện Embra giữ dữ liệu tài khoản cho tới khi bạn yêu cầu xoá, và giữ hồ sơ thanh toán để đối soát. Hệ thống chưa tự xoá các dữ liệu này theo thời hạn.</p>
+  <h3>Email Embra đã gửi</h3>
+  <p>Embra giữ bản thư đã gửi (địa chỉ người nhận, tiêu đề, nội dung) 90 ngày để xử lý khi thư không tới, rồi xoá nội dung, chỉ giữ loại thư và thời điểm gửi.</p>
 
   <h2 id="quyen">11. Quyền của bạn</h2>
   <ul>
