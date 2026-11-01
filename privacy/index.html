@@ -87,7 +87,7 @@
     <div class="contact">
       <p><strong>Liên hệ về dữ liệu cá nhân:</strong> <a href="mailto:hello@embra.cloud">hello@embra.cloud</a></p>
       <p>Embra chưa chỉ định bộ phận hoặc nhân sự bảo vệ dữ liệu riêng; người vận hành nêu trên là đầu mối tiếp nhận mọi yêu cầu.</p>
-      <p><mark data-todo>[CẦN XÁC NHẬN: có thêm kênh liên hệ khác (Zalo, điện thoại công việc, địa chỉ liên lạc) hay chỉ email; số Zalo cá nhân đã được bỏ khỏi trang]</mark></p>
+      <p><strong>Điện thoại, Zalo:</strong> <a href="tel:+84329589421">0329 589 421</a></p>
     </div>
   </section>
 
@@ -279,7 +279,7 @@
     <table class="stack">
       <thead><tr><th scope="col">Bên</th><th scope="col">Mục đích</th><th scope="col">Dữ liệu</th><th scope="col">Nơi xử lý</th></tr></thead>
       <tbody>
-        <tr><td data-k="Bên">Nhà cung cấp máy chủ <mark data-todo>[CẦN XÁC NHẬN: tên nhà cung cấp VPS tại Việt Nam]</mark></td><td data-k="Mục đích">Thuê máy chủ chạy Embra</td><td data-k="Dữ liệu">Mọi dữ liệu nằm trên máy chủ: database điều khiển, app, database và file của app, sao lưu tại chỗ, log, metrics</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
+        <tr><td data-k="Bên">GenCloud (nhà cung cấp máy chủ)</td><td data-k="Mục đích">Thuê máy chủ chạy Embra</td><td data-k="Dữ liệu">Mọi dữ liệu nằm trên máy chủ: database điều khiển, app, database và file của app, sao lưu tại chỗ, log, metrics</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
         <tr><td data-k="Bên">GitHub</td><td data-k="Mục đích">Đăng nhập bằng GitHub; GitHub App đọc repo; ảnh đại diện trong console; phục vụ website embra.cloud</td><td data-k="Dữ liệu">Embra nhận ID, tên đăng nhập, email; GitHub nhận IP của người xem console và website</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
         <tr><td data-k="Bên">Google</td><td data-k="Mục đích">Đăng nhập bằng Google cho người được mời; hộp thư hello@embra.cloud chạy trên Gmail</td><td data-k="Dữ liệu">Embra nhận mã tài khoản, email, tên; nội dung email bạn gửi cho Embra đi qua Google</td><td data-k="Nơi xử lý">Hoa Kỳ và các nơi Google đặt hạ tầng</td></tr>
         <tr><td data-k="Bên">Resend</td><td data-k="Mục đích">Gửi email giao dịch của Embra (danh sách ở dưới)</td><td data-k="Dữ liệu">Địa chỉ người nhận, tiêu đề và nội dung thư</td><td data-k="Nơi xử lý">Hoa Kỳ (nơi xử lý chính theo DPA của Resend); gửi thư qua hạ tầng Amazon Web Services tại Tokyo, Nhật Bản</td></tr>
@@ -288,7 +288,7 @@
         <tr><td data-k="Bên">Telegram</td><td data-k="Mục đích">Gửi cảnh báo vận hành cho người vận hành</td><td data-k="Dữ liệu">Mã workspace, environment, tài khoản thanh toán, giao dịch, số tiền, loại và mã báo cáo lạm dụng. Không chứa email, tên người trả, nội dung chuyển khoản hay dữ liệu app.</td><td data-k="Nơi xử lý">Ngoài Việt Nam</td></tr>
         <tr><td data-k="Bên">Oracle Cloud</td><td data-k="Mục đích">Máy chủ chạy trang trạng thái status.embra.cloud, Plausible (stats.embra.cloud) và API waitlist</td><td data-k="Dữ liệu">Số liệu lượt xem website (không cookie, không lưu IP); dữ liệu waitlist theo <a href="/chinh-sach-du-lieu.html">thông báo riêng</a></td><td data-k="Nơi xử lý">Amsterdam, Hà Lan</td></tr>
         <tr><td data-k="Bên">Let's Encrypt</td><td data-k="Mục đích">Cấp chứng chỉ HTTPS</td><td data-k="Dữ liệu">Tên miền của app, kể cả tên miền riêng. Tên miền được công khai trong nhật ký Certificate Transparency.</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
-        <tr><td data-k="Bên">Cloudflare</td><td data-k="Mục đích">Quản lý DNS cho onembra.com <mark data-todo>[CẦN XÁC NHẬN: Cloudflare chỉ làm DNS hay có chuyển tiếp (proxy) lưu lượng tới edge]</mark></td><td data-k="Dữ liệu">Truy vấn DNS tới tên miền app</td><td data-k="Nơi xử lý">Ngoài Việt Nam</td></tr>
+        <tr><td data-k="Bên">Cloudflare</td><td data-k="Mục đích">Quản lý DNS cho onembra.com; chỉ làm DNS, lưu lượng tới app không đi qua Cloudflare</td><td data-k="Dữ liệu">Truy vấn DNS tới tên miền app</td><td data-k="Nơi xử lý">Ngoài Việt Nam</td></tr>
       </tbody>
     </table>
     <p>Nếu Embra thêm hoặc đổi một bên ở trên, Embra cập nhật trang này trước khi áp dụng và thông báo theo <a href="#thay-doi">mục 18</a>.</p>

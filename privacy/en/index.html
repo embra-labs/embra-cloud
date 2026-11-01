@@ -86,7 +86,7 @@
     <div class="contact">
       <p><strong>Personal data contact:</strong> <a href="mailto:hello@embra.cloud">hello@embra.cloud</a></p>
       <p>Embra has not appointed a separate data protection officer or unit, nor a representative in the European Union. The operator named above handles all requests.</p>
-      <p><mark data-todo>[TO CONFIRM: any other contact channel (Zalo, business phone, postal address) or email only; the personal Zalo number has been removed from the page]</mark></p>
+      <p><strong>Phone, Zalo:</strong> <a href="tel:+84329589421">+84 329 589 421</a></p>
     </div>
   </section>
 
@@ -278,7 +278,7 @@
     <table class="stack">
       <thead><tr><th scope="col">Party</th><th scope="col">Purpose</th><th scope="col">Data</th><th scope="col">Location</th></tr></thead>
       <tbody>
-        <tr><td data-k="Party">Server provider <mark data-todo>[TO CONFIRM: name of the VPS provider in Vietnam]</mark></td><td data-k="Purpose">Rented servers running Embra</td><td data-k="Data">All data on the servers: control database, apps, app databases and files, local backups, logs, metrics</td><td data-k="Location">Vietnam</td></tr>
+        <tr><td data-k="Party">GenCloud (server provider)</td><td data-k="Purpose">Rented servers running Embra</td><td data-k="Data">All data on the servers: control database, apps, app databases and files, local backups, logs, metrics</td><td data-k="Location">Vietnam</td></tr>
         <tr><td data-k="Party">GitHub</td><td data-k="Purpose">Sign in with GitHub; GitHub App reads repositories; console avatars; hosting the embra.cloud website</td><td data-k="Data">Embra receives ID, login, email; GitHub receives the IP of console and website visitors</td><td data-k="Location">United States</td></tr>
         <tr><td data-k="Party">Google</td><td data-k="Purpose">Sign in with Google for invitees; the hello@embra.cloud mailbox runs on Gmail</td><td data-k="Data">Embra receives account ID, email, name; email you send to Embra passes through Google</td><td data-k="Location">United States and other Google infrastructure locations</td></tr>
         <tr><td data-k="Party">Resend</td><td data-k="Purpose">Sending Embra's transactional email (list below)</td><td data-k="Data">Recipient address, subject and body</td><td data-k="Location">United States (primary processing per Resend's DPA); sending through Amazon Web Services infrastructure in Tokyo, Japan</td></tr>
@@ -287,7 +287,7 @@
         <tr><td data-k="Party">Telegram</td><td data-k="Purpose">Operational alerts to the operator</td><td data-k="Data">Workspace, environment, billing account and transaction IDs, amounts, abuse report category and ID. No emails, payer names, transfer descriptions or app data.</td><td data-k="Location">Outside Vietnam</td></tr>
         <tr><td data-k="Party">Oracle Cloud</td><td data-k="Purpose">Server running status.embra.cloud, Plausible (stats.embra.cloud) and the waitlist API</td><td data-k="Data">Website page-view statistics (no cookies, no stored IPs); waitlist data under its <a href="/chinh-sach-du-lieu.html">own notice</a></td><td data-k="Location">Amsterdam, Netherlands</td></tr>
         <tr><td data-k="Party">Let's Encrypt</td><td data-k="Purpose">Issuing HTTPS certificates</td><td data-k="Data">Your app's domain names, including custom domains. Domain names are published in Certificate Transparency logs.</td><td data-k="Location">United States</td></tr>
-        <tr><td data-k="Party">Cloudflare</td><td data-k="Purpose">DNS for onembra.com <mark data-todo>[TO CONFIRM: DNS only, or does Cloudflare proxy traffic to the edge]</mark></td><td data-k="Data">DNS queries for app domains</td><td data-k="Location">Outside Vietnam</td></tr>
+        <tr><td data-k="Party">Cloudflare</td><td data-k="Purpose">DNS for onembra.com; DNS only, app traffic does not pass through Cloudflare</td><td data-k="Data">DNS queries for app domains</td><td data-k="Location">Outside Vietnam</td></tr>
       </tbody>
     </table>
     <p>If Embra adds or changes a party above, Embra updates this page before the change takes effect and gives notice as described in <a href="#thay-doi">section 18</a>.</p>
