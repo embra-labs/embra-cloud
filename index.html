@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam: deploy từ GitHub, database riêng có review migration, backup và restore theo thời điểm. Beta trả phí từ 249.000đ/tháng.">
 <meta name="theme-color" content="#232323">
-<title>Embra · Hosting app và PostgreSQL tại Việt Nam</title>
+<title>Embra Cloud · Hosting Node.js và PostgreSQL tại Việt Nam</title>
 <link rel="canonical" href="https://embra.cloud/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Embra">
@@ -31,7 +31,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
  {"@type":"WebSite","@id":"https://embra.cloud/#website","url":"https://embra.cloud/","name":"Embra","inLanguage":"vi"},
- {"@type":"Organization","@id":"https://embra.cloud/#org","name":"Embra","url":"https://embra.cloud/","logo":"https://embra.cloud/apple-touch-icon.png","email":"hello@embra.cloud","areaServed":"VN","founder":{"@id":"https://embra.cloud/#founder"},"sameAs":["https://github.com/embra-labs"]},
+ {"@type":"Organization","@id":"https://embra.cloud/#org","name":"Embra","alternateName":["Embra Cloud","embra.cloud"],"url":"https://embra.cloud/","logo":{"@type":"ImageObject","url":"https://embra.cloud/apple-touch-icon.png"},"email":"hello@embra.cloud","areaServed":"VN","founder":{"@id":"https://embra.cloud/#founder"},"sameAs":["https://github.com/embra-labs"]},
  {"@type":"Person","@id":"https://embra.cloud/#founder","name":"Hoàng Xuân","jobTitle":"Founder","url":"https://embra.cloud/#nguoi-lam","sameAs":["https://github.com/hxuan190","https://www.linkedin.com/in/hxuan190"]},
  {"@type":"FAQPage","@id":"https://embra.cloud/#faq","inLanguage":"vi","isPartOf":{"@id":"https://embra.cloud/#website"},"mainEntity":[{"@type":"Question","name":"Đưa app production lên được chưa?","acceptedAnswer":{"@type":"Answer","text":"Được, trong giới hạn từng gói. Trước khi chuyển dữ liệu, mình cùng bạn thử restore trên bản sao. Beta chưa có SLA."}},{"@type":"Question","name":"Restore có giữ mọi dữ liệu mới không?","acceptedAnswer":{"@type":"Answer","text":"Không. Restore về một mốc cũ bỏ các lần ghi sau mốc đó; Embra ghi rõ phần sẽ mất trước khi bạn duyệt."}},{"@type":"Question","name":"Có cần dùng AI agent không?","acceptedAnswer":{"@type":"Answer","text":"Không. Dashboard đủ để deploy và vận hành. Agent dùng MCP bằng token riêng: build, plan, diễn tập được; duyệt, xoá, export, restore thì không."}},{"@type":"Question","name":"Lấy dữ liệu ra thế nào?","acceptedAnswer":{"@type":"Answer","text":"Owner tự export app và database trên dashboard bất cứ lúc nào. Đội Embra truy cập để hỗ trợ đều ghi lý do, bạn thấy trong Activity."}},{"@type":"Question","name":"Có hoá đơn VAT không?","acceptedAnswer":{"@type":"Answer","text":"Chưa. Embra là dự án cá nhân, chưa có pháp nhân. Trả bằng chuyển khoản VietQR."}},{"@type":"Question","name":"Ai hỗ trợ khi gặp sự cố?","acceptedAnswer":{"@type":"Answer","text":"Engineer xây dựng Embra trực tiếp support qua Zalo, Telegram hoặc hello@embra.cloud. Không gửi token, mật khẩu qua kênh công khai. Cách báo lỗi →"}}]}
 ]}
@@ -750,7 +750,7 @@
     <div class="hero-center">
       <p class="caps rv">HOSTING APP · SERVER TẠI TP.HCM · NODE.JS&nbsp;/&nbsp;NEXT.JS&nbsp;+&nbsp;POSTGRESQL</p>
       <div class="wordmark rv" role="img" aria-label="Embra"><span class="cap"><svg viewBox="13.5 8 37 40" aria-hidden="true"><path d="M25.5 8L30.5 8L29.5 12L50.5 12L48.5 20L30.5 20L29.5 24L42.5 24L40.5 32L27.5 32L26.5 36L44.5 36L43.5 40L38.5 44L21.5 44L20.5 48L15.5 48L16.5 44L13.5 44L20.5 16L21.5 12L24.5 12Z"/></svg></span><span>MBRA</span></div>
-      <h1 class="hero-h rv">Production<br class="m"> không phải<br><span>chỗ để chạy thử.</span></h1>
+      <h1 class="hero-h rv">Production <br class="m">không phải <br><span>chỗ để chạy thử.</span></h1>
       <p class="hero-copy rv">Agent deploy được, chỉ bạn duyệt production. Migration diễn tập và chấm <span class="nw">A–F</span> trước; cần lùi thì restore, bản cũ giữ 72&nbsp;giờ.</p>
       <p class="hero-scope rv">BETA TRẢ PHÍ · TỪ&nbsp;249.000Đ&nbsp;/&nbsp;PROJECT&nbsp;/&nbsp;THÁNG · TRẢ&nbsp;VIETQR · <a href="#gia">XEM&nbsp;BẢNG&nbsp;GIÁ</a></p>
       <div class="hero-cta rv">
