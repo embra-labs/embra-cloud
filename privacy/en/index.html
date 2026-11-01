@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Embra privacy policy (English translation): what personal data Embra collects, purposes and legal bases, where data is stored, who receives it, how long it is kept, who can access it, and how to exercise your rights.">
+<meta name="theme-color" content="#232323">
+<title>Privacy policy · Embra</title>
+<link rel="canonical" href="https://embra.cloud/privacy/en/">
+<link rel="alternate" hreflang="vi" href="https://embra.cloud/privacy/">
+<link rel="alternate" hreflang="en" href="https://embra.cloud/privacy/en/">
+<link rel="alternate" hreflang="x-default" href="https://embra.cloud/privacy/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261007">
+<link rel="stylesheet" href="/privacy/policy.css?v=20261101">
+<!--
+  Full English translation of /privacy/ (the Vietnamese version prevails). Keep section numbers and ids identical to
+  the Vietnamese page. Every sentence must stay true to embra-labs/embra (origin/main) as of the version date.
+  Unverified items are marked <mark data-todo>; fill or remove all of them before publishing.
+-->
+</head>
+<body>
+<a class="skip" href="#noi-dung">Skip to content</a>
+<header class="site"><div class="in"><b>EMBRA</b><a href="/">[ HOME ]</a></div></header>
+
+<div class="shell">
+  <div class="intro">
+    <h1>Privacy policy</h1>
+    <p class="lead">This policy explains what personal data Embra collects when you use the console, the <code>embra</code> CLI, the API or MCP, or run apps on Embra; what Embra uses it for and on what legal basis; where it is stored, who receives it and how long it is kept; and how you can exercise your rights.</p>
+    <div class="tools">
+      <span class="lang"><a href="/privacy/" hreflang="vi" lang="vi">Tiếng Việt</a> · <a href="/privacy/en/" aria-current="page" hreflang="en">English</a></span>
+      <button type="button" class="print" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+    <dl class="meta">
+      <div><dt>Version</dt><dd><mark data-todo>[TO CONFIRM: 2026-11-XX, publication date]</mark></dd></div>
+      <div><dt>Effective</dt><dd>From the publication date of this version <mark data-todo>[2026-11-XX]</mark></dd></div>
+      <div><dt>Applies to</dt><dd>The Embra service: console, CLI, API, MCP and apps running on Embra</dd></div>
+      <div><dt>Legal framework</dt><dd>Vietnam Personal Data Protection Law 91/2025/QH15; Decree 356/2025/ND-CP (as amended by Decree 392/2026/ND-CP); Consumer Protection Law 19/2023/QH15</dd></div>
+      <div><dt>Language</dt><dd>English translation. The <a href="/privacy/" hreflang="vi">Vietnamese version</a> is the original and prevails if the two differ.</dd></div>
+      <div><dt>Previous version</dt><dd>2026-10-27 (see <a href="#lich-su">version history</a>)</dd></div>
+    </dl>
+
+    <aside class="summary" aria-labelledby="tom-tat-h">
+      <h2 id="tom-tat-h">Summary</h2>
+      <ul>
+        <li>Embra does not sell or rent personal data and does not share data for advertising. The console uses no advertising cookies and no third-party analytics.</li>
+        <li>For account, workspace and billing data, Embra is the data controller. For data inside your apps (databases, files, logs), Embra is a processor acting on your behalf.</li>
+        <li>Apps, databases, files and logs run on servers in Vietnam. Some data leaves Vietnam: email via Resend (United States), sign-in via GitHub and Google, operational alerts via Telegram, and off-server backups (<a href="#nuoc-ngoai">section 10</a>).</li>
+        <li>Most app data has a fixed retention period (logs 30 days, export links 24 hours, uploaded source 7 days). Account data, activity history and billing records currently have no automatic deletion schedule (<a href="#xoa">section 11</a>).</li>
+        <li>Embra's operator can read the control database directly when providing support, reconciling payments or handling incidents, and those reads do not appear in your activity history (<a href="#truy-cap">section 8</a>).</li>
+        <li>Send requests to access, correct or delete your data to <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Embra responds within 2 working days (<a href="#thuc-hien">section 13</a>).</li>
+      </ul>
+    </aside>
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <p class="toc-h">Contents</p>
+    <ol>
+      <li><span class="n">1</span><a href="#ai">Data controller and contact</a></li>
+      <li><span class="n">2</span><a href="#vai-tro">Scope and Embra's roles</a></li>
+      <li><span class="n">3</span><a href="#tai-khoan">Account and workspace data</a></li>
+      <li><span class="n">4</span><a href="#thanh-toan">Billing</a></li>
+      <li><span class="n">5</span><a href="#app">Data inside your apps</a></li>
+      <li><span class="n">6</span><a href="#backup">Backups</a></li>
+      <li><span class="n">7</span><a href="#ip-cookie">Cookies, browser storage and IP addresses</a></li>
+      <li><span class="n">8</span><a href="#truy-cap">Who can access data</a></li>
+      <li><span class="n">9</span><a href="#ben-thu-ba">Processors and recipients</a></li>
+      <li><span class="n">10</span><a href="#nuoc-ngoai">International transfers</a></li>
+      <li><span class="n">11</span><a href="#xoa">Retention and deletion</a></li>
+      <li><span class="n">12</span><a href="#quyen">Your rights</a></li>
+      <li><span class="n">13</span><a href="#thuc-hien">How to exercise your rights</a></li>
+      <li><span class="n">14</span><a href="#tu-dong">Automated decisions</a></li>
+      <li><span class="n">15</span><a href="#bao-mat">Security</a></li>
+      <li><span class="n">16</span><a href="#su-co">Incidents and breach notification</a></li>
+      <li><span class="n">17</span><a href="#google">Google user data</a></li>
+      <li><span class="n">18</span><a href="#thay-doi">Changes and version history</a></li>
+    </ol>
+  </nav>
+
+  <main class="doc" id="noi-dung">
+
+  <section class="s" id="ai" aria-labelledby="h-ai">
+    <h2 id="h-ai"><span class="num">1.</span> Data controller and contact <a class="anchor" href="#ai" aria-label="Link to section 1">#</a></h2>
+    <p>Embra is currently operated by <strong>Hoàng Xuân</strong>, an individual based in Vietnam, as the controller of the account, workspace and billing data described in this policy. Embra has not yet been incorporated as a legal entity. When it is, this policy will be updated as described in <a href="#thay-doi">section 18</a>. The operator's public profile: <a href="https://github.com/hxuan190">github.com/hxuan190</a>.</p>
+    <div class="contact">
+      <p><strong>Personal data contact:</strong> <a href="mailto:hello@embra.cloud">hello@embra.cloud</a></p>
+      <p>Embra has not appointed a separate data protection officer or unit, nor a representative in the European Union. The operator named above handles all requests.</p>
+      <p><mark data-todo>[TO CONFIRM: any other contact channel (Zalo, business phone, postal address) or email only; the personal Zalo number has been removed from the page]</mark></p>
+    </div>
+  </section>
+
+  <section class="s" id="vai-tro" aria-labelledby="h-vai-tro">
+    <h2 id="h-vai-tro"><span class="num">2.</span> Scope and Embra's roles <a class="anchor" href="#vai-tro" aria-label="Link to section 2">#</a></h2>
+    <p>This policy applies to people who sign in to the console, use the CLI, API or MCP, customers who run apps on Embra, people invited to a workspace or billing account, and people who submit abuse reports. Embra holds two kinds of data, in two different roles:</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Kind of data</th><th scope="col">Examples</th><th scope="col">Embra's role</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Kind of data">Data about you, the Embra user</td><td data-k="Examples">Account, workspace membership, activity history, billing, abuse reports</td><td data-k="Embra's role">Controller and processor. Embra decides the purposes and means of processing as described on this page.</td></tr>
+        <tr><td data-k="Kind of data">Data inside your apps</td><td data-k="Examples">Source code, Postgres databases, files in buckets, secrets, logs your app writes, your app's end-user data</td><td data-k="Embra's role">Processor. You are the controller towards your app's end users. Embra stores and processes this data only to run the service you request (<a href="#app">section 5</a>).</td></tr>
+      </tbody>
+    </table>
+    <p>Out of scope: the waitlist has its own <a href="/chinh-sach-du-lieu.html">data processing notice</a> (in Vietnamese). The conditions of use are in the <a href="/terms/">Terms of Service</a> (in Vietnamese).</p>
+    <p>Embra does not sell or rent personal data and does not share data with third parties for advertising. Embra does not ask for data such as national ID numbers, biometric data, location or passwords. Some data Embra holds, such as activity history, IP addresses at CLI sign-in and bank transfer descriptions, may be considered sensitive personal data under Decree 356/2025/ND-CP (Article 4(1)(k) and (l)). Embra limits who can access this data as described in <a href="#truy-cap">section 8</a>.</p>
+  </section>
+
+  <section class="s" id="tai-khoan" aria-labelledby="h-tai-khoan">
+    <h2 id="h-tai-khoan"><span class="num">3.</span> Account and workspace data <a class="anchor" href="#tai-khoan" aria-label="Link to section 3">#</a></h2>
+    <p>The "Legal basis" column refers to Law 91/2025/QH15: <strong>performance of a contract</strong> (Article 19(1)(d): processing needed to provide the service you signed up for; GDPR Art. 6(1)(b)), <strong>protection of lawful rights and interests</strong> against infringement (Article 19(1)(a), such as abuse prevention and security; comparable to legitimate interests, GDPR Art. 6(1)(f)), <strong>legal obligation</strong> (Article 19(1)(đ); GDPR Art. 6(1)(c)), or your <strong>consent</strong> (Article 9; GDPR Art. 6(1)(a)).</p>
+    <table class="stack">
+      <caption>Account data, purposes and legal bases</caption>
+      <thead><tr><th scope="col">Data</th><th scope="col">Source</th><th scope="col">Purpose</th><th scope="col">Legal basis</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Data">GitHub ID and login (used as display name), verified primary email</td><td data-k="Source">Sign in with GitHub</td><td data-k="Purpose">Sign-in, identifying you in workspaces, contacting you</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Google account ID (<code>sub</code>), verified email, name</td><td data-k="Source">Sign in with Google (invitees only)</td><td data-k="Purpose">Sign-in to the workspace that invited that email</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Workspace name, members and roles, invited emails, inviter, invitation, expiry and acceptance times</td><td data-k="Source">Owner/admin, operator</td><td data-k="Purpose">Access control within the workspace</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Billing account members (partners, agencies): user, role, invited email, inviter, invitation expiry</td><td data-k="Source">Billing account owner, operator</td><td data-k="Purpose">Letting one billing account manage and pay for several workspaces</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Hashes of session cookies and tokens (CLI, MCP, CI); token name, scope, expiry; last-used time of tokens and memberships; session authentication time</td><td data-k="Source">System</td><td data-k="Purpose">Authenticating each request, showing you which tokens are still in use</td><td data-k="Legal basis">Contract; protection of lawful interests</td></tr>
+        <tr><td data-k="Data">CLI sign-in (<code>embra login</code>): IP address and client name of the requesting machine, requested scope, approver, times</td><td data-k="Source">CLI, approver's browser</td><td data-k="Purpose">Showing the approver who is asking for access; preventing abuse</td><td data-k="Legal basis">Protection of lawful interests</td></tr>
+        <tr><td data-k="Data">Activity history and operation journal: what was done, when, by which member or token; entries may contain invitees' emails, GitHub logins and the operator's operating-system user name</td><td data-k="Source">System</td><td data-k="Purpose">Letting the workspace review actions, investigating incidents, making operator access visible</td><td data-k="Legal basis">Contract; protection of lawful interests</td></tr>
+        <tr><td data-k="Data">GitHub App connection: installation ID, the GitHub account or organisation that installed the app, the installer's GitHub ID, the list of repositories granted; IDs of GitHub webhooks received</td><td data-k="Source">GitHub</td><td data-k="Purpose">Linking repositories for builds</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Abuse reports: category, reported hostname, free-text description, reporter email (optional), one-way HMAC of the reporter's IP, handling notes</td><td data-k="Source">Public report form, email, operator</td><td data-k="Purpose">Handling violating content and behaviour, replying to the reporter</td><td data-k="Legal basis">Protection of lawful interests</td></tr>
+        <tr><td data-k="Data">Trial exemptions: GitHub login and ID, reason, who granted it</td><td data-k="Source">Operator, at your request</td><td data-k="Purpose">Human review of the trial decision (<a href="#tu-dong">section 14</a>)</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Emails Embra sends you: recipient address, subject, body (<a href="#email">section 9</a>)</td><td data-k="Source">System</td><td data-k="Purpose">Notices about security, access, data loss and billing</td><td data-k="Legal basis">Contract</td></tr>
+      </tbody>
+    </table>
+    <h3 id="tai-khoan-chi-tiet">Details</h3>
+    <ul>
+      <li>If GitHub does not return an email that is both primary and verified, or that email already belongs to another Embra account, Embra uses your GitHub noreply address (<code>id+login@users.noreply.github.com</code>).</li>
+      <li>The creation date of your GitHub account is read once to decide trial eligibility and is not stored.</li>
+      <li>The GitHub or Google token received at sign-in, and the user token used during GitHub App installation, are used only in that step to read the information needed and are then discarded, never stored.</li>
+      <li>CLI sign-in has a "country" field in the database, but Embra currently has no IP geolocation source, so the field is always empty.</li>
+      <li>Trial workspaces are named after your GitHub login.</li>
+      <li>Embra needs an email address and a sign-in identity to provide the service. Without them, Embra cannot create an account for you.</li>
+    </ul>
+  </section>
+
+  <section class="s" id="thanh-toan" aria-labelledby="h-thanh-toan">
+    <h2 id="h-thanh-toan"><span class="num">4.</span> Billing <a class="anchor" href="#thanh-toan" aria-label="Link to section 4">#</a></h2>
+    <table class="stack">
+      <thead><tr><th scope="col">Data</th><th scope="col">Purpose</th><th scope="col">Legal basis</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Data">Billing account: the payer name you enter when choosing a plan. If left blank, Embra uses the GitHub login of the person choosing the plan (or their email, if they only sign in with Google). That login or email is also recorded in the billing account's contact field and on the plan order. The operator may add further contact notes.</td><td data-k="Purpose">Invoicing, billing contact</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Chosen plan, plan orders, invoices, payment codes, amounts, periods, payment dates, amounts paid, credit balance</td><td data-k="Purpose">Charging, reconciliation</td><td data-k="Legal basis">Contract; legal obligation (accounting records)</td></tr>
+        <tr><td data-k="Data">Bank transactions reported by SePay: amount, date, bank reference, transfer description (banks may add the sender's name or account number to the description). Embra stores both incoming and outgoing transactions of the receiving account.</td><td data-k="Purpose">Matching your payments</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Rejected SePay webhooks (for example malformed ones): the full JSON body SePay sent</td><td data-k="Purpose">Recovering misrouted payments</td><td data-k="Legal basis">Contract</td></tr>
+        <tr><td data-k="Data">Refunds: amount, reference, reason, the operator who made it</td><td data-k="Purpose">Returning money, reconciliation</td><td data-k="Legal basis">Contract; legal obligation (accounting records)</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>You pay by VietQR bank transfer to Embra's TPBank account. SePay reads that account's transactions and reports them to Embra.</li>
+      <li>Embra does not write transfer descriptions, payer names or bank references to logs, activity history or Telegram alerts. Payer name, amount and invoice number do appear in billing emails sent via Resend (<a href="#email">section 9</a>).</li>
+      <li>Embra never receives card numbers, bank login credentials or your account balance.</li>
+    </ul>
+  </section>
+
+  <section class="s" id="app" aria-labelledby="h-app">
+    <h2 id="h-app"><span class="num">5.</span> Data inside your apps <a class="anchor" href="#app" aria-label="Link to section 5">#</a></h2>
+    <p>For the data in this section Embra is a processor: Embra stores and processes it to build, run, back up, restore and export your apps at your request, and for no other purpose. The legal basis is performance of the contract with you. If your app stores personal data of its end users, you are responsible to them.</p>
+    <h3 id="app-build">Source code and builds</h3>
+    <ul>
+      <li>When you connect a repository, Embra's GitHub App requests a token that can only <strong>read the contents</strong> of that repository. To list repositories when you pick one, Embra uses a token that can only read basic metadata of the repositories you granted to the GitHub App. These tokens live at most 1 hour and are not stored.</li>
+      <li>Embra stores the repository name, branch, root directory, commit SHA and image digest of each build. It does not store commit author names, emails or commit messages.</li>
+      <li>Directly uploaded source is kept for at most 7 days (24 hours if not used by any build).</li>
+      <li>The build cache (derived from your code) is kept for up to 14 days after its last use, even after the environment is deleted.</li>
+      <li>Built images (containing your code) are stored in a private registry on Embra's server and are currently not deleted automatically.</li>
+      <li>Build logs are kept for 30 days after the build finishes.</li>
+    </ul>
+    <h3 id="app-du-lieu">Databases, files and secrets</h3>
+    <ul>
+      <li>Each environment has its own Postgres database. Databases and bucket files are stored on Embra's servers in Vietnam. For backups see <a href="#backup">section 6</a>.</li>
+      <li>Secrets (secret environment variables) are encrypted with AES-GCM before storage.</li>
+      <li><strong>Forks for AI agents:</strong> when you or your token create a fork, Embra creates a point-in-time copy of the production database, with columns masked according to the fork masking rules, for an AI agent to experiment on. A fork lives at most 24 hours. Fork data goes to the AI client you choose to connect through MCP.</li>
+      <li><strong>Data import:</strong> a dump you upload for loading into a database is kept on the control server until the import completes (24 hours if unused). Afterwards Embra keeps only a summary of table names and row counts imported.</li>
+    </ul>
+    <h3 id="app-log">Logs</h3>
+    <ul>
+      <li>Embra stores what your app writes to stdout/stderr (web, worker, cron) so you can search it later. Logs contain whatever your app prints, so do not print passwords, tokens, API keys or unnecessary personal data.</li>
+      <li>Embra's edge also writes one line per request to your app: method, path (without query string), protocol, status code, duration and response size. This line contains no IP address, headers, cookies or request body. Under heavy traffic Embra records only a sample plus a summary line each minute.</li>
+      <li>The log store keeps at most 30 days and has a size cap: when it is nearly full, the oldest day is deleted first, so logs may disappear sooner. You can search the last 1 to 30 days depending on your plan (<a href="/bang-gia/">pricing</a>).</li>
+      <li>If your app logs faster than 256 KiB per second, the excess is not stored and Embra writes a notice line in the log.</li>
+      <li>Raw log files on the server (used for live log viewing) are deleted when you delete the environment, or 30 days after the last write of a removed container.</li>
+    </ul>
+    <h3 id="app-metrics">Metrics</h3>
+    <ul>
+      <li>Embra measures CPU, memory, out-of-memory events and restarts, HTTP request counts by status class (2xx, 4xx, 5xx…), response time and Postgres disk usage. Metrics <strong>contain no URLs, IP addresses, headers or request bodies</strong>.</li>
+      <li>Metrics are kept for 30 days. The window you can view depends on your plan, as with logs.</li>
+    </ul>
+    <h3 id="app-export">Export</h3>
+    <p>An owner or admin can export an environment: the export contains a database dump, the app image, configuration (secret names only, no values) and, if selected, bucket files. The download link is signed and deleted automatically after 24 hours.</p>
+  </section>
+
+  <section class="s" id="backup" aria-labelledby="h-backup">
+    <h2 id="h-backup"><span class="num">6.</span> Backups <a class="anchor" href="#backup" aria-label="Link to section 6">#</a></h2>
+    <h3 id="backup-app">App databases</h3>
+    <ul>
+      <li>Each environment's Postgres is backed up continuously (WAL) with a full backup every week. Embra keeps the 2 most recent full backups plus the WAL between them, so you can restore to a point in time within roughly the last 1 to 2 weeks. These backups are stored on Embra's servers in Vietnam.</li>
+      <li>The system can also push these backups to off-server S3 storage. <mark data-todo>[TO CONFIRM: is off-server backup of app Postgres (offsite pgBackRest) enabled on the live host; provider and country]</mark></li>
+      <li>After a point-in-time restore, the previous database is kept for another 72 hours so you can switch back.</li>
+    </ul>
+    <h3 id="backup-bucket">Bucket files</h3>
+    <p>Bucket files may be backed up nightly to off-server S3 storage and kept for 7 days, even after the bucket or environment is deleted. <mark data-todo>[TO CONFIRM: is bucket backup to external S3 enabled; provider and country]</mark></p>
+    <h3 id="backup-control">Embra's control database</h3>
+    <p>The control database holds the data in sections 3 and 4 (accounts, emails, activity history, billing, transfer descriptions, CLI sign-in IPs, sent emails, abuse reports). Every hour, the whole database is dumped, encrypted with <code>age</code> on the server, and pushed to off-server S3 storage. Hourly copies are kept for 2 days and daily copies for 7 days. <mark data-todo>[TO CONFIRM: is the embra-controldb-backup timer running on the live host; name of the offsite S3 provider (runbook says B2 or Hetzner), country, actual lifecycle]</mark></p>
+    <div class="note">
+      <p><strong>Current limitation.</strong> Where an off-server backup above is not enabled, the corresponding data has backups only on the same server as the original; if that server fails badly, both may be lost together. Keep your own exports of important data.</p>
+    </div>
+  </section>
+
+  <section class="s" id="ip-cookie" aria-labelledby="h-ip-cookie">
+    <h2 id="h-ip-cookie"><span class="num">7.</span> Cookies, browser storage and IP addresses <a class="anchor" href="#ip-cookie" aria-label="Link to section 7">#</a></h2>
+    <h3 id="cookie-console">Console cookies</h3>
+    <p>These cookies are strictly necessary for the console and are all set with Secure, SameSite=Lax and the <code>__Host-</code> prefix.</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Cookie</th><th scope="col">Purpose</th><th scope="col">Lifetime</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Cookie"><code>__Host-embra_session</code></td><td data-k="Purpose">Keeps you signed in</td><td data-k="Lifetime">7 days, or until you sign out</td></tr>
+        <tr><td data-k="Cookie"><code>__Host-embra_csrf</code></td><td data-k="Purpose">Protects against cross-site request forgery (CSRF)</td><td data-k="Lifetime">7 days, or until you sign out</td></tr>
+        <tr><td data-k="Cookie"><code>__Host-embra_oauth_state</code></td><td data-k="Purpose">Verifies the GitHub/Google sign-in step</td><td data-k="Lifetime">10 minutes</td></tr>
+      </tbody>
+    </table>
+    <h3 id="cookie-app">Cookies on your app's domain</h3>
+    <p>Embra's edge may set cookies on your app's domain (<code>*.onembra.com</code> or your custom domain), so visitors to your app may receive them too:</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Cookie</th><th scope="col">Purpose</th><th scope="col">Lifetime</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Cookie"><code>embra_fork_key</code></td><td data-k="Purpose">Opens a fork preview with its access key</td><td data-k="Lifetime">24 hours</td></tr>
+        <tr><td data-k="Cookie"><code>embra_ch</code></td><td data-k="Purpose">Records that the browser passed the anti-bot challenge while the app is in under-attack mode. The value is an HMAC of the IP and expiry time; it does not contain the IP itself.</td><td data-k="Lifetime">1 hour (default)</td></tr>
+      </tbody>
+    </table>
+    <h3 id="bo-nho">Browser storage and external resources</h3>
+    <ul>
+      <li>The console uses no advertising or tracking cookies and loads no third-party analytics.</li>
+      <li>The console keeps a few preferences in your browser's localStorage: diagram layout and language. The path to return to after sign-in is kept in sessionStorage and is lost when the tab closes. None of this is sent to Embra.</li>
+      <li>The console shows avatars loaded directly from <code>avatars.githubusercontent.com</code>, so GitHub receives your browser's IP address when the image loads.</li>
+    </ul>
+    <h3 id="ip">IP addresses</h3>
+    <ul>
+      <li>Embra's edge uses IP addresses in memory (not written to disk) for rate and connection limiting.</li>
+      <li>Every request to an app is also checked with CrowdSec, abuse-prevention software running on Embra's server, to block IPs showing attack behaviour. CrowdSec stores its block decisions and alerts, including the IPs involved, on the server. <mark data-todo>[TO CONFIRM: is the CrowdSec LAPI enrolled with the CrowdSec Central API and sending signals (blocked IPs) out]</mark></li>
+      <li>The edge request log line contains no IP (<a href="#app-log">section 5</a>). However, when an app returns an error (for example 502 because it is not running), the edge writes an error line to the server's system journal, which may include the caller's IP, hostname and path with query string. Only the operator can read this journal. <mark data-todo>[TO CONFIRM: does journald on the host contain http.log.error lines with remote_ip; journald retention (SystemMaxUse/MaxRetentionSec)]</mark></li>
+      <li>Embra's control server does not write your IP to its logs. Exceptions: CLI sign-in stores the IP as in <a href="#tai-khoan">section 3</a>; abuse reports store only a one-way HMAC of the reporter's IP (IPv6 by /64 prefix), never the IP itself.</li>
+      <li>End-user requests pass through Embra's edge to your app. Your app receives their IP address in the <code>X-Forwarded-For</code> header; what your app stores is your decision.</li>
+    </ul>
+    <h3 id="website">The embra.cloud website</h3>
+    <p>This website is served through GitHub Pages, so GitHub receives visitors' IP addresses under GitHub's own policy. To count page views, Embra self-hosts Plausible at stats.embra.cloud, which sets no cookies and stores no IPs, as described in the <a href="/chinh-sach-du-lieu.html">waitlist notice</a>.</p>
+  </section>
+
+  <section class="s" id="truy-cap" aria-labelledby="h-truy-cap">
+    <h2 id="h-truy-cap"><span class="num">8.</span> Who can access data <a class="anchor" href="#truy-cap" aria-label="Link to section 8">#</a></h2>
+    <h3 id="truy-cap-workspace">Within your workspace</h3>
+    <p>"In person" means a web session, or a token freshly issued through an approved CLI sign-in.</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Data or action</th><th scope="col">Who can see or do it</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Data or action">Environments, logs, metrics, activity history. Activity history may contain invitees' emails and members' GitHub logins.</td><td data-k="Who can see or do it">Every member (owner, admin, developer, viewer) and every workspace token, including tokens for AI agents, CI and MCP</td></tr>
+        <tr><td data-k="Data or action">Member list and pending invitations (emails, roles)</td><td data-k="Who can see or do it">Owner, admin</td></tr>
+        <tr><td data-k="Data or action">Secret names</td><td data-k="Who can see or do it">Owner, admin, developer and AI agent tokens</td></tr>
+        <tr><td data-k="Data or action">Database connection URL, setting secrets</td><td data-k="Who can see or do it">Owner, admin, developer</td></tr>
+        <tr><td data-k="Data or action">Billing (invoices, amounts, receiving bank account)</td><td data-k="Who can see or do it">Owner and admin can view; only the owner chooses plans and pays</td></tr>
+        <tr><td data-k="Data or action">Exporting an environment</td><td data-k="Who can see or do it">Owner, admin; in person</td></tr>
+        <tr><td data-k="Data or action">Deleting an environment</td><td data-k="Who can see or do it">Owner, admin. Deleting production requires a person; staging and preview environments can also be deleted with an owner or admin machine token.</td></tr>
+        <tr><td data-k="Data or action">Deleting the workspace</td><td data-k="Who can see or do it">Owner only; in person</td></tr>
+      </tbody>
+    </table>
+    <h3 id="truy-cap-agency">Partner (agency) billing accounts</h3>
+    <p>If your workspace is attached to a partner's billing account, that account's owner and billing-role members can see the workspace's name, plan and amounts, read the consolidated invoices and receive billing emails. Members of a billing account can see each other's emails. Apart from this, other workspaces cannot read your data.</p>
+    <h3 id="truy-cap-van-hanh">Embra's operator</h3>
+    <p>Currently only the operator named in <a href="#ai">section 1</a> has operational access. The operator looks at data when providing support you asked for, reconciling payments, handling abuse reports, handling incidents, or when required by law. There are three access paths, with different levels of visibility:</p>
+    <ol>
+      <li><strong>Operator tokens via the API.</strong> These tokens require a stated reason. Each time such a token reads logs, log history, metrics, build logs, a database URL, an export, an undo preview, a fork access key or billing information, your workspace's activity history shows an entry with the reason (reads of the same kind within 10 minutes are grouped). If that entry cannot be written, Embra refuses the read. Reads of activity history, the member list or secret names with an operator token are <strong>not</strong> recorded.</li>
+      <li><strong>Admin commands on the server</strong> (<code>embrad admin</code>). These read the control database directly without a token, for example to list members, unmatched transactions (including transfer descriptions), billing account members and abuse reports. This is routine support and reconciliation work. These reads do <strong>not</strong> appear in your activity history. Sent-email content is masked in this tool unless the operator explicitly asks to reveal it.</li>
+      <li><strong>Direct server or database access</strong> when handling infrastructure incidents. This also does <strong>not</strong> appear in your activity history.</li>
+    </ol>
+  </section>
+
+  <section class="s" id="ben-thu-ba" aria-labelledby="h-ben-thu-ba">
+    <h2 id="h-ben-thu-ba"><span class="num">9.</span> Processors and recipients <a class="anchor" href="#ben-thu-ba" aria-label="Link to section 9">#</a></h2>
+    <p>The parties below receive or process part of your data when you use Embra. Apart from them, the people in <a href="#truy-cap">section 8</a> and destinations you choose yourself (for example an AI client receiving fork data), Embra provides data to others only when required by law. List last updated <mark data-todo>[2026-11-XX]</mark>.</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Party</th><th scope="col">Purpose</th><th scope="col">Data</th><th scope="col">Location</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Party">Server provider <mark data-todo>[TO CONFIRM: name of the VPS provider in Vietnam]</mark></td><td data-k="Purpose">Rented servers running Embra</td><td data-k="Data">All data on the servers: control database, apps, app databases and files, local backups, logs, metrics</td><td data-k="Location">Vietnam</td></tr>
+        <tr><td data-k="Party">Off-server S3 storage <mark data-todo>[TO CONFIRM: name of the offsite S3 provider]</mark></td><td data-k="Purpose">Off-server backups (<a href="#backup">section 6</a>)</td><td data-k="Data">Encrypted control database dumps; app Postgres backups and bucket files if enabled</td><td data-k="Location"><mark data-todo>[TO CONFIRM: country]</mark></td></tr>
+        <tr><td data-k="Party">GitHub</td><td data-k="Purpose">Sign in with GitHub; GitHub App reads repositories; console avatars; hosting the embra.cloud website</td><td data-k="Data">Embra receives ID, login, email; GitHub receives the IP of console and website visitors</td><td data-k="Location">United States</td></tr>
+        <tr><td data-k="Party">Google</td><td data-k="Purpose">Sign in with Google for invitees; the hello@embra.cloud mailbox runs on Gmail</td><td data-k="Data">Embra receives account ID, email, name; email you send to Embra passes through Google</td><td data-k="Location">United States and other Google infrastructure locations</td></tr>
+        <tr><td data-k="Party">Resend</td><td data-k="Purpose">Sending Embra's transactional email (list below)</td><td data-k="Data">Recipient address, subject and body</td><td data-k="Location">United States (primary processing per Resend's DPA); sending through Amazon Web Services infrastructure in Tokyo, Japan</td></tr>
+        <tr><td data-k="Party">SePay</td><td data-k="Purpose">Reads transactions of the receiving TPBank account and reports them to Embra</td><td data-k="Data">Amount, date, reference, transfer description</td><td data-k="Location">Vietnam</td></tr>
+        <tr><td data-k="Party">TPBank</td><td data-k="Purpose">Bank receiving transfers</td><td data-k="Data">Transaction details, as with any bank transfer</td><td data-k="Location">Vietnam</td></tr>
+        <tr><td data-k="Party">Telegram</td><td data-k="Purpose">Operational alerts to the operator</td><td data-k="Data">Workspace, environment, billing account and transaction IDs, amounts, abuse report category and ID. No emails, payer names, transfer descriptions or app data.</td><td data-k="Location">Outside Vietnam</td></tr>
+        <tr><td data-k="Party">Oracle Cloud</td><td data-k="Purpose">Server running status.embra.cloud, Plausible (stats.embra.cloud) and the waitlist API</td><td data-k="Data">Website page-view statistics (no cookies, no stored IPs); waitlist data under its <a href="/chinh-sach-du-lieu.html">own notice</a></td><td data-k="Location">Amsterdam, Netherlands</td></tr>
+        <tr><td data-k="Party">Let's Encrypt <mark data-todo>[TO CONFIRM: Let's Encrypt only, or ZeroSSL as fallback CA too]</mark></td><td data-k="Purpose">Issuing HTTPS certificates</td><td data-k="Data">Your app's domain names, including custom domains. Domain names are published in Certificate Transparency logs.</td><td data-k="Location">United States</td></tr>
+        <tr><td data-k="Party">Cloudflare</td><td data-k="Purpose">DNS for onembra.com <mark data-todo>[TO CONFIRM: DNS only, or does Cloudflare proxy traffic to the edge]</mark></td><td data-k="Data">DNS queries for app domains</td><td data-k="Location">Outside Vietnam</td></tr>
+        <tr><td data-k="Party">CrowdSec (CrowdSec Central) <mark data-todo>[TO CONFIRM: keep this row only if the LAPI is enrolled with CrowdSec Central]</mark></td><td data-k="Purpose">Sharing and receiving lists of malicious IPs to block attacks</td><td data-k="Data">IPs of blocked requests, behaviour type, time</td><td data-k="Location">Outside Vietnam <mark data-todo>[TO CONFIRM: country]</mark></td></tr>
+      </tbody>
+    </table>
+    <p>If Embra adds or changes a party above, Embra updates this page before the change takes effect and gives notice as described in <a href="#thay-doi">section 18</a>.</p>
+
+    <h3 id="email">Emails Embra sends via Resend</h3>
+    <p><mark data-todo>[TO CONFIRM: is email.enabled on at publication; if not, keep this text but add "Embra starts sending email on …" and notify owners in advance]</mark></p>
+    <p>Embra sends the emails below. They are mandatory notices about security, access, data loss and billing, so there is no unsubscribe option. Embra sends no marketing email.</p>
+    <table class="stack">
+      <thead><tr><th scope="col">Group</th><th scope="col">Emails</th><th scope="col">Recipients</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Group">Security and access</td><td data-k="Emails">New token you created; token created by the operator; workspace invitation; role change or removal from a workspace; billing account invitation</td><td data-k="Recipients">The people concerned, including invitees who do not have an Embra account yet</td></tr>
+        <tr><td data-k="Group">Trial and suspension</td><td data-k="Emails">Trial expiring (about 3 days and 24 hours before); trial workspace deleted; environment suspended</td><td data-k="Recipients">Workspace owner</td></tr>
+        <tr><td data-k="Group">Billing</td><td data-k="Emails">New invoice; overdue invoice; upcoming suspension for non-payment; payment received; refund; plan term ending</td><td data-k="Recipients">Workspace owner, or the owner and billing members of a partner billing account</td></tr>
+      </tbody>
+    </table>
+    <p>Email content may include workspace, project and environment names, payer name, amounts, invoice numbers, Embra's receiving bank account number and refund references. Emails never contain data from inside your apps.</p>
+  </section>
+
+  <section class="s" id="nuoc-ngoai" aria-labelledby="h-nuoc-ngoai">
+    <h2 id="h-nuoc-ngoai"><span class="num">10.</span> International transfers <a class="anchor" href="#nuoc-ngoai" aria-label="Link to section 10">#</a></h2>
+    <p><strong>Stays in Vietnam:</strong> the control database (primary copy), apps, app databases and files, local backups, logs and metrics.</p>
+    <p><strong>Leaves Vietnam:</strong></p>
+    <ul>
+      <li>Transactional email via Resend (United States; sending infrastructure in Japan).</li>
+      <li>Sign-in data via GitHub and Google; your IP when your browser loads avatars from GitHub; email you send to hello@embra.cloud via Gmail.</li>
+      <li>Operational alerts via Telegram (IDs and amounts only, as in <a href="#ben-thu-ba">section 9</a>).</li>
+      <li>Off-server backups of the control database and, if enabled, of app databases and files (<a href="#backup">section 6</a>).</li>
+      <li>App domain names sent to the certificate authority; DNS queries via Cloudflare.</li>
+      <li>Waitlist data and website statistics in Amsterdam, Netherlands.</li>
+      <li>If CrowdSec Central is enabled: IPs of blocked requests (<a href="#ben-thu-ba">section 9</a>).</li>
+    </ul>
+    <p>For each recipient, Embra relies on the terms of service and standard data processing terms that the recipient publishes. For example, Resend's DPA includes Standard Contractual Clauses (SCCs) and a commitment to give notice of sub-processor changes. Under Article 20 of Law 91/2025/QH15, Embra must prepare a cross-border personal data transfer impact assessment and file it with the competent authority. <mark data-todo>[TO CONFIRM: status of the assessment (prepared, filed on which date); state "prepared/filed" only once true]</mark></p>
+  </section>
+
+  <section class="s" id="xoa" aria-labelledby="h-xoa">
+    <h2 id="h-xoa"><span class="num">11.</span> Retention and deletion <a class="anchor" href="#xoa" aria-label="Link to section 11">#</a></h2>
+    <p>The table shows periods under the system's default configuration. "No automatic deletion yet" means the system does not currently delete that data on its own; it is kept until you ask for deletion and Embra deletes it manually, except what must be kept by law.</p>
+    <table class="stack">
+      <caption>Retention periods</caption>
+      <thead><tr><th scope="col">Data</th><th scope="col">Retention</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Data">Account (email, GitHub or Google ID, name)</td><td data-k="Retention">No automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Session cookie</td><td data-k="Retention">Cookie expires after 7 days; session records in the database have no automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Tokens</td><td data-k="Retention">Tokens expire after at most 90 days; token records (hash, name, last-used time) have no automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Workspace membership</td><td data-k="Retention">Until the member is removed; survives workspace deletion</td></tr>
+        <tr><td data-k="Data">Workspace and billing account invitations (invited email)</td><td data-k="Retention">No automatic deletion yet</td></tr>
+        <tr><td data-k="Data">CLI sign-in (IP, client name)</td><td data-k="Retention">24 hours if denied or expired; 30 days if approved</td></tr>
+        <tr><td data-k="Data">Activity history, operation journal</td><td data-k="Retention">No automatic deletion yet; survives environment and workspace deletion</td></tr>
+        <tr><td data-k="Data">GitHub App connection</td><td data-k="Retention">No automatic deletion yet; survives workspace deletion. GitHub webhook IDs: 7 days.</td></tr>
+        <tr><td data-k="Data">Build records and repository links (repository, branch, SHA)</td><td data-k="Retention">No automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Uploaded source</td><td data-k="Retention">7 days (24 hours if unused); deleted with the environment</td></tr>
+        <tr><td data-k="Data">Build cache</td><td data-k="Retention">14 days after last use; not deleted with the environment</td></tr>
+        <tr><td data-k="Data">Built images</td><td data-k="Retention">No automatic deletion yet; Embra deletes them on request</td></tr>
+        <tr><td data-k="Data">Build logs</td><td data-k="Retention">30 days after the build finishes; deleted with the environment</td></tr>
+        <tr><td data-k="Data">App logs and edge request lines</td><td data-k="Retention">At most 30 days, subject to a size cap; deleted with the environment</td></tr>
+        <tr><td data-k="Data">Raw log files</td><td data-k="Retention">30 days after the last write of a removed container; deleted with the environment</td></tr>
+        <tr><td data-k="Data">Server system journal (including edge error lines)</td><td data-k="Retention"><mark data-todo>[TO CONFIRM: journald retention]</mark></td></tr>
+        <tr><td data-k="Data">CrowdSec block decisions and alerts on the server (including IPs)</td><td data-k="Retention"><mark data-todo>[TO CONFIRM: CrowdSec LAPI retention]</mark></td></tr>
+        <tr><td data-k="Data">Metrics</td><td data-k="Retention">30 days; not deleted immediately with the environment</td></tr>
+        <tr><td data-k="Data">Secrets</td><td data-k="Retention">Values deleted with the environment; names and versions are kept</td></tr>
+        <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; deleted with the environment, including any off-server copy</td></tr>
+        <tr><td data-k="Data">Off-server bucket backups (if enabled)</td><td data-k="Retention">7 days, even after the bucket is deleted</td></tr>
+        <tr><td data-k="Data">Control database backups</td><td data-k="Retention">Hourly copies 2 days, daily copies 7 days <mark data-todo>[TO CONFIRM: actual bucket lifecycle]</mark></td></tr>
+        <tr><td data-k="Data">Exports</td><td data-k="Retention">24 hours</td></tr>
+        <tr><td data-k="Data">Forks</td><td data-k="Retention">At most 24 hours</td></tr>
+        <tr><td data-k="Data">Import dumps</td><td data-k="Retention">Until the import completes (24 hours if unused); table and row-count summary has no automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Billing records: billing accounts, orders, invoices, transactions (including outgoing), rejected webhooks, refunds</td><td data-k="Retention">No automatic deletion yet <mark data-todo>[TO CONFIRM with a lawyer: mandatory retention period for payment records]</mark></td></tr>
+        <tr><td data-k="Data">Sent emails</td><td data-k="Retention">Recipient, subject and body: 90 days after the email reaches its final state (sent, failed or skipped). An email that cannot be sent within 48 hours is skipped. Afterwards Embra keeps only the email kind, times, workspace ID, event ID, Resend ID and any send error; this remainder has no automatic deletion yet.</td></tr>
+        <tr><td data-k="Data">Abuse reports, suspension records, trial exemptions</td><td data-k="Retention">No automatic deletion yet</td></tr>
+        <tr><td data-k="Data">Request de-duplication records (may contain an API response body)</td><td data-k="Retention">24 hours</td></tr>
+        <tr><td data-k="Data">Internal job queue (object IDs)</td><td data-k="Retention">24 hours after completion; 7 days if discarded</td></tr>
+        <tr><td data-k="Data">Telegram alerts</td><td data-k="Retention">Under Telegram's policy</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="xoa-env">When you delete an environment</h3>
+    <p>Embra deletes its Postgres database and volume, backups, buckets, custom domains, uploaded source, log history, raw log files and build logs. Secret values are deleted; only names and versions are kept. Deletion runs in the background and usually finishes within minutes. What remains afterwards: metrics (up to 30 days), images, build cache (up to 14 days), off-server bucket copies (up to 7 days, if enabled), build records, activity history and control database backups.</p>
+    <h3 id="xoa-workspace">When an owner deletes a workspace</h3>
+    <p>All of the workspace's tokens and sessions are revoked immediately and every environment is deleted as above. What is kept: members' accounts, the workspace name, the member list, invitations (invited emails), the GitHub App connection (GitHub account name), activity history, the operation journal, build records and billing records. To delete more, send a request as described in <a href="#thuc-hien">section 13</a>.</p>
+    <h3 id="xoa-trial">When a trial expires</h3>
+    <p>The trial lasts 7 days. About 3 days before it ends, the workspace's activity history shows a warning and Embra emails the owner; about 24 hours before, Embra sends another email. When it expires you can no longer sign in or export, and the system <strong>automatically deletes the whole workspace and all its environments</strong> as above, usually within 10 minutes, then emails the owner. Export anything you want to keep before then.</p>
+    <p>Exceptions: the workspace is not deleted automatically if you have transferred money (even an underpayment) for a plan that has not been activated yet, or if the workspace has a suspended environment.</p>
+    <h3 id="xoa-tam-ngung">When suspended for abuse</h3>
+    <p>Apps are taken off the Internet and stopped, and the workspace becomes read-only, but data and backups are preserved. Embra does not automatically delete data of a suspended workspace.</p>
+    <h3 id="xoa-tai-khoan">Account deletion</h3>
+    <p>The console does not yet offer self-service account deletion. Send a request as described in <a href="#thuc-hien">section 13</a>; the operator deletes or anonymises your account data and tells you what must be kept (for example billing records) and why. Copies in control database backups expire according to the table above.</p>
+  </section>
+
+  <section class="s" id="quyen" aria-labelledby="h-quyen">
+    <h2 id="h-quyen"><span class="num">12.</span> Your rights <a class="anchor" href="#quyen" aria-label="Link to section 12">#</a></h2>
+    <p>Under Article 4 of Law 91/2025/QH15 you have the right to:</p>
+    <ul>
+      <li>Be informed about the processing of your personal data (this policy).</li>
+      <li>Access your data and ask for incorrect data to be corrected.</li>
+      <li>Obtain a copy of your data (data portability). You can take your app data yourself with an export; Embra sends you your account and billing data on request.</li>
+      <li>Ask for deletion, including deletion of your account.</li>
+      <li>Give, refuse or withdraw consent for processing based on consent.</li>
+      <li>Ask for processing to be restricted, and object to processing.</li>
+      <li>Ask for measures to protect your personal data.</li>
+      <li>Complain, denounce, sue and claim compensation as provided by law.</li>
+    </ul>
+    <p>For processing needed to perform the contract or required by law (Article 19), the rights to withdraw consent and to restrict processing do not apply (Law 91/2025/QH15, Article 10(1)). For example, Embra needs an email address and sign-in identity to provide the service, and must keep billing records. When Embra cannot carry out a request, it tells you why.</p>
+    <p>You can complain to the personal data protection authority under the Ministry of Public Security (Department of Cybersecurity and High-Tech Crime Prevention, A05) or through the National Personal Data Protection Portal. If you are in the European Union or the United Kingdom, you can also lodge a complaint with your local data protection supervisory authority.</p>
+  </section>
+
+  <section class="s" id="thuc-hien" aria-labelledby="h-thuc-hien">
+    <h2 id="h-thuc-hien"><span class="num">13.</span> How to exercise your rights <a class="anchor" href="#thuc-hien" aria-label="Link to section 13">#</a></h2>
+    <ol>
+      <li>Email <a href="mailto:hello@embra.cloud">hello@embra.cloud</a> from the email address linked to your Embra account, stating your request (access, correction, copy, deletion, withdrawal of consent, restriction, objection) and the workspace concerned. If you write from another address, Embra may ask further questions to verify that you own the account.</li>
+      <li>Embra responds within <strong>2 working days</strong> of receiving the request.</li>
+      <li>Embra completes the request within the periods set by Article 5 of Decree 356/2025/ND-CP:</li>
+    </ol>
+    <table class="stack">
+      <thead><tr><th scope="col">Request</th><th scope="col">Completed within</th><th scope="col">If a processor or third party is involved</th></tr></thead>
+      <tbody>
+        <tr><td data-k="Request">Access, correction, copy</td><td data-k="Completed within">10 days</td><td data-k="If a processor or third party is involved">15 days</td></tr>
+        <tr><td data-k="Request">Withdrawal of consent, restriction, objection</td><td data-k="Completed within">15 days</td><td data-k="If a processor or third party is involved">20 days</td></tr>
+        <tr><td data-k="Request">Deletion</td><td data-k="Completed within">20 days</td><td data-k="If a processor or third party is involved">30 days</td></tr>
+        <tr><td data-k="Request">Protective measures</td><td data-k="Completed within">15 days</td><td data-k="If a processor or third party is involved">Not applicable</td></tr>
+      </tbody>
+    </table>
+    <p>If more time is needed, Embra extends the period at most once, by no more than the original period, and tells you why.</p>
+    <p>Some things you can do yourself in the console without a request: export an environment, delete an environment, remove members, revoke tokens, delete the workspace (owner).</p>
+    <p>If you are an end user of an app running on Embra, contact the app's owner, who is the controller of your data. Embra helps the app owner carry out your request.</p>
+  </section>
+
+  <section class="s" id="tu-dong" aria-labelledby="h-tu-dong">
+    <h2 id="h-tu-dong"><span class="num">14.</span> Automated decisions <a class="anchor" href="#tu-dong" aria-label="Link to section 14">#</a></h2>
+    <p>When you first sign in with GitHub, the system automatically decides whether to grant a trial: it grants one only if your GitHub account was created at least 30 days ago. The purpose is to limit freshly created accounts used in bulk to abuse free resources. The system reads only your GitHub account's creation date, uses no other data and does not store that date.</p>
+    <p>If you are refused, you can ask the operator for a human review by emailing <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. If approved, Embra records an exemption containing your GitHub login and ID, the reason and who granted it.</p>
+  </section>
+
+  <section class="s" id="bao-mat" aria-labelledby="h-bao-mat">
+    <h2 id="h-bao-mat"><span class="num">15.</span> Security <a class="anchor" href="#bao-mat" aria-label="Link to section 15">#</a></h2>
+    <ul>
+      <li>Session cookies are stored only as HMACs and tokens only as SHA-256 hashes; Embra does not store the original values. Console cookies are set with Secure and SameSite=Lax, with a separate anti-CSRF cookie.</li>
+      <li>App secrets are encrypted with AES-GCM before storage.</li>
+      <li>Each environment runs in its own network with its own Postgres.</li>
+      <li>Control database dumps are encrypted with <code>age</code> before leaving the server.</li>
+      <li>The console and API are served over HTTPS; apps on <code>*.onembra.com</code> and custom domains get HTTPS certificates automatically. <mark data-todo>[TO CONFIRM: are all plain-HTTP requests to apps redirected to HTTPS]</mark></li>
+      <li>Workspace permissions are role-based, and dangerous actions require a person (<a href="#truy-cap">section 8</a>). Reads with operator tokens are recorded in the activity history, except as noted in section 8.</li>
+      <li>Encryption at rest for databases, files, logs and backups on the server: <mark data-todo>[TO CONFIRM: are disks/ZFS encrypted at rest; state nothing until verified]</mark></li>
+    </ul>
+    <p>No method of protection is completely secure. If you suspect a token has leaked, revoke it in the console immediately and tell Embra.</p>
+  </section>
+
+  <section class="s" id="su-co" aria-labelledby="h-su-co">
+    <h2 id="h-su-co"><span class="num">16.</span> Incidents and breach notification <a class="anchor" href="#su-co" aria-label="Link to section 16">#</a></h2>
+    <p>When Embra discovers that personal data has been leaked, accessed without authorisation or lost, Embra:</p>
+    <ul>
+      <li>records the incident in writing and takes remedial measures;</li>
+      <li>notifies the personal data protection authority (Department A05, Ministry of Public Security) no later than <strong>72 hours</strong> after discovery, under Article 23 of Law 91/2025/QH15 using the form in Decree 356/2025/ND-CP; if the system is attacked in a way that puts consumer information at risk, notifies the competent state authority within 24 hours under Article 19 of Law 19/2023/QH15;</li>
+      <li>notifies affected people by email: what happened, which data is affected, possible consequences, what Embra has done and what you should do;</li>
+      <li>if the incident affects data inside your apps, notifies the workspace owner so you can meet your own obligations towards your end users.</li>
+    </ul>
+  </section>
+
+  <section class="s" id="google" aria-labelledby="h-google">
+    <h2 id="h-google"><span class="num">17.</span> Google user data <a class="anchor" href="#google" aria-label="Link to section 17">#</a></h2>
+    <p>"Sign in with Google" is offered only to people a workspace owner or admin has invited by email.</p>
+    <ul>
+      <li><strong>Scopes:</strong> <code>openid email profile</code> only.</li>
+      <li><strong>What Embra keeps:</strong> your Google account ID (<code>sub</code>), your verified email address and your name. The access token from Google is used once to read these fields and is never stored.</li>
+      <li><strong>Use:</strong> solely to sign you in to the workspace that invited you. The workspace's owners and admins see your name and email in the member list; the invited email also appears in the workspace's activity history, which every member and token of that workspace can read.</li>
+      <li><strong>No other use:</strong> Embra does not use Google user data for advertising, does not sell it, and does not transfer it to others except as needed for security and abuse investigation, or as required by law.</li>
+      <li><strong>Deletion:</strong> email hello@embra.cloud from the invited address and Embra deletes or anonymises your account data.</li>
+    </ul>
+    <p>Embra's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+  </section>
+
+  <section class="s" id="thay-doi" aria-labelledby="h-thay-doi">
+    <h2 id="h-thay-doi"><span class="num">18.</span> Changes and version history <a class="anchor" href="#thay-doi" aria-label="Link to section 18">#</a></h2>
+    <p>When the content changes, Embra updates the "Version" line at the top of the page, adds an entry to the history below and updates this translation. Changes that are less favourable to you (collecting more data, adding recipients, keeping data longer, using it for a new purpose) are announced by email to workspace owners before they take effect.</p>
+    <h3 id="lich-su">Version history</h3>
+    <ol class="history">
+      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, off-server backups, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
+      <li><span class="v">2026-10-27</span>First published version.</li>
+    </ol>
+    <p><mark data-todo>[TO CONFIRM: publish the old version (2026-10-27) at a fixed URL so it can be linked]</mark></p>
+  </section>
+
+  </main>
+</div>
+
+<footer class="site"><a href="/terms/">Terms of Service (Vietnamese)</a><a href="/privacy/" hreflang="vi">Chính sách quyền riêng tư (Tiếng Việt)</a><a href="/chinh-sach-du-lieu.html">Waitlist data notice</a><a href="https://docs.embra.cloud/">Docs</a><a href="https://status.embra.cloud/">System status</a><a href="https://console.embra.cloud/">Console sign-in</a><a href="mailto:hello@embra.cloud">hello@embra.cloud</a><br>© 2026 Embra.</footer>
+</body>
+</html>
