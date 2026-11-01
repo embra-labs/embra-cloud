@@ -33,8 +33,8 @@
       <button type="button" class="print" onclick="window.print()">Print / Save as PDF</button>
     </div>
     <dl class="meta">
-      <div><dt>Version</dt><dd><mark data-todo>[TO CONFIRM: 2026-11-XX, publication date]</mark></dd></div>
-      <div><dt>Effective</dt><dd>From the publication date of this version <mark data-todo>[2026-11-XX]</mark></dd></div>
+      <div><dt>Version</dt><dd>2026-11-01</dd></div>
+      <div><dt>Effective</dt><dd>From the publication date of this version (2026-11-01)</dd></div>
       <div><dt>Applies to</dt><dd>The Embra service: console, CLI, API, MCP and apps running on Embra</dd></div>
       <div><dt>Legal framework</dt><dd>Vietnam Personal Data Protection Law 91/2025/QH15; Decree 356/2025/ND-CP (as amended by Decree 392/2026/ND-CP); Consumer Protection Law 19/2023/QH15</dd></div>
       <div><dt>Language</dt><dd>English translation. The <a href="/privacy/" hreflang="vi">Vietnamese version</a> is the original and prevails if the two differ.</dd></div>
@@ -316,7 +316,7 @@
       <li>App domain names sent to the certificate authority; DNS queries via Cloudflare.</li>
       <li>Waitlist data and website statistics in Amsterdam, Netherlands.</li>
     </ul>
-    <p>For each recipient, Embra relies on the terms of service and standard data processing terms that the recipient publishes. For example, Resend's DPA includes Standard Contractual Clauses (SCCs) and a commitment to give notice of sub-processor changes. Under Article 20 of Law 91/2025/QH15, Embra must prepare a cross-border personal data transfer impact assessment and file it with the competent authority. <mark data-todo>[TO CONFIRM: status of the assessment (prepared, filed on which date); state "prepared/filed" only once true]</mark></p>
+    <p>For each recipient, Embra relies on the terms of service and standard data processing terms that the recipient publishes. For example, Resend's DPA includes Standard Contractual Clauses (SCCs) and a commitment to give notice of sub-processor changes. Under Article 20 of Law 91/2025/QH15, Embra must prepare a cross-border personal data transfer impact assessment and file it with the competent authority. As of the date of this version, Embra has not filed that assessment.</p>
   </section>
 
   <section class="s" id="xoa" aria-labelledby="h-xoa">
@@ -348,7 +348,7 @@
         <tr><td data-k="Data">Exports</td><td data-k="Retention">24 hours</td></tr>
         <tr><td data-k="Data">Forks</td><td data-k="Retention">At most 24 hours</td></tr>
         <tr><td data-k="Data">Import dumps</td><td data-k="Retention">Until the import completes (24 hours if unused); table and row-count summary has no automatic deletion yet</td></tr>
-        <tr><td data-k="Data">Billing records: billing accounts, orders, invoices, transactions (including outgoing), rejected webhooks, refunds</td><td data-k="Retention">No automatic deletion yet <mark data-todo>[TO CONFIRM with a lawyer: mandatory retention period for payment records]</mark></td></tr>
+        <tr><td data-k="Data">Billing records: billing accounts, orders, invoices, transactions (including outgoing), rejected webhooks, refunds</td><td data-k="Retention">No automatic deletion yet</td></tr>
         <tr><td data-k="Data">Sent emails</td><td data-k="Retention">Recipient, subject and body: 90 days after the email reaches its final state (sent, failed or skipped). An email that cannot be sent within 48 hours is skipped. Afterwards Embra keeps only the email kind, times, workspace ID, event ID, Resend ID and any send error; this remainder has no automatic deletion yet.</td></tr>
         <tr><td data-k="Data">Abuse reports, suspension records, trial exemptions</td><td data-k="Retention">No automatic deletion yet</td></tr>
         <tr><td data-k="Data">Request de-duplication records (may contain an API response body)</td><td data-k="Retention">24 hours</td></tr>
@@ -455,10 +455,10 @@
     <p>When the content changes, Embra updates the "Version" line at the top of the page, adds an entry to the history below and updates this translation. Changes that are less favourable to you (collecting more data, adding recipients, keeping data longer, using it for a new purpose) are announced by email to workspace owners before they take effect.</p>
     <h3 id="lich-su">Version history</h3>
     <ol class="history">
-      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
+      <li><span class="v">2026-11-01</span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
       <li><span class="v">2026-10-27</span>First published version.</li>
     </ol>
-    <p><mark data-todo>[TO CONFIRM: publish the old version (2026-10-27) at a fixed URL so it can be linked]</mark></p>
+    <p>Previous version: <a href="/privacy/2026-10-27/">version 2026-10-27</a> (Vietnamese).</p>
   </section>
 
   </main>
