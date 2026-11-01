@@ -46,7 +46,7 @@
       <ul>
         <li>Embra does not sell or rent personal data and does not share data for advertising. The console uses no advertising cookies and no third-party analytics.</li>
         <li>For account, workspace and billing data, Embra is the data controller. For data inside your apps (databases, files, logs), Embra is a processor acting on your behalf.</li>
-        <li>Apps, databases, files and logs run on servers in Vietnam. Some data leaves Vietnam: email via Resend (United States), sign-in via GitHub and Google, operational alerts via Telegram, and off-server backups (<a href="#nuoc-ngoai">section 10</a>).</li>
+        <li>Apps, databases, files and logs run on servers in Vietnam. Some data leaves Vietnam: email via Resend (United States), sign-in via GitHub and Google and operational alerts via Telegram (<a href="#nuoc-ngoai">section 10</a>).</li>
         <li>Most app data has a fixed retention period (logs 30 days, export links 24 hours, uploaded source 7 days). Account data, activity history and billing records currently have no automatic deletion schedule (<a href="#xoa">section 11</a>).</li>
         <li>Embra's operator can read the control database directly when providing support, reconciling payments or handling incidents, and those reads do not appear in your activity history (<a href="#truy-cap">section 8</a>).</li>
         <li>Send requests to access, correct or delete your data to <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Embra responds within 2 working days (<a href="#thuc-hien">section 13</a>).</li>
@@ -195,15 +195,14 @@
     <h3 id="backup-app">App databases</h3>
     <ul>
       <li>Each environment's Postgres is backed up continuously (WAL) with a full backup every week. Embra keeps the 2 most recent full backups plus the WAL between them, so you can restore to a point in time within roughly the last 1 to 2 weeks. These backups are stored on Embra's servers in Vietnam.</li>
-      <li>The system can also push these backups to off-server S3 storage. <mark data-todo>[TO CONFIRM: is off-server backup of app Postgres (offsite pgBackRest) enabled on the live host; provider and country]</mark></li>
       <li>After a point-in-time restore, the previous database is kept for another 72 hours so you can switch back.</li>
     </ul>
     <h3 id="backup-bucket">Bucket files</h3>
-    <p>Bucket files may be backed up nightly to off-server S3 storage and kept for 7 days, even after the bucket or environment is deleted. <mark data-todo>[TO CONFIRM: is bucket backup to external S3 enabled; provider and country]</mark></p>
+    <p>Bucket files currently have no backup. Keep the originals of important files elsewhere.</p>
     <h3 id="backup-control">Embra's control database</h3>
-    <p>The control database holds the data in sections 3 and 4 (accounts, emails, activity history, billing, transfer descriptions, CLI sign-in IPs, sent emails, abuse reports). Every hour, the whole database is dumped, encrypted with <code>age</code> on the server, and pushed to off-server S3 storage. Hourly copies are kept for 2 days and daily copies for 7 days. <mark data-todo>[TO CONFIRM: is the embra-controldb-backup timer running on the live host; name of the offsite S3 provider (runbook says B2 or Hetzner), country, actual lifecycle]</mark></p>
+    <p>The control database holds the data in sections 3 and 4 (accounts, emails, activity history, billing, transfer descriptions, CLI sign-in IPs, sent emails, abuse reports). This database currently has no off-server backup.</p>
     <div class="note">
-      <p><strong>Current limitation.</strong> Where an off-server backup above is not enabled, the corresponding data has backups only on the same server as the original; if that server fails badly, both may be lost together. Keep your own exports of important data.</p>
+      <p><strong>Current limitation.</strong> Embra has no off-server backups yet: every backup sits on the same server as the original data; if that server fails badly, both may be lost together. Keep your own exports of important data.</p>
     </div>
   </section>
 
@@ -237,8 +236,7 @@
     <h3 id="ip">IP addresses</h3>
     <ul>
       <li>Embra's edge uses IP addresses in memory (not written to disk) for rate and connection limiting.</li>
-      <li>Every request to an app is also checked with CrowdSec, abuse-prevention software running on Embra's server, to block IPs showing attack behaviour. CrowdSec stores its block decisions and alerts, including the IPs involved, on the server. <mark data-todo>[TO CONFIRM: is the CrowdSec LAPI enrolled with the CrowdSec Central API and sending signals (blocked IPs) out]</mark></li>
-      <li>The edge request log line contains no IP (<a href="#app-log">section 5</a>). However, when an app returns an error (for example 502 because it is not running), the edge writes an error line to the server's system journal, which may include the caller's IP, hostname and path with query string. Only the operator can read this journal. <mark data-todo>[TO CONFIRM: does journald on the host contain http.log.error lines with remote_ip; journald retention (SystemMaxUse/MaxRetentionSec)]</mark></li>
+      <li>The edge request log line contains no IP (<a href="#app-log">section 5</a>). However, when an app returns an error (for example 502 because it is not running), the edge writes an error line to the server's system journal, which may include the caller's IP, hostname and path with query string. Only the operator can read this journal. This journal has no time-based retention; the oldest lines are deleted when the journal reaches its size limit on the server.</li>
       <li>Embra's control server does not write your IP to its logs. Exceptions: CLI sign-in stores the IP as in <a href="#tai-khoan">section 3</a>; abuse reports store only a one-way HMAC of the reporter's IP (IPv6 by /64 prefix), never the IP itself.</li>
       <li>End-user requests pass through Embra's edge to your app. Your app receives their IP address in the <code>X-Forwarded-For</code> header; what your app stores is your decision.</li>
     </ul>
@@ -281,7 +279,6 @@
       <thead><tr><th scope="col">Party</th><th scope="col">Purpose</th><th scope="col">Data</th><th scope="col">Location</th></tr></thead>
       <tbody>
         <tr><td data-k="Party">Server provider <mark data-todo>[TO CONFIRM: name of the VPS provider in Vietnam]</mark></td><td data-k="Purpose">Rented servers running Embra</td><td data-k="Data">All data on the servers: control database, apps, app databases and files, local backups, logs, metrics</td><td data-k="Location">Vietnam</td></tr>
-        <tr><td data-k="Party">Off-server S3 storage <mark data-todo>[TO CONFIRM: name of the offsite S3 provider]</mark></td><td data-k="Purpose">Off-server backups (<a href="#backup">section 6</a>)</td><td data-k="Data">Encrypted control database dumps; app Postgres backups and bucket files if enabled</td><td data-k="Location"><mark data-todo>[TO CONFIRM: country]</mark></td></tr>
         <tr><td data-k="Party">GitHub</td><td data-k="Purpose">Sign in with GitHub; GitHub App reads repositories; console avatars; hosting the embra.cloud website</td><td data-k="Data">Embra receives ID, login, email; GitHub receives the IP of console and website visitors</td><td data-k="Location">United States</td></tr>
         <tr><td data-k="Party">Google</td><td data-k="Purpose">Sign in with Google for invitees; the hello@embra.cloud mailbox runs on Gmail</td><td data-k="Data">Embra receives account ID, email, name; email you send to Embra passes through Google</td><td data-k="Location">United States and other Google infrastructure locations</td></tr>
         <tr><td data-k="Party">Resend</td><td data-k="Purpose">Sending Embra's transactional email (list below)</td><td data-k="Data">Recipient address, subject and body</td><td data-k="Location">United States (primary processing per Resend's DPA); sending through Amazon Web Services infrastructure in Tokyo, Japan</td></tr>
@@ -289,15 +286,13 @@
         <tr><td data-k="Party">TPBank</td><td data-k="Purpose">Bank receiving transfers</td><td data-k="Data">Transaction details, as with any bank transfer</td><td data-k="Location">Vietnam</td></tr>
         <tr><td data-k="Party">Telegram</td><td data-k="Purpose">Operational alerts to the operator</td><td data-k="Data">Workspace, environment, billing account and transaction IDs, amounts, abuse report category and ID. No emails, payer names, transfer descriptions or app data.</td><td data-k="Location">Outside Vietnam</td></tr>
         <tr><td data-k="Party">Oracle Cloud</td><td data-k="Purpose">Server running status.embra.cloud, Plausible (stats.embra.cloud) and the waitlist API</td><td data-k="Data">Website page-view statistics (no cookies, no stored IPs); waitlist data under its <a href="/chinh-sach-du-lieu.html">own notice</a></td><td data-k="Location">Amsterdam, Netherlands</td></tr>
-        <tr><td data-k="Party">Let's Encrypt <mark data-todo>[TO CONFIRM: Let's Encrypt only, or ZeroSSL as fallback CA too]</mark></td><td data-k="Purpose">Issuing HTTPS certificates</td><td data-k="Data">Your app's domain names, including custom domains. Domain names are published in Certificate Transparency logs.</td><td data-k="Location">United States</td></tr>
+        <tr><td data-k="Party">Let's Encrypt</td><td data-k="Purpose">Issuing HTTPS certificates</td><td data-k="Data">Your app's domain names, including custom domains. Domain names are published in Certificate Transparency logs.</td><td data-k="Location">United States</td></tr>
         <tr><td data-k="Party">Cloudflare</td><td data-k="Purpose">DNS for onembra.com <mark data-todo>[TO CONFIRM: DNS only, or does Cloudflare proxy traffic to the edge]</mark></td><td data-k="Data">DNS queries for app domains</td><td data-k="Location">Outside Vietnam</td></tr>
-        <tr><td data-k="Party">CrowdSec (CrowdSec Central) <mark data-todo>[TO CONFIRM: keep this row only if the LAPI is enrolled with CrowdSec Central]</mark></td><td data-k="Purpose">Sharing and receiving lists of malicious IPs to block attacks</td><td data-k="Data">IPs of blocked requests, behaviour type, time</td><td data-k="Location">Outside Vietnam <mark data-todo>[TO CONFIRM: country]</mark></td></tr>
       </tbody>
     </table>
     <p>If Embra adds or changes a party above, Embra updates this page before the change takes effect and gives notice as described in <a href="#thay-doi">section 18</a>.</p>
 
     <h3 id="email">Emails Embra sends via Resend</h3>
-    <p><mark data-todo>[TO CONFIRM: is email.enabled on at publication; if not, keep this text but add "Embra starts sending email on …" and notify owners in advance]</mark></p>
     <p>Embra sends the emails below. They are mandatory notices about security, access, data loss and billing, so there is no unsubscribe option. Embra sends no marketing email.</p>
     <table class="stack">
       <thead><tr><th scope="col">Group</th><th scope="col">Emails</th><th scope="col">Recipients</th></tr></thead>
@@ -318,10 +313,8 @@
       <li>Transactional email via Resend (United States; sending infrastructure in Japan).</li>
       <li>Sign-in data via GitHub and Google; your IP when your browser loads avatars from GitHub; email you send to hello@embra.cloud via Gmail.</li>
       <li>Operational alerts via Telegram (IDs and amounts only, as in <a href="#ben-thu-ba">section 9</a>).</li>
-      <li>Off-server backups of the control database and, if enabled, of app databases and files (<a href="#backup">section 6</a>).</li>
       <li>App domain names sent to the certificate authority; DNS queries via Cloudflare.</li>
       <li>Waitlist data and website statistics in Amsterdam, Netherlands.</li>
-      <li>If CrowdSec Central is enabled: IPs of blocked requests (<a href="#ben-thu-ba">section 9</a>).</li>
     </ul>
     <p>For each recipient, Embra relies on the terms of service and standard data processing terms that the recipient publishes. For example, Resend's DPA includes Standard Contractual Clauses (SCCs) and a commitment to give notice of sub-processor changes. Under Article 20 of Law 91/2025/QH15, Embra must prepare a cross-border personal data transfer impact assessment and file it with the competent authority. <mark data-todo>[TO CONFIRM: status of the assessment (prepared, filed on which date); state "prepared/filed" only once true]</mark></p>
   </section>
@@ -348,13 +341,10 @@
         <tr><td data-k="Data">Build logs</td><td data-k="Retention">30 days after the build finishes; deleted with the environment</td></tr>
         <tr><td data-k="Data">App logs and edge request lines</td><td data-k="Retention">At most 30 days, subject to a size cap; deleted with the environment</td></tr>
         <tr><td data-k="Data">Raw log files</td><td data-k="Retention">30 days after the last write of a removed container; deleted with the environment</td></tr>
-        <tr><td data-k="Data">Server system journal (including edge error lines)</td><td data-k="Retention"><mark data-todo>[TO CONFIRM: journald retention]</mark></td></tr>
-        <tr><td data-k="Data">CrowdSec block decisions and alerts on the server (including IPs)</td><td data-k="Retention"><mark data-todo>[TO CONFIRM: CrowdSec LAPI retention]</mark></td></tr>
+        <tr><td data-k="Data">Server system journal (including edge error lines)</td><td data-k="Retention">No time limit; the oldest lines are deleted when the journal reaches its size limit on the server</td></tr>
         <tr><td data-k="Data">Metrics</td><td data-k="Retention">30 days; not deleted immediately with the environment</td></tr>
         <tr><td data-k="Data">Secrets</td><td data-k="Retention">Values deleted with the environment; names and versions are kept</td></tr>
-        <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; deleted with the environment, including any off-server copy</td></tr>
-        <tr><td data-k="Data">Off-server bucket backups (if enabled)</td><td data-k="Retention">7 days, even after the bucket is deleted</td></tr>
-        <tr><td data-k="Data">Control database backups</td><td data-k="Retention">Hourly copies 2 days, daily copies 7 days <mark data-todo>[TO CONFIRM: actual bucket lifecycle]</mark></td></tr>
+        <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; deleted with the environment</td></tr>
         <tr><td data-k="Data">Exports</td><td data-k="Retention">24 hours</td></tr>
         <tr><td data-k="Data">Forks</td><td data-k="Retention">At most 24 hours</td></tr>
         <tr><td data-k="Data">Import dumps</td><td data-k="Retention">Until the import completes (24 hours if unused); table and row-count summary has no automatic deletion yet</td></tr>
@@ -368,7 +358,7 @@
     </table>
 
     <h3 id="xoa-env">When you delete an environment</h3>
-    <p>Embra deletes its Postgres database and volume, backups, buckets, custom domains, uploaded source, log history, raw log files and build logs. Secret values are deleted; only names and versions are kept. Deletion runs in the background and usually finishes within minutes. What remains afterwards: metrics (up to 30 days), images, build cache (up to 14 days), off-server bucket copies (up to 7 days, if enabled), build records, activity history and control database backups.</p>
+    <p>Embra deletes its Postgres database and volume, backups, buckets, custom domains, uploaded source, log history, raw log files and build logs. Secret values are deleted; only names and versions are kept. Deletion runs in the background and usually finishes within minutes. What remains afterwards: metrics (up to 30 days), images, build cache (up to 14 days), build records and activity history.</p>
     <h3 id="xoa-workspace">When an owner deletes a workspace</h3>
     <p>All of the workspace's tokens and sessions are revoked immediately and every environment is deleted as above. What is kept: members' accounts, the workspace name, the member list, invitations (invited emails), the GitHub App connection (GitHub account name), activity history, the operation journal, build records and billing records. To delete more, send a request as described in <a href="#thuc-hien">section 13</a>.</p>
     <h3 id="xoa-trial">When a trial expires</h3>
@@ -430,10 +420,8 @@
       <li>Session cookies are stored only as HMACs and tokens only as SHA-256 hashes; Embra does not store the original values. Console cookies are set with Secure and SameSite=Lax, with a separate anti-CSRF cookie.</li>
       <li>App secrets are encrypted with AES-GCM before storage.</li>
       <li>Each environment runs in its own network with its own Postgres.</li>
-      <li>Control database dumps are encrypted with <code>age</code> before leaving the server.</li>
-      <li>The console and API are served over HTTPS; apps on <code>*.onembra.com</code> and custom domains get HTTPS certificates automatically. <mark data-todo>[TO CONFIRM: are all plain-HTTP requests to apps redirected to HTTPS]</mark></li>
+      <li>The console and API are served over HTTPS; apps on <code>*.onembra.com</code> and custom domains get HTTPS certificates automatically. Plain-HTTP requests to apps are redirected to HTTPS.</li>
       <li>Workspace permissions are role-based, and dangerous actions require a person (<a href="#truy-cap">section 8</a>). Reads with operator tokens are recorded in the activity history, except as noted in section 8.</li>
-      <li>Encryption at rest for databases, files, logs and backups on the server: <mark data-todo>[TO CONFIRM: are disks/ZFS encrypted at rest; state nothing until verified]</mark></li>
     </ul>
     <p>No method of protection is completely secure. If you suspect a token has leaked, revoke it in the console immediately and tell Embra.</p>
   </section>
@@ -467,7 +455,7 @@
     <p>When the content changes, Embra updates the "Version" line at the top of the page, adds an entry to the history below and updates this translation. Changes that are less favourable to you (collecting more data, adding recipients, keeping data longer, using it for a new purpose) are announced by email to workspace owners before they take effect.</p>
     <h3 id="lich-su">Version history</h3>
     <ol class="history">
-      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, off-server backups, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
+      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
       <li><span class="v">2026-10-27</span>First published version.</li>
     </ol>
     <p><mark data-todo>[TO CONFIRM: publish the old version (2026-10-27) at a fixed URL so it can be linked]</mark></p>

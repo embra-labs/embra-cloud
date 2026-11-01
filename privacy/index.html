@@ -47,7 +47,7 @@
       <ul>
         <li>Embra không bán, không cho thuê dữ liệu cá nhân và không chia sẻ dữ liệu để quảng cáo. Console không dùng cookie quảng cáo hay công cụ phân tích của bên thứ ba.</li>
         <li>Với dữ liệu tài khoản, workspace và thanh toán, Embra là bên kiểm soát dữ liệu. Với dữ liệu trong app của bạn (database, file, log), Embra là bên xử lý thay mặt bạn.</li>
-        <li>App, database, file và log chạy trên máy chủ tại Việt Nam. Một số dữ liệu đi ra nước ngoài: email qua Resend (Hoa Kỳ), đăng nhập qua GitHub và Google, cảnh báo vận hành qua Telegram, và bản sao lưu ngoài máy chủ (<a href="#nuoc-ngoai">mục 10</a>).</li>
+        <li>App, database, file và log chạy trên máy chủ tại Việt Nam. Một số dữ liệu đi ra nước ngoài: email qua Resend (Hoa Kỳ), đăng nhập qua GitHub và Google và cảnh báo vận hành qua Telegram (<a href="#nuoc-ngoai">mục 10</a>).</li>
         <li>Phần lớn dữ liệu của app có thời hạn cụ thể (log 30 ngày, link export 24 giờ, mã nguồn upload 7 ngày). Dữ liệu tài khoản, lịch sử hoạt động và hồ sơ thanh toán hiện chưa có lịch tự xoá (<a href="#xoa">mục 11</a>).</li>
         <li>Người vận hành Embra có thể đọc trực tiếp database điều khiển khi hỗ trợ, đối soát hoặc xử lý sự cố, và các lần đọc này không hiện trong lịch sử của bạn (<a href="#truy-cap">mục 8</a>).</li>
         <li>Gửi yêu cầu xem, sửa, xoá dữ liệu tới <a href="mailto:hello@embra.cloud">hello@embra.cloud</a>. Embra phản hồi trong 02 ngày làm việc (<a href="#thuc-hien">mục 13</a>).</li>
@@ -196,15 +196,14 @@
     <h3 id="backup-app">Database của app</h3>
     <ul>
       <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất. Bản sao lưu nằm trên máy chủ Embra tại Việt Nam.</li>
-      <li>Hệ thống có thể đẩy thêm bản sao lưu này lên kho lưu trữ S3 ngoài máy chủ. <mark data-todo>[CẦN XÁC NHẬN: sao lưu ngoài máy chủ cho Postgres của app (offsite pgBackRest) có đang bật trên host live không; nhà cung cấp và quốc gia]</mark></li>
       <li>Sau khi khôi phục về một thời điểm, bản database cũ được giữ thêm 72 giờ để có thể quay lại.</li>
     </ul>
     <h3 id="backup-bucket">File trong bucket</h3>
-    <p>File trong bucket có thể được sao lưu mỗi đêm sang kho S3 ngoài máy chủ và giữ 7 ngày, kể cả sau khi bucket hoặc environment bị xoá. <mark data-todo>[CẦN XÁC NHẬN: sao lưu bucket ra S3 ngoài có đang bật không; nhà cung cấp và quốc gia]</mark></p>
+    <p>File trong bucket hiện chưa có bản sao lưu. Hãy giữ bản gốc của file quan trọng ở nơi khác.</p>
     <h3 id="backup-control">Database điều khiển của Embra</h3>
-    <p>Database điều khiển chứa dữ liệu ở mục 3 và 4 (tài khoản, email, lịch sử hoạt động, thanh toán, nội dung chuyển khoản, IP đăng nhập CLI, thư đã gửi, báo cáo lạm dụng). Mỗi giờ, toàn bộ database này được dump, mã hoá bằng <code>age</code> trên máy chủ, rồi đẩy lên kho S3 ngoài máy chủ. Bản theo giờ được giữ 2 ngày, bản theo ngày được giữ 7 ngày. <mark data-todo>[CẦN XÁC NHẬN: timer embra-controldb-backup có đang chạy trên host live không; tên nhà cung cấp S3 offsite (runbook ghi B2 hoặc Hetzner), quốc gia, lifecycle thực tế]</mark></p>
+    <p>Database điều khiển chứa dữ liệu ở mục 3 và 4 (tài khoản, email, lịch sử hoạt động, thanh toán, nội dung chuyển khoản, IP đăng nhập CLI, thư đã gửi, báo cáo lạm dụng). Database này hiện chưa có bản sao lưu ra ngoài máy chủ.</p>
     <div class="note">
-      <p><strong>Giới hạn hiện tại.</strong> Nếu một kho sao lưu ngoài máy chủ ở trên chưa bật, dữ liệu tương ứng chỉ có bản sao lưu trên cùng máy chủ với dữ liệu gốc; khi máy chủ hỏng nặng, cả hai có thể mất cùng lúc. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
+      <p><strong>Giới hạn hiện tại.</strong> Embra chưa có bản sao lưu ngoài máy chủ: mọi bản sao lưu nằm trên cùng máy chủ với dữ liệu gốc; khi máy chủ hỏng nặng, cả hai có thể mất cùng lúc. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
     </div>
   </section>
 
@@ -238,8 +237,7 @@
     <h3 id="ip">Địa chỉ IP</h3>
     <ul>
       <li>Edge của Embra dùng địa chỉ IP trong bộ nhớ (không lưu xuống đĩa) để giới hạn tốc độ và số kết nối.</li>
-      <li>Mọi request tới app cũng được kiểm tra với CrowdSec, phần mềm chống lạm dụng chạy trên máy chủ Embra, để chặn IP có dấu hiệu tấn công. CrowdSec lưu trên máy chủ các quyết định chặn và cảnh báo, gồm IP liên quan. <mark data-todo>[CẦN XÁC NHẬN: CrowdSec LAPI có đăng ký với CrowdSec Central API và gửi tín hiệu (IP bị chặn) ra ngoài không]</mark></li>
-      <li>Dòng log request của edge không có IP (<a href="#app-log">mục 5</a>). Tuy nhiên, khi app trả lỗi (ví dụ 502 vì app không chạy), edge ghi một dòng lỗi vào nhật ký hệ thống của máy chủ, có thể gồm IP người gọi, tên miền và đường dẫn kèm query string. Chỉ người vận hành đọc được nhật ký này. <mark data-todo>[CẦN XÁC NHẬN: journald trên host có các dòng http.log.error kèm remote_ip không; thời hạn giữ journald (SystemMaxUse/MaxRetentionSec)]</mark></li>
+      <li>Dòng log request của edge không có IP (<a href="#app-log">mục 5</a>). Tuy nhiên, khi app trả lỗi (ví dụ 502 vì app không chạy), edge ghi một dòng lỗi vào nhật ký hệ thống của máy chủ, có thể gồm IP người gọi, tên miền và đường dẫn kèm query string. Chỉ người vận hành đọc được nhật ký này. Nhật ký này không có hạn giữ theo ngày; dòng cũ nhất bị xoá khi nhật ký chạm giới hạn dung lượng trên máy chủ.</li>
       <li>Máy chủ điều khiển của Embra không ghi IP của bạn vào log. Ngoại lệ: đăng nhập CLI lưu IP như ở <a href="#tai-khoan">mục 3</a>; báo cáo lạm dụng chỉ lưu HMAC một chiều của IP người báo (IPv6 tính theo dải /64), không lưu IP gốc.</li>
       <li>Request từ người dùng cuối đi qua edge của Embra rồi tới app. App của bạn nhận địa chỉ IP của họ qua header <code>X-Forwarded-For</code>; app lưu gì là do bạn quyết định.</li>
     </ul>
@@ -282,7 +280,6 @@
       <thead><tr><th scope="col">Bên</th><th scope="col">Mục đích</th><th scope="col">Dữ liệu</th><th scope="col">Nơi xử lý</th></tr></thead>
       <tbody>
         <tr><td data-k="Bên">Nhà cung cấp máy chủ <mark data-todo>[CẦN XÁC NHẬN: tên nhà cung cấp VPS tại Việt Nam]</mark></td><td data-k="Mục đích">Thuê máy chủ chạy Embra</td><td data-k="Dữ liệu">Mọi dữ liệu nằm trên máy chủ: database điều khiển, app, database và file của app, sao lưu tại chỗ, log, metrics</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
-        <tr><td data-k="Bên">Kho lưu trữ S3 ngoài máy chủ <mark data-todo>[CẦN XÁC NHẬN: tên nhà cung cấp S3 offsite]</mark></td><td data-k="Mục đích">Giữ bản sao lưu ngoài máy chủ (<a href="#backup">mục 6</a>)</td><td data-k="Dữ liệu">Bản dump database điều khiển đã mã hoá; bản sao lưu Postgres và file bucket của app nếu bật</td><td data-k="Nơi xử lý"><mark data-todo>[CẦN XÁC NHẬN: quốc gia]</mark></td></tr>
         <tr><td data-k="Bên">GitHub</td><td data-k="Mục đích">Đăng nhập bằng GitHub; GitHub App đọc repo; ảnh đại diện trong console; phục vụ website embra.cloud</td><td data-k="Dữ liệu">Embra nhận ID, tên đăng nhập, email; GitHub nhận IP của người xem console và website</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
         <tr><td data-k="Bên">Google</td><td data-k="Mục đích">Đăng nhập bằng Google cho người được mời; hộp thư hello@embra.cloud chạy trên Gmail</td><td data-k="Dữ liệu">Embra nhận mã tài khoản, email, tên; nội dung email bạn gửi cho Embra đi qua Google</td><td data-k="Nơi xử lý">Hoa Kỳ và các nơi Google đặt hạ tầng</td></tr>
         <tr><td data-k="Bên">Resend</td><td data-k="Mục đích">Gửi email giao dịch của Embra (danh sách ở dưới)</td><td data-k="Dữ liệu">Địa chỉ người nhận, tiêu đề và nội dung thư</td><td data-k="Nơi xử lý">Hoa Kỳ (nơi xử lý chính theo DPA của Resend); gửi thư qua hạ tầng Amazon Web Services tại Tokyo, Nhật Bản</td></tr>
@@ -290,15 +287,13 @@
         <tr><td data-k="Bên">TPBank</td><td data-k="Mục đích">Ngân hàng nhận tiền chuyển khoản</td><td data-k="Dữ liệu">Thông tin giao dịch, như mọi chuyển khoản ngân hàng</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
         <tr><td data-k="Bên">Telegram</td><td data-k="Mục đích">Gửi cảnh báo vận hành cho người vận hành</td><td data-k="Dữ liệu">Mã workspace, environment, tài khoản thanh toán, giao dịch, số tiền, loại và mã báo cáo lạm dụng. Không chứa email, tên người trả, nội dung chuyển khoản hay dữ liệu app.</td><td data-k="Nơi xử lý">Ngoài Việt Nam</td></tr>
         <tr><td data-k="Bên">Oracle Cloud</td><td data-k="Mục đích">Máy chủ chạy trang trạng thái status.embra.cloud, Plausible (stats.embra.cloud) và API waitlist</td><td data-k="Dữ liệu">Số liệu lượt xem website (không cookie, không lưu IP); dữ liệu waitlist theo <a href="/chinh-sach-du-lieu.html">thông báo riêng</a></td><td data-k="Nơi xử lý">Amsterdam, Hà Lan</td></tr>
-        <tr><td data-k="Bên">Let's Encrypt <mark data-todo>[CẦN XÁC NHẬN: chỉ Let's Encrypt, hay có thêm ZeroSSL làm CA dự phòng]</mark></td><td data-k="Mục đích">Cấp chứng chỉ HTTPS</td><td data-k="Dữ liệu">Tên miền của app, kể cả tên miền riêng. Tên miền được công khai trong nhật ký Certificate Transparency.</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
+        <tr><td data-k="Bên">Let's Encrypt</td><td data-k="Mục đích">Cấp chứng chỉ HTTPS</td><td data-k="Dữ liệu">Tên miền của app, kể cả tên miền riêng. Tên miền được công khai trong nhật ký Certificate Transparency.</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
         <tr><td data-k="Bên">Cloudflare</td><td data-k="Mục đích">Quản lý DNS cho onembra.com <mark data-todo>[CẦN XÁC NHẬN: Cloudflare chỉ làm DNS hay có chuyển tiếp (proxy) lưu lượng tới edge]</mark></td><td data-k="Dữ liệu">Truy vấn DNS tới tên miền app</td><td data-k="Nơi xử lý">Ngoài Việt Nam</td></tr>
-        <tr><td data-k="Bên">CrowdSec (CrowdSec Central) <mark data-todo>[CẦN XÁC NHẬN: chỉ giữ dòng này nếu LAPI đăng ký với CrowdSec Central]</mark></td><td data-k="Mục đích">Chia sẻ và nhận danh sách IP độc hại để chặn tấn công</td><td data-k="Dữ liệu">IP của request bị chặn, loại hành vi, thời điểm</td><td data-k="Nơi xử lý">Ngoài Việt Nam <mark data-todo>[CẦN XÁC NHẬN: quốc gia]</mark></td></tr>
       </tbody>
     </table>
     <p>Nếu Embra thêm hoặc đổi một bên ở trên, Embra cập nhật trang này trước khi áp dụng và thông báo theo <a href="#thay-doi">mục 18</a>.</p>
 
     <h3 id="email">Email Embra gửi qua Resend</h3>
-    <p><mark data-todo>[CẦN XÁC NHẬN: email.enabled có bật tại thời điểm công bố không; nếu chưa, giữ đoạn này nhưng thêm câu "Embra bắt đầu gửi email từ ngày …" và báo trước cho owner]</mark></p>
     <p>Embra gửi các email sau. Đây là email bắt buộc về bảo mật, quyền truy cập, mất dữ liệu và thanh toán, nên không có tuỳ chọn huỷ đăng ký. Embra không gửi email quảng cáo.</p>
     <table class="stack">
       <thead><tr><th scope="col">Nhóm</th><th scope="col">Email</th><th scope="col">Người nhận</th></tr></thead>
@@ -319,10 +314,8 @@
       <li>Email giao dịch qua Resend (Hoa Kỳ; hạ tầng gửi tại Nhật Bản).</li>
       <li>Dữ liệu đăng nhập qua GitHub và Google; IP của bạn khi trình duyệt tải ảnh đại diện từ GitHub; email bạn gửi tới hello@embra.cloud qua Gmail.</li>
       <li>Cảnh báo vận hành qua Telegram (chỉ mã và số tiền, như ở <a href="#ben-thu-ba">mục 9</a>).</li>
-      <li>Bản sao lưu ngoài máy chủ của database điều khiển và, nếu bật, của database và file app (<a href="#backup">mục 6</a>).</li>
       <li>Tên miền app gửi tới tổ chức cấp chứng chỉ HTTPS; truy vấn DNS qua Cloudflare.</li>
       <li>Dữ liệu waitlist và số liệu truy cập website tại Amsterdam, Hà Lan.</li>
-      <li>Nếu CrowdSec Central được bật: IP của request bị chặn (<a href="#ben-thu-ba">mục 9</a>).</li>
     </ul>
     <p>Với mỗi bên nhận, Embra dựa vào điều khoản dịch vụ và thoả thuận xử lý dữ liệu tiêu chuẩn mà bên đó công bố. Ví dụ, DPA của Resend có điều khoản hợp đồng mẫu (SCC) và cam kết thông báo khi đổi bên xử lý phụ. Theo Luật 91/2025/QH15 Điều 20, Embra phải lập hồ sơ đánh giá tác động chuyển dữ liệu cá nhân xuyên biên giới và gửi cơ quan chuyên trách. <mark data-todo>[CẦN XÁC NHẬN: trạng thái hồ sơ (đã lập, đã nộp ngày nào); chỉ ghi "đã lập/đã nộp" khi có thật]</mark></p>
   </section>
@@ -349,13 +342,10 @@
         <tr><td data-k="Dữ liệu">Log build</td><td data-k="Thời hạn">30 ngày sau khi build kết thúc; xoá khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Log app và dòng request của edge</td><td data-k="Thời hạn">Tối đa 30 ngày, có giới hạn dung lượng; xoá khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">File log thô</td><td data-k="Thời hạn">30 ngày sau lần ghi cuối của container đã gỡ; xoá khi xoá environment</td></tr>
-        <tr><td data-k="Dữ liệu">Nhật ký hệ thống của máy chủ (gồm dòng lỗi của edge)</td><td data-k="Thời hạn"><mark data-todo>[CẦN XÁC NHẬN: thời hạn journald]</mark></td></tr>
-        <tr><td data-k="Dữ liệu">Quyết định chặn và cảnh báo của CrowdSec trên máy chủ (gồm IP)</td><td data-k="Thời hạn"><mark data-todo>[CẦN XÁC NHẬN: thời hạn giữ của CrowdSec LAPI]</mark></td></tr>
+        <tr><td data-k="Dữ liệu">Nhật ký hệ thống của máy chủ (gồm dòng lỗi của edge)</td><td data-k="Thời hạn">Không có hạn theo ngày; dòng cũ nhất bị xoá khi nhật ký chạm giới hạn dung lượng trên máy chủ</td></tr>
         <tr><td data-k="Dữ liệu">Metrics</td><td data-k="Thời hạn">30 ngày; không xoá ngay khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Secret</td><td data-k="Thời hạn">Giá trị xoá khi xoá environment; tên và phiên bản được giữ</td></tr>
-        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; xoá khi xoá environment, kể cả bản ngoài máy chủ nếu có</td></tr>
-        <tr><td data-k="Dữ liệu">Sao lưu bucket ngoài máy chủ (nếu bật)</td><td data-k="Thời hạn">7 ngày, kể cả sau khi bucket bị xoá</td></tr>
-        <tr><td data-k="Dữ liệu">Sao lưu database điều khiển</td><td data-k="Thời hạn">Bản theo giờ 2 ngày, bản theo ngày 7 ngày <mark data-todo>[CẦN XÁC NHẬN: lifecycle thực tế của bucket]</mark></td></tr>
+        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; xoá khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Bản export</td><td data-k="Thời hạn">24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Fork</td><td data-k="Thời hạn">Tối đa 24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Bản dump import</td><td data-k="Thời hạn">Tới khi import xong (24 giờ nếu chưa dùng); tóm tắt bảng và số dòng chưa có lịch tự xoá</td></tr>
@@ -369,7 +359,7 @@
     </table>
 
     <h3 id="xoa-env">Khi bạn xoá một environment</h3>
-    <p>Embra xoá database Postgres và ổ đĩa của nó, bản sao lưu, bucket, tên miền riêng, mã nguồn đã upload, lịch sử log, file log thô và log build. Giá trị secret bị xoá, chỉ giữ tên và phiên bản. Việc xoá chạy nền và thường xong trong vài phút. Những gì còn lại sau đó: metrics (tới 30 ngày), image, bộ nhớ đệm build (tới 14 ngày), bản sao bucket ngoài máy chủ (tới 7 ngày, nếu bật), bản ghi build, lịch sử hoạt động và các bản sao lưu database điều khiển.</p>
+    <p>Embra xoá database Postgres và ổ đĩa của nó, bản sao lưu, bucket, tên miền riêng, mã nguồn đã upload, lịch sử log, file log thô và log build. Giá trị secret bị xoá, chỉ giữ tên và phiên bản. Việc xoá chạy nền và thường xong trong vài phút. Những gì còn lại sau đó: metrics (tới 30 ngày), image, bộ nhớ đệm build (tới 14 ngày), bản ghi build và lịch sử hoạt động.</p>
     <h3 id="xoa-workspace">Khi owner xoá workspace</h3>
     <p>Mọi token và phiên đăng nhập của workspace bị thu hồi ngay, và mọi environment bị xoá như trên. Những gì vẫn được giữ: tài khoản của các thành viên, tên workspace, danh sách thành viên, lời mời (email được mời), kết nối GitHub App (tên tài khoản GitHub), lịch sử hoạt động, nhật ký thao tác, bản ghi build và hồ sơ thanh toán. Muốn xoá thêm, gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>.</p>
     <h3 id="xoa-trial">Khi hết hạn dùng thử</h3>
@@ -431,10 +421,8 @@
       <li>Cookie phiên chỉ lưu dạng HMAC và token chỉ lưu dạng hash SHA-256; Embra không lưu giá trị gốc. Cookie console đặt với Secure, SameSite=Lax và có cookie chống CSRF.</li>
       <li>Secret của app được mã hoá AES-GCM trước khi lưu.</li>
       <li>Mỗi environment chạy trong mạng riêng và có Postgres riêng.</li>
-      <li>Bản dump database điều khiển được mã hoá bằng <code>age</code> trước khi rời máy chủ.</li>
-      <li>Console và API phục vụ qua HTTPS; app trên <code>*.onembra.com</code> và tên miền riêng được cấp chứng chỉ HTTPS tự động. <mark data-todo>[CẦN XÁC NHẬN: mọi request HTTP tới app có được chuyển sang HTTPS không]</mark></li>
+      <li>Console và API phục vụ qua HTTPS; app trên <code>*.onembra.com</code> và tên miền riêng được cấp chứng chỉ HTTPS tự động. Request HTTP tới app được chuyển sang HTTPS.</li>
       <li>Quyền trong workspace chia theo vai trò, và thao tác nguy hiểm đòi người thật (<a href="#truy-cap">mục 8</a>). Lần đọc dữ liệu bằng token vận hành được ghi vào lịch sử hoạt động, trừ các trường hợp nêu ở mục 8.</li>
-      <li>Mã hoá lúc lưu trữ cho database, file, log và bản sao lưu trên máy chủ: <mark data-todo>[CẦN XÁC NHẬN: ổ đĩa/ZFS có mã hoá lúc nghỉ không; chưa ghi gì cho tới khi kiểm xong]</mark></li>
     </ul>
     <p>Không có biện pháp nào an toàn tuyệt đối. Nếu bạn nghi token bị lộ, hãy thu hồi ngay trong console và báo cho Embra.</p>
   </section>
@@ -469,7 +457,7 @@
     <p>Khi đổi nội dung, Embra cập nhật dòng "Phiên bản" ở đầu trang, thêm một dòng vào lịch sử dưới đây và sửa bản tiếng Anh cho khớp. Thay đổi bất lợi cho bạn (thu thêm dữ liệu, thêm bên nhận, giữ lâu hơn, dùng cho mục đích mới) được báo qua email cho owner các workspace trước khi áp dụng.</p>
     <h3 id="lich-su">Lịch sử phiên bản</h3>
     <ol class="history">
-      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Viết lại toàn bộ: thêm cơ sở xử lý theo từng mục đích, bản tiếng Anh đầy đủ, bảng bên xử lý có nơi xử lý, Resend, sao lưu ngoài máy chủ, chuyển dữ liệu ra nước ngoài, bảng thời hạn lưu trữ, thời hạn thực hiện quyền, quyết định tự động, thông báo vi phạm. Sửa: đăng nhập CLI không lưu quốc gia; tên người trả mặc định; ai xem được danh sách thành viên; truy cập của người vận hành qua lệnh quản trị; xoá staging và preview bằng token. Bản nháp 2026-10-31 (thêm Resend) chưa từng được công bố và được gộp vào phiên bản này.</li>
+      <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Viết lại toàn bộ: thêm cơ sở xử lý theo từng mục đích, bản tiếng Anh đầy đủ, bảng bên xử lý có nơi xử lý, Resend, chuyển dữ liệu ra nước ngoài, bảng thời hạn lưu trữ, thời hạn thực hiện quyền, quyết định tự động, thông báo vi phạm. Sửa: đăng nhập CLI không lưu quốc gia; tên người trả mặc định; ai xem được danh sách thành viên; truy cập của người vận hành qua lệnh quản trị; xoá staging và preview bằng token. Bản nháp 2026-10-31 (thêm Resend) chưa từng được công bố và được gộp vào phiên bản này.</li>
       <li><span class="v">2026-10-27</span>Phiên bản đầu tiên được công bố.</li>
     </ol>
     <p><mark data-todo>[CẦN XÁC NHẬN: có công bố bản cũ (2026-10-27) ở một URL cố định để đặt link không]</mark></p>
