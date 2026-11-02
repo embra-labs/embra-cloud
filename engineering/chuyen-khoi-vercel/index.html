@@ -82,7 +82,7 @@ pg_dump --format=custom --dbname="$SOURCE_URL" --file=app.dump
 pg_restore --no-owner --no-privileges --exit-on-error --single-transaction \
   --dbname="$TARGET_URL" app.dump</code></pre>
 <p>Mặc định <code>pg_restore</code> chạy tiếp khi gặp lỗi, nên một restore “xong” vẫn có thể thiếu bảng; <code>--exit-on-error</code> làm lỗi hiện ra ngay. Nếu nguồn là Neon, dùng chuỗi kết nối direct, không qua pooler.</p><p>Đọc chuỗi kết nối từ biến môi trường, không dán mật khẩu vào lệnh để tránh lưu vào lịch sử shell. Nếu không chấp nhận được thời gian dừng ghi, bạn cần replication (ví dụ logical replication) thay vì dump; việc đó phức tạp hơn và nên diễn tập riêng.</p>
-<p>Sau khi chuyển, giữ database cũ ở chế độ chỉ đọc vài ngày. Đó là đường quay lại nếu phát hiện thiếu dữ liệu, với điều kiện bạn chấp nhận bỏ các lần ghi đã xảy ra ở nơi mới.</p>
+<p>Sau khi chuyển, giữ database cũ ở chế độ chỉ đọc vài ngày. Đó là đường quay lại nếu phát hiện thiếu dữ liệu, với điều kiện bạn chấp nhận bỏ các lần ghi đã xảy ra ở nơi mới.</p><p>Ở nơi mới, dựng backup hằng ngày có restore thử ngay từ đầu: <a href="/engineering/backup-postgresql/">hướng dẫn backup PostgreSQL</a>.</p>
 
 <h2 id="dns">4. Đổi DNS có đường quay lại</h2>
 <ol>

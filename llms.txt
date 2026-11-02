@@ -26,6 +26,7 @@ Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có p
 ## Bằng chứng công khai
 
 - [Engineering](https://embra.cloud/engineering/)
+- [Backup PostgreSQL](https://embra.cloud/engineering/backup-postgresql/): pg_dump -Fc + globals, restore thử với --exit-on-error và đối chiếu, retention, bản sao ngoài máy bằng rclone; mọi lệnh chạy trên PostgreSQL 18.6 ngày 02/11/2026. Hướng dẫn chung, không cần tài khoản Embra.
 - [Deploy app có Postgres](https://embra.cloud/engineering/deploy-with-postgres/): hướng dẫn thực hành và checklist, dùng được khi tự host; không phải hướng dẫn cài Embra.
 - [So sánh nơi chạy app có Postgres cho người dùng Việt Nam](https://embra.cloud/so-sanh/): Vercel, Supabase, Neon, Railway, Render, Mắt Bão Vibe Host, VPS tại Việt Nam và Embra theo vị trí server, giá khởi điểm, cách trả tiền và trách nhiệm database; số liệu đối chiếu trang chính thức ngày 21/10/2026 (Render, Supabase, Neon ngày 24/10/2026). Dòng Embra là gói beta trả phí từ 25/10/2026.
 - [Độ trễ từ Việt Nam tới các region gần](https://embra.cloud/engineering/do-tre-viet-nam/): 120 vòng TCP/TLS từ một máy tại Việt Nam ngày 22/10/2026 (ngoài giờ cao điểm) tới TP.HCM, Hà Nội, Singapore, Hong Kong, Tokyo, Virginia; ước lượng chi phí khi app và database ở hai nơi. Số đo của nhà cung cấp khác, không phải hạ tầng Embra.
