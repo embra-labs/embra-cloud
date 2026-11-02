@@ -2,6 +2,13 @@
 main{max-width:760px}
 .byline{margin:0 0 28px}
 .toc[open] summary{margin-bottom:6px}
+
+/* "Kết luận chính" box right after the byline (standard §2.1) */
+.key-points{margin:0 0 32px;padding:16px 20px 6px;background:#f0e7d5;border-left:3px solid #ac6a30;border-radius:4px;font-size:16px;line-height:1.65}
+.key-points .kp-title{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8b421b}
+.key-points ul{margin:0;padding-left:20px}
+.key-points li{margin:0 0 10px}
+article h3{font-size:21px;line-height:1.4;margin:36px 0 0}
 .toc summary::marker{color:#8b421b}
 
 /* Tall vertical diagrams: cap height on desktop instead of stretching to the column width */
