@@ -1,0 +1,35 @@
+/* Shared frame for /engineering/ posts (claude-blog-standard-20261102.md §2). Loaded after each page's inline style. */
+main{max-width:760px}
+.byline{margin:0 0 28px}
+.toc[open] summary{margin-bottom:6px}
+.toc summary::marker{color:#8b421b}
+
+/* Tall vertical diagrams: cap height on desktop instead of stretching to the column width */
+article img[src$=".svg"]{width:auto;max-width:100%;max-height:900px;margin:0 auto}
+
+/* Code: language label + copy button added by post.js */
+.code-wrap{position:relative;margin:22px 0}
+.code-wrap pre{margin:0;padding-top:34px;border-radius:6px}
+.code-lang{position:absolute;top:8px;left:16px;font:600 11px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#62635b}
+.code-copy{position:absolute;top:6px;right:8px;font:13px/1 system-ui,sans-serif;padding:6px 10px;border:1px solid #d3cbbb;border-radius:5px;background:#faf8f3;color:#262623;cursor:pointer}
+.code-copy:hover{border-color:#8b421b}
+
+/* End of post: read next, author, CTA */
+.post-end{margin:56px 0 0;padding-top:8px;border-top:1px solid #ded7ca}
+.post-end h2{font-size:22px;margin:28px 0 8px}
+.read-next ul{padding-left:22px;margin:0}
+.read-next li{margin:10px 0}
+.author-box{display:flex;gap:14px;align-items:flex-start;margin:32px 0 0;font-size:15px;line-height:1.65}
+.author-box img{width:40px;height:40px;border:0;border-radius:0;flex:none;margin-top:4px}
+.author-box p{margin:0}
+.about-line{font-size:15px;color:#62635b;margin:20px 0 0}
+.cta-box{margin:28px 0 0;padding:18px 20px;background:#f0e7d5;border-left:3px solid #ac6a30;border-radius:4px}
+.cta-box p{margin:6px 0}
+.cta-box .btn{display:inline-block;background:#232323;color:#faf8f3;text-decoration:none;padding:8px 16px;border-radius:5px;margin-right:12px;font-weight:600}
+.cta-box .btn:hover{background:#8b421b}
+
+@media(max-width:600px){
+  /* Tables with at most 3 columns fit on a phone; only wider ones keep horizontal scroll */
+  .table-scroll table:not(:has(tr > :nth-child(4))){min-width:0}
+  .post-end h2{font-size:20px}
+}
