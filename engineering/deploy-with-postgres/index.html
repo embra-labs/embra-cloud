@@ -22,7 +22,7 @@ table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}th,td{p
 </head>
 <body><a class="skip" href="#main">Đến nội dung</a><header class="bar"><a class="brand" href="/" aria-label="Embra, trang chủ"><img src="/favicon.svg" alt="">EMBRA</a><nav aria-label="Chính"><a href="/engineering/">Engineering</a><a href="https://github.com/embra-labs">GitHub</a><a href="/bang-gia/">Bảng giá</a><a href="https://docs.embra.cloud/">Tài liệu</a><a href="https://console.embra.cloud/">Đăng nhập</a></nav></header>
 <main id="main"><p class="kicker">Engineering / Hướng dẫn thực hành</p><article><h1 id="deploy-app-co-postgres-kiem-gi-truoc-khi-chuyen-sang-ban-moi">Deploy app có Postgres: kiểm gì trước khi chuyển sang bản mới?</h1>
-<p class="byline"><em>Đội Embra · Xuất bản trên website 09/10/2026 · Phát triển từ guide GitHub ngày 08/10/2026 · Khoảng 9 phút đọc.</em></p>
+<p class="byline"><em>Đội Embra · Xuất bản trên website 09/10/2026 · Phát triển từ guide GitHub ngày 08/10/2026 · Khoảng 9 phút đọc.</em></p><aside class="key-points" aria-label="Kết luận chính"><p class="kp-title">Kết luận chính</p><ul><li>Trước deploy, kiểm bốn điều: dữ liệu nào còn khi thay container, bản mới trỏ vào đâu, HTTP 200 có nghĩa là tạo được đơn không, quay lại code cũ có đủ không.</li><li>Đổi schema theo expand–contract: thêm cấu trúc mới, chuyển dữ liệu và nơi đọc, rồi mới bỏ cấu trúc cũ.</li><li>Đặt trước ngưỡng dừng deploy: mức lỗi, latency, thời gian quan sát và người quyết định.</li><li>Diễn tập restore riêng: backup tồn tại và backup phục hồi được là hai điều khác nhau.</li><li>Có checklist tải về; dùng được với mọi nơi chạy, không cần tài khoản Embra.</li></ul></aside>
 <p>Bài này giúp bạn chuẩn bị một lần deploy app có Postgres: dữ liệu nào phải giữ lại, code cũ còn chạy được sau migration không, và cần kiểm gì nếu phải restore. Dùng được khi tự host hoặc dùng nền tảng khác; không cần tài khoản Embra.</p>
 <p>Các bước thực hành dùng môi trường test và dữ liệu tổng hợp. <a href="checklist.md" download="embra-postgres-checklist.md">Tải checklist để ghi kết quả</a>.</p>
 <p>Bạn có một app nhận đơn hàng. Trên máy cá nhân, trang web mở được, API ghi đơn
@@ -38,23 +38,19 @@ dữ liệu có cấu trúc. Nơi lưu file giữ nội dung ảnh. Worker làm 
 sau khi API trả lời. Một ứng dụng nhỏ có thể gộp frontend và API trong một
 process; chỉ tách thêm khi công việc cần đến.</p>
 <h2 id="kiem-tra-bon-dieu-truoc-lan-deploy-tiep-theo">Kiểm tra bốn điều trước lần deploy tiếp theo</h2>
-<p><strong>1. Khi thay container, dữ liệu nào còn?</strong></p>
-<p>File trong lớp ghi của container có thể mất khi container bị xóa và tạo lại.
-Ảnh người dùng cần nơi lưu bền vững như volume được quản lý hoặc object storage.
-Database cũng cần storage bền vững. Việc app hiện tại đọc được ảnh chưa chứng
-minh ảnh sẽ còn sau deploy. Thử thay container trong môi trường test rồi đọc
-lại cùng một đơn và ảnh đã tạo trước đó. Xem cơ chế lưu trữ trong <a href="https://docs.docker.com/engine/storage/">tài liệu Docker</a>.</p>
-<p><strong>2. Phiên bản mới đang kết nối tới môi trường nào?</strong></p>
+<h3 id="q1">1. Khi thay container, dữ liệu nào còn?</h3>
+<p>File trong lớp ghi của container có thể mất khi container bị xóa và tạo lại. Ảnh người dùng cần nơi lưu bền vững như volume được quản lý hoặc object storage. Database cũng cần storage bền vững.</p><p>Việc app hiện tại đọc được ảnh chưa chứng minh ảnh sẽ còn sau deploy. Thử thay container trong môi trường test rồi đọc lại cùng một đơn và ảnh đã tạo trước đó. Xem cơ chế lưu trữ trong <a href="https://docs.docker.com/engine/storage/">tài liệu Docker</a>.</p>
+<h3 id="q2">2. Phiên bản mới đang kết nối tới môi trường nào?</h3>
 <p>Ghi rõ cấu hình cho test và production: endpoint database, nơi lưu file và các
 dịch vụ bên ngoài. Không in mật khẩu hoặc token để kiểm tra. Dùng tên môi
 trường và định danh cấu hình đã che dữ liệu nhạy cảm. Kiểm cả cấu hình lúc build
 và lúc chạy nếu framework của bạn sử dụng hai giai đoạn đó.</p>
-<p><strong>3. App trả HTTP 200 có nghĩa là tạo được đơn không?</strong></p>
+<h3 id="q3">3. App trả HTTP 200 có nghĩa là tạo được đơn không?</h3>
 <p>Một trang health chỉ trả chuỗi “OK” có thể vẫn hoạt động khi database mất kết
 nối. Dùng readiness phù hợp để kiểm tra phụ thuộc cần thiết, và một bài thử
 tạo/đọc đơn bằng dữ liệu tổng hợp trong môi trường test. Không tạo đơn thật
 hoặc gửi email cho khách mỗi lần hệ thống gọi healthcheck.</p>
-<p><strong>4. Nếu phiên bản mới lỗi, quay lại code cũ có đủ không?</strong></p>
+<h3 id="q4">4. Nếu phiên bản mới lỗi, quay lại code cũ có đủ không?</h3>
 <p>Code cũ phải đọc được schema và dữ liệu hiện tại. Nếu migration đã xóa cột mà
 code cũ dùng, quay lại image cũ không tự mang cột đó về. Trước deploy, kiểm tra
 tính tương thích của thay đổi dữ liệu và đường phục hồi riêng.</p>
@@ -87,8 +83,8 @@ tính tương thích của thay đổi dữ liệu và đường phục hồi ri
 </tr>
 </tbody>
 </table></div>
-<p>Phần ghi đồng thời phải được thiết kế theo app. Không thể chỉ chép hết dữ liệu cũ rồi coi các dòng được tạo trong lúc đó sẽ tự đúng. Nếu hai cột cùng nằm trong một database, có thể cập nhật chúng trong cùng transaction; nếu có hệ thống bên ngoài, cần cách xử lý riêng khi một bên thành công còn bên kia thất bại.</p>
-<p>Cách chia giai đoạn này thường được gọi là <em>expand–contract</em>. Nó giúp giữ một khoảng tương thích giữa các phiên bản. Nó không loại bỏ lock hay chi phí chạy migration: PostgreSQL vẫn lấy các loại lock khác nhau tuỳ câu lệnh. Hãy xem <a href="https://www.postgresql.org/docs/18/explicit-locking.html">cơ chế locking của PostgreSQL</a> và diễn tập với kích thước dữ liệu, truy vấn đồng thời phù hợp.</p>
+<p>Phần ghi đồng thời phải được thiết kế theo app. Không thể chỉ chép hết dữ liệu cũ rồi coi các dòng được tạo trong lúc đó sẽ tự đúng.</p><p>Nếu hai cột cùng nằm trong một database, có thể cập nhật chúng trong cùng transaction; nếu có hệ thống bên ngoài, cần cách xử lý riêng khi một bên thành công còn bên kia thất bại.</p>
+<p>Cách chia giai đoạn này thường được gọi là <em>expand–contract</em>. Nó giúp giữ một khoảng tương thích giữa các phiên bản.</p><p>Nó không loại bỏ lock hay chi phí chạy migration: PostgreSQL vẫn lấy các loại lock khác nhau tuỳ câu lệnh. Hãy xem <a href="https://www.postgresql.org/docs/18/explicit-locking.html">cơ chế locking của PostgreSQL</a> và diễn tập với kích thước dữ liệu, truy vấn đồng thời phù hợp.</p>
 <h2 id="bai-thuc-hanh-nho">Bài thực hành nhỏ</h2>
 <p>Trên môi trường test với dữ liệu giả:</p>
 <ol>
@@ -114,7 +110,7 @@ backup phục hồi được là hai điều cần kiểm riêng.</p>
 <h2 id="dien-tap-phuc-hoi-rieng">Diễn tập phục hồi riêng</h2>
 <p>Có storage bền vững chưa chứng minh bạn phục hồi được khi mất dữ liệu. Với một bản backup, hãy thử restore vào database riêng, kết nối bản app thử vào đó và đọc lại mã đơn đã ghi nhận. Nếu app lưu ảnh bên ngoài Postgres, kiểm cả file tương ứng: backup database không tự chứa những file đó.</p>
 <p>Với SQL dump, cần chuẩn bị các role/quyền phù hợp và kiểm lỗi restore, không chỉ nhìn thấy file backup. Xem <a href="https://www.postgresql.org/docs/18/backup-dump.html">backup và restore bằng SQL dump của PostgreSQL</a>.</p>
-<p>Nếu dùng phục hồi theo thời điểm (PITR), cần base backup và chuỗi WAL cần thiết để tới được mốc phục hồi. Chọn rõ mốc thời gian, kiểm dữ liệu trước/sau mốc và ghi lại phần ghi mới không có trong database đã phục hồi. Đọc <a href="https://www.postgresql.org/docs/18/continuous-archiving.html">hướng dẫn PITR của PostgreSQL</a> cho cách cấu hình và thực hiện; bài này không thay runbook của hệ thống bạn.</p>
+<p>Nếu dùng phục hồi theo thời điểm (PITR), cần base backup và chuỗi WAL cần thiết để tới được mốc phục hồi. Chọn rõ mốc thời gian, kiểm dữ liệu trước/sau mốc và ghi lại phần ghi mới không có trong database đã phục hồi.</p><p>Đọc <a href="https://www.postgresql.org/docs/18/continuous-archiving.html">hướng dẫn PITR của PostgreSQL</a> cho cách cấu hình và thực hiện; bài này không thay runbook của hệ thống bạn.</p>
 <h2 id="ghi-ket-qua-truoc-khi-goi-la-san-sang">Ghi kết quả trước khi gọi là sẵn sàng</h2>
 <p><a href="checklist.md" download="embra-postgres-checklist.md">Checklist Markdown tải về</a> có cùng các mục dưới đây để bạn điền cho từng lần thử.</p>
 <p>Bảng dưới là mẫu để tự điền, không phải kết quả thử nghiệm của Embra. Ghi ngày, phiên bản app/schema và môi trường cùng kết quả. “Chưa chạy” khác với “đạt”.</p>
