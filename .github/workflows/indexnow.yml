@@ -1,0 +1,45 @@
+name: IndexNow
+
+# The site is published by GitHub Pages (legacy build from main). This workflow
+# waits for that build to go live for the pushed commit, then pings IndexNow
+# with the pages that changed. Manual runs submit every URL in the sitemap.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: read
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Wait for Pages build of this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            read -r status commit < <(gh api "repos/$GITHUB_REPOSITORY/pages/builds/latest" --jq '"\(.status) \(.commit)"' || echo "error -")
+            echo "pages build: $status $commit"
+            if [ "$commit" = "$GITHUB_SHA" ] && [ "$status" = built ]; then exit 0; fi
+            if [ "$commit" = "$GITHUB_SHA" ] && [ "$status" = errored ]; then echo "pages build errored"; exit 1; fi
+            sleep 10
+          done
+          echo "timed out waiting for pages build"; exit 1
+      - name: Ping IndexNow
+        env:
+          BEFORE: ${{ github.event.before }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          args="--host embra.cloud --key 57fab922e81b4749a30e6a3e9ca73200 --sitemap https://embra.cloud/sitemap.xml --mode static"
+          if [ "$EVENT" = workflow_dispatch ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            python3 .github/scripts/indexnow.py $args --all </dev/null
+          else
+            git diff --name-only "$BEFORE" "$GITHUB_SHA" | python3 .github/scripts/indexnow.py $args
+          fi
