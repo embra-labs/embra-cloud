@@ -195,7 +195,7 @@
     <h2 id="h-backup"><span class="num">6.</span> Sao lưu <a class="anchor" href="#backup" aria-label="Liên kết tới mục 6">#</a></h2>
     <h3 id="backup-app">Database của app</h3>
     <ul>
-      <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất. Bản sao lưu nằm trên máy chủ Embra tại Việt Nam.</li>
+      <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất. Bản sao lưu nằm trên máy chủ Embra tại Việt Nam và được chép khoảng mỗi phút sang object storage của Cloudfly tại Hà Nội.</li>
       <li>Sau khi khôi phục về một thời điểm, bản database cũ được giữ thêm 72 giờ để có thể quay lại.</li>
     </ul>
     <h3 id="backup-bucket">File trong bucket</h3>
@@ -203,7 +203,7 @@
     <h3 id="backup-control">Database điều khiển của Embra</h3>
     <p>Database điều khiển chứa dữ liệu ở mục 3 và 4 (tài khoản, email, lịch sử hoạt động, thanh toán, nội dung chuyển khoản, IP đăng nhập CLI, thư đã gửi, báo cáo lạm dụng). Database này hiện chưa có bản sao lưu ra ngoài máy chủ.</p>
     <div class="note">
-      <p><strong>Giới hạn hiện tại.</strong> Embra chưa có bản sao lưu ngoài máy chủ: mọi bản sao lưu nằm trên cùng máy chủ với dữ liệu gốc; khi máy chủ hỏng nặng, cả hai có thể mất cùng lúc. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
+      <p><strong>Giới hạn hiện tại.</strong> Bản sao ngoài máy chủ mới có cho database của app. File trong bucket và database điều khiển chưa có bản sao ngoài máy chủ; khi máy chủ hỏng nặng, phần này có thể mất. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
     </div>
   </section>
 
@@ -280,6 +280,7 @@
       <thead><tr><th scope="col">Bên</th><th scope="col">Mục đích</th><th scope="col">Dữ liệu</th><th scope="col">Nơi xử lý</th></tr></thead>
       <tbody>
         <tr><td data-k="Bên">GenCloud (nhà cung cấp máy chủ)</td><td data-k="Mục đích">Thuê máy chủ chạy Embra</td><td data-k="Dữ liệu">Mọi dữ liệu nằm trên máy chủ: database điều khiển, app, database và file của app, sao lưu tại chỗ, log, metrics</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
+        <tr><td data-k="Bên">Cloudfly (object storage)</td><td data-k="Mục đích">Lưu bản sao backup database của app ngoài máy chủ chạy Embra</td><td data-k="Dữ liệu">Bản sao backup Postgres của app (toàn bộ dữ liệu trong database)</td><td data-k="Nơi xử lý">Hà Nội, Việt Nam</td></tr>
         <tr><td data-k="Bên">GitHub</td><td data-k="Mục đích">Đăng nhập bằng GitHub; GitHub App đọc repo; ảnh đại diện trong console; phục vụ website embra.cloud</td><td data-k="Dữ liệu">Embra nhận ID, tên đăng nhập, email; GitHub nhận IP của người xem console và website</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
         <tr><td data-k="Bên">Google</td><td data-k="Mục đích">Đăng nhập bằng Google cho người được mời; hộp thư hello@embra.cloud chạy trên Gmail</td><td data-k="Dữ liệu">Embra nhận mã tài khoản, email, tên; nội dung email bạn gửi cho Embra đi qua Google</td><td data-k="Nơi xử lý">Hoa Kỳ và các nơi Google đặt hạ tầng</td></tr>
         <tr><td data-k="Bên">Resend</td><td data-k="Mục đích">Gửi email giao dịch của Embra (danh sách ở dưới)</td><td data-k="Dữ liệu">Địa chỉ người nhận, tiêu đề và nội dung thư</td><td data-k="Nơi xử lý">Hoa Kỳ (nơi xử lý chính theo DPA của Resend); gửi thư qua hạ tầng Amazon Web Services tại Tokyo, Nhật Bản</td></tr>
@@ -457,6 +458,7 @@
     <p>Khi đổi nội dung, Embra cập nhật dòng "Phiên bản" ở đầu trang, thêm một dòng vào lịch sử dưới đây và sửa bản tiếng Anh cho khớp. Thay đổi bất lợi cho bạn (thu thêm dữ liệu, thêm bên nhận, giữ lâu hơn, dùng cho mục đích mới) được báo qua email cho owner các workspace trước khi áp dụng.</p>
     <h3 id="lich-su">Lịch sử phiên bản</h3>
     <ol class="history">
+      <li><span class="v">2026-11-05</span>Thêm Cloudfly: bản sao backup database của app tại Hà Nội. Sửa mục Bản sao lưu cho khớp.</li>
       <li><span class="v"><mark data-todo>[2026-11-XX]</mark></span>Viết lại toàn bộ: thêm cơ sở xử lý theo từng mục đích, bản tiếng Anh đầy đủ, bảng bên xử lý có nơi xử lý, Resend, chuyển dữ liệu ra nước ngoài, bảng thời hạn lưu trữ, thời hạn thực hiện quyền, quyết định tự động, thông báo vi phạm. Sửa: đăng nhập CLI không lưu quốc gia; tên người trả mặc định; ai xem được danh sách thành viên; truy cập của người vận hành qua lệnh quản trị; xoá staging và preview bằng token. Bản nháp 2026-10-31 (thêm Resend) chưa từng được công bố và được gộp vào phiên bản này.</li>
       <li><span class="v">2026-10-27</span>Phiên bản đầu tiên được công bố.</li>
     </ol>

@@ -69,7 +69,7 @@
   <ul>
     <li>Embra <strong>không cam kết mức sẵn sàng (SLA)</strong> và không bồi hoàn khi dịch vụ gián đoạn. Trạng thái hệ thống xem ở <a href="https://status.embra.cloud">status.embra.cloud</a>.</li>
     <li>Tính năng, giới hạn và giao diện có thể thay đổi. Thay đổi làm mất tính năng bạn đang dùng sẽ được báo trước.</li>
-    <li>Hiện Embra chạy trên một máy chủ và <strong>bản sao lưu nằm trên cùng máy chủ đó</strong>, chưa có bản sao ở nơi khác (xem <a href="/privacy/#backup">mục Bản sao lưu</a>).</li>
+    <li>Hiện Embra chạy trên một máy chủ. Backup database của app có bản sao ngoài máy chủ tại Hà Nội; <strong>file trong bucket và database điều khiển chưa có bản sao ngoài máy chủ</strong> (xem <a href="/privacy/#backup">mục Bản sao lưu</a>).</li>
   </ul>
 
   <h2 id="tai-khoan">2. Tài khoản và vai trò</h2>
@@ -139,7 +139,7 @@
     <li><strong>Mã nguồn và nội dung:</strong> bạn có quyền dùng mã nguồn, dữ liệu và nội dung bạn đưa lên Embra, và chịu trách nhiệm về chúng.</li>
     <li><strong>Dữ liệu người dùng cuối:</strong> nếu app của bạn thu thập dữ liệu cá nhân, bạn là bên chịu trách nhiệm theo pháp luật về bảo vệ dữ liệu cá nhân với người dùng đó. Embra xử lý dữ liệu này thay mặt bạn.</li>
     <li><strong>Secret:</strong> đặt mật khẩu, API key trong secret của Embra, không đưa vào repo, và không in chúng ra log.</li>
-    <li><strong>Sao lưu của riêng bạn:</strong> vì bản sao lưu của Embra hiện nằm trên cùng máy chủ, hãy định kỳ export và giữ bản sao dữ liệu quan trọng ở nơi khác.</li>
+    <li><strong>Sao lưu của riêng bạn:</strong> Embra chạy trên một máy chủ và file trong bucket chưa có bản sao ngoài máy chủ; hãy định kỳ export và giữ bản sao dữ liệu quan trọng ở nơi khác.</li>
     <li><strong>Tên miền riêng:</strong> bạn quản lý DNS của tên miền mình gắn vào Embra.</li>
   </ul>
 
