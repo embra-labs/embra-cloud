@@ -59,6 +59,6 @@ Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực ti�
 2. Deploy theo [Bắt đầu nhanh](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/).
 3. Chọn gói ([bảng giá](https://embra.cloud/bang-gia/)) và trả bằng VietQR khi muốn giữ app.
 
-Backup hiện nằm cùng máy chủ với database; nên export định kỳ. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
+Backup PostgreSQL có bản sao ngoài máy chủ, trên object storage tại Hà Nội. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
 
 [Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md) · [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md) · [hello@embra.cloud](mailto:hello@embra.cloud) · [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html) · [Thông tin cho agent](https://embra.cloud/llms.txt)

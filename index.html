@@ -914,7 +914,7 @@
       <table>
         <tr><th scope="row"><span>Tạo</span></th><td><p>PostgreSQL 18 riêng, không mở ra internet. <code>DATABASE_URL</code> gắn sẵn vào app.</p></td></tr>
         <tr><th scope="row"><span>Đổi</span></th><td><p>Migration diễn tập trên bản sao, chấm rủi ro A–F, chụp snapshot rồi mới áp.</p></td></tr>
-        <tr><th scope="row"><span>Lưu</span></th><td><p>Backup liên tục, restore thử định kỳ. Backup hiện nằm cùng máy chủ; nên export định kỳ.</p></td></tr>
+        <tr><th scope="row"><span>Lưu</span></th><td><p>Backup liên tục, restore thử định kỳ, có bản sao ngoài máy chủ tại Hà Nội.</p></td></tr>
         <tr><th scope="row"><span>Lùi</span></th><td><p>Restore ra database mới, bạn duyệt rồi mới chuyển, bản cũ giữ 72 giờ.</p></td></tr>
         <tr><th scope="row"><span>Thử</span></th><td><p>Mỗi PR một database trống, tự xoá sau 72 giờ.</p></td></tr>
         <tr><th scope="row"><span>Mang đi</span></th><td><p>Tải <code>pg_dump</code>, image và <code>compose.yaml</code> để chạy ở nơi khác.</p></td></tr>

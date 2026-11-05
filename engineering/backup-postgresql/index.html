@@ -121,7 +121,7 @@ rclone check /var/backups/pg offsite:my-pg-backups --one-way --download --includ
 <p><code>pg_dump</code> mất mọi thay đổi sau lần dump. Nếu app nhận đơn hay thanh toán, mất một ngày thường không chấp nhận được.</p>
 <p>PITR (point-in-time recovery) giữ một base backup cộng chuỗi WAL, nhật ký mọi thay đổi. Nhờ đó bạn restore được về một thời điểm cụ thể, ví dụ một phút trước lệnh <code>DELETE</code> nhầm.</p>
 <p>Tự cấu hình được bằng <code>archive_command</code> theo tài liệu PostgreSQL. Phần giữ chuỗi WAL liền mạch, xoay vòng và restore nên giao cho công cụ như pgBackRest hoặc WAL-G. Restore thử và bản sao ngoài máy vẫn cần như trên.</p>
-<p class="context-cta"><strong>Database chạy trên Embra:</strong> WAL được đẩy vào backup ít nhất mỗi phút, bản đầy đủ chạy mỗi 7 ngày, và mỗi 7 ngày Embra tự restore thử từ backup rồi hiện kết quả trên console. Embra <strong>chưa</strong> có bản sao ra ngoài server, nên vẫn cần export định kỳ và giữ ở nơi khác. Chi tiết ở <a href="https://docs.embra.cloud/huong-dan/rollback-va-khoi-phuc/">tài liệu backup và khôi phục</a>.</p>
+<p class="context-cta"><strong>Database chạy trên Embra:</strong> WAL được đẩy vào backup ít nhất mỗi phút, bản đầy đủ chạy mỗi 7 ngày, và mỗi 7 ngày Embra tự restore thử từ backup rồi hiện kết quả trên console. Backup còn được chép khoảng mỗi phút sang object storage tại Hà Nội, ngoài server chạy database. Chi tiết ở <a href="https://docs.embra.cloud/huong-dan/rollback-va-khoi-phuc/">tài liệu backup và khôi phục</a>.</p>
 
 <h2 id="loi-hay-gap">Lỗi hay gặp</h2>
 <ul>
