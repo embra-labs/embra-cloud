@@ -6,7 +6,7 @@ Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt N
 
 Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend.
 
-**Cập nhật 25/10/2026:** beta trả phí, nhận app production trong giới hạn từng gói; onboarding trực tiếp từng khách. Giá từ 249.000đ mỗi project mỗi tháng: [bảng giá](https://embra.cloud/bang-gia/).
+**Cập nhật 05/11/2026:** beta trả phí, nhận app production trong giới hạn từng gói; tự đăng ký được: đăng nhập console bằng GitHub (tài khoản từ 30 ngày tuổi) là có workspace dùng thử miễn phí 7 ngày. Giá từ 249.000đ mỗi project mỗi tháng: [bảng giá](https://embra.cloud/bang-gia/).
 
 [Bắt đầu ở đây](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/) · [Tài liệu](https://docs.embra.cloud/) · [Trạng thái hệ thống](https://status.embra.cloud/) · [Đăng nhập console](https://console.embra.cloud/) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
