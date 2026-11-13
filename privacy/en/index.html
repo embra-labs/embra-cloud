@@ -202,9 +202,9 @@
     <h3 id="backup-bucket">Bucket files</h3>
     <p>Bucket files currently have no backup. Keep the originals of important files elsewhere.</p>
     <h3 id="backup-control">Embra's control database</h3>
-    <p>The control database holds the data in sections 3 and 4 (accounts, emails, activity history, billing, transfer descriptions, CLI sign-in IPs, sent emails, abuse reports). This database currently has no off-server backup.</p>
+    <p>The control database holds the data in sections 3 and 4 (accounts, emails, activity history, billing, transfer descriptions, CLI sign-in IPs, sent emails, abuse reports). Since 2026-11-13 this database is backed up every hour: each copy is encrypted on the server and then copied to Cloudfly object storage in Hanoi. The decryption key is not on the server, and Cloudfly does not have it either. Each copy is locked for 7 days: during that time nobody can delete or change it, Embra included. After that it is deleted automatically, no later than 10 days after it was made.</p>
     <div class="note">
-      <p><strong>Current limitation.</strong> Only app databases have an off-server copy. Bucket files and the control database have no off-server copy yet; if the server fails badly, they may be lost. Keep your own exports of important data.</p>
+      <p><strong>Current limitation.</strong> App databases and the control database have an off-server copy. Bucket files have no off-server copy yet; if the server fails badly, they may be lost. Keep your own exports of important data.</p>
     </div>
   </section>
 
@@ -281,7 +281,7 @@
       <thead><tr><th scope="col">Party</th><th scope="col">Purpose</th><th scope="col">Data</th><th scope="col">Location</th></tr></thead>
       <tbody>
         <tr><td data-k="Party">GenCloud (server provider)</td><td data-k="Purpose">Rented servers running Embra</td><td data-k="Data">All data on the servers: control database, apps, app databases and files, local backups, logs, metrics</td><td data-k="Location">Vietnam</td></tr>
-        <tr><td data-k="Party">Cloudfly (object storage)</td><td data-k="Purpose">Stores an off-server copy of app database backups</td><td data-k="Data">Copies of app Postgres backups (all data in the database)</td><td data-k="Location">Hanoi, Vietnam</td></tr>
+        <tr><td data-k="Party">Cloudfly (object storage)</td><td data-k="Purpose">Stores off-server copies of app database and control database backups</td><td data-k="Data">Copies of app Postgres backups (all data in the database); control database backups (the data in sections 3 and 4), encrypted, which Cloudfly cannot decrypt</td><td data-k="Location">Hanoi, Vietnam</td></tr>
         <tr><td data-k="Party">GitHub</td><td data-k="Purpose">Sign in with GitHub; GitHub App reads repositories; console avatars; hosting the embra.cloud website</td><td data-k="Data">Embra receives ID, login, email; GitHub receives the IP of console and website visitors</td><td data-k="Location">United States</td></tr>
         <tr><td data-k="Party">Google</td><td data-k="Purpose">Sign in with Google for invitees; the hello@embra.cloud mailbox runs on Gmail</td><td data-k="Data">Embra receives account ID, email, name; email you send to Embra passes through Google</td><td data-k="Location">United States and other Google infrastructure locations</td></tr>
         <tr><td data-k="Party">Resend</td><td data-k="Purpose">Sending Embra's transactional email (list below)</td><td data-k="Data">Recipient address, subject and body</td><td data-k="Location">United States (primary processing per Resend's DPA); sending through Amazon Web Services infrastructure in Tokyo, Japan</td></tr>
@@ -348,6 +348,7 @@
         <tr><td data-k="Data">Metrics</td><td data-k="Retention">30 days; not deleted immediately with the environment</td></tr>
         <tr><td data-k="Data">Secrets</td><td data-k="Retention">Values deleted with the environment; names and versions are kept</td></tr>
         <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; at Cloudfly, files that have expired or been replaced are kept for another 7 days. When the environment is deleted: the server copy is usually deleted within about 1 minute, the Cloudfly copy within 7 days at most</td></tr>
+        <tr><td data-k="Data">Control database backups</td><td data-k="Retention">One copy every hour; each copy is locked for 7 days and then deleted automatically, no later than 10 days after it was made. While locked, a copy cannot be deleted on its own, even when you ask for your account to be deleted</td></tr>
         <tr><td data-k="Data">Exports</td><td data-k="Retention">24 hours</td></tr>
         <tr><td data-k="Data">Forks</td><td data-k="Retention">At most 24 hours</td></tr>
         <tr><td data-k="Data">Import dumps</td><td data-k="Retention">Until the import completes (24 hours if unused); table and row-count summary has no automatic deletion yet</td></tr>
@@ -377,7 +378,7 @@
     <h3 id="xoa-tam-ngung">When suspended for abuse</h3>
     <p>Apps are taken off the Internet and stopped, and the workspace becomes read-only, but data and backups are preserved. Embra does not automatically delete data of a suspended workspace.</p>
     <h3 id="xoa-tai-khoan">Account deletion</h3>
-    <p>The console does not yet offer self-service account deletion. Send a request as described in <a href="#thuc-hien">section 13</a>; the operator deletes or anonymises your account data and tells you what must be kept (for example billing records) and why. Copies in control database backups expire according to the table above.</p>
+    <p>The console does not yet offer self-service account deletion. Send a request as described in <a href="#thuc-hien">section 13</a>; the operator deletes or anonymises your account data and tells you what must be kept (for example billing records) and why. Copies in control database backups cannot be deleted individually; they are deleted automatically no later than 10 days after they were made (table above). If the control database ever has to be restored from a backup, Embra deletes again the data you asked to delete before the system goes back into service.</p>
   </section>
 
   <section class="s" id="quyen" aria-labelledby="h-quyen">
@@ -465,6 +466,7 @@
     <p>When the content changes, Embra updates the "Version" line at the top of the page, adds an entry to the history below and updates this translation. Changes that are less favourable to you (collecting more data, adding recipients, keeping data longer, using it for a new purpose) are announced by email to workspace owners before they take effect.</p>
     <h3 id="lich-su">Version history</h3>
     <ol class="history">
+      <li><span class="v">2026-11-13</span>Added control database backups: hourly, encrypted on the server, copied to Cloudfly in Hanoi (Cloudfly cannot decrypt them), each copy locked for 7 days and deleted automatically no later than 10 days after it was made. Cloudfly now also receives these encrypted copies. Section 6, the recipients table, the retention table and the account deletion paragraph updated to match.</li>
       <li><span class="v">2026-11-13</span>Corrected how long backups take to delete when an environment or workspace is deleted: the Cloudfly copy within 7 days at most, usually minutes to a few hours (the page previously said deletion "usually finishes within minutes" for everything, which was wrong); the server copy usually within about 1 minute. Added: expired or replaced backup files at Cloudfly are deleted automatically after 7 days; confirmation of deletion by email on request.</li>
       <li><span class="v">2026-11-13</span>Filled in the publication date, the status of the cross-border transfer impact assessment (being prepared) and the retention of billing records (per accounting and tax law). No change to how Embra processes data.</li>
       <li><span class="v">2026-11-05</span>Added Cloudfly: off-server copy of app database backups in Hanoi. Backup section updated to match.</li>
