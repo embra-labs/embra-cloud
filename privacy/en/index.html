@@ -196,6 +196,8 @@
     <ul>
       <li>Each environment's Postgres is backed up continuously (WAL) with a full backup every week. Embra keeps the 2 most recent full backups plus the WAL between them, so you can restore to a point in time within roughly the last 1 to 2 weeks. These backups are stored on Embra's servers in Vietnam and copied about every minute to Cloudfly object storage in Hanoi.</li>
       <li>After a point-in-time restore, the previous database is kept for another 72 hours so you can switch back.</li>
+      <li>At Cloudfly, backup files that have expired or been replaced are moved to a separate area and deleted automatically after 7 days.</li>
+      <li>When you delete an environment, its backups are deleted both on the server and at Cloudfly, including that separate area. The Cloudfly copy is deleted within 7 days at most (<a href="#xoa-env">section 11</a>).</li>
     </ul>
     <h3 id="backup-bucket">Bucket files</h3>
     <p>Bucket files currently have no backup. Keep the originals of important files elsewhere.</p>
@@ -345,7 +347,7 @@
         <tr><td data-k="Data">Server system journal (including edge error lines)</td><td data-k="Retention">No time limit; the oldest lines are deleted when the journal reaches its size limit on the server</td></tr>
         <tr><td data-k="Data">Metrics</td><td data-k="Retention">30 days; not deleted immediately with the environment</td></tr>
         <tr><td data-k="Data">Secrets</td><td data-k="Retention">Values deleted with the environment; names and versions are kept</td></tr>
-        <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; deleted with the environment</td></tr>
+        <tr><td data-k="Data">App Postgres backups</td><td data-k="Retention">2 most recent full backups plus WAL (roughly 1 to 2 weeks); previous database after a restore: 72 hours; at Cloudfly, files that have expired or been replaced are kept for another 7 days. When the environment is deleted: the server copy is usually deleted within about 1 minute, the Cloudfly copy within 7 days at most</td></tr>
         <tr><td data-k="Data">Exports</td><td data-k="Retention">24 hours</td></tr>
         <tr><td data-k="Data">Forks</td><td data-k="Retention">At most 24 hours</td></tr>
         <tr><td data-k="Data">Import dumps</td><td data-k="Retention">Until the import completes (24 hours if unused); table and row-count summary has no automatic deletion yet</td></tr>
@@ -359,11 +361,18 @@
     </table>
 
     <h3 id="xoa-env">When you delete an environment</h3>
-    <p>Embra deletes its Postgres database and volume, backups, buckets, custom domains, uploaded source, log history, raw log files and build logs. Secret values are deleted; only names and versions are kept. Deletion runs in the background and usually finishes within minutes. What remains afterwards: metrics (up to 30 days), images, build cache (up to 14 days), build records and activity history.</p>
+    <p>Embra deletes its Postgres database and volume, buckets, custom domains, uploaded source, log history, raw log files and build logs. Secret values are deleted; only names and versions are kept. This runs in the background and usually finishes within minutes.</p>
+    <p>Database backups:</p>
+    <ul>
+      <li><strong>On the server:</strong> usually deleted within about 1 minute. Embra deletes this copy only after it has recorded the deletion request at the secondary storage location; if that location is temporarily unreachable, the server copy is kept until the request can be recorded.</li>
+      <li><strong>At the secondary storage location</strong> (Cloudfly object storage in Hanoi, <a href="#backup">section 6</a>): deleted by a background queue that retries until done. This usually takes minutes to a few hours, and <strong>no longer than 7 days</strong>. If a fault prevents deleting this copy within 7 days, Embra tells the owner why and when it expects to finish.</li>
+    </ul>
+    <p>From the moment you delete, these backups are no longer used for restores. What remains after deletion: metrics (up to 30 days), images, build cache (up to 14 days), build records and activity history.</p>
+    <p>If you need confirmation that data has been deleted, send a request as described in <a href="#thuc-hien">section 13</a>. Embra checks and replies by email: what was deleted, when, and what is still kept and why.</p>
     <h3 id="xoa-workspace">When an owner deletes a workspace</h3>
-    <p>All of the workspace's tokens and sessions are revoked immediately and every environment is deleted as above. What is kept: members' accounts, the workspace name, the member list, invitations (invited emails), the GitHub App connection (GitHub account name), activity history, the operation journal, build records and billing records. To delete more, send a request as described in <a href="#thuc-hien">section 13</a>.</p>
+    <p>All of the workspace's tokens and sessions are revoked immediately and every environment is deleted as above, including the backup copies at Cloudfly (within 7 days at most). What is kept: members' accounts, the workspace name, the member list, invitations (invited emails), the GitHub App connection (GitHub account name), activity history, the operation journal, build records and billing records (kept for the period required by accounting and tax law). To delete more, send a request as described in <a href="#thuc-hien">section 13</a>.</p>
     <h3 id="xoa-trial">When a trial expires</h3>
-    <p>The trial lasts 7 days. About 3 days before it ends, the workspace's activity history shows a warning and Embra emails the owner; about 24 hours before, Embra sends another email. When it expires you can no longer sign in or export, and the system <strong>automatically deletes the whole workspace and all its environments</strong> as above, usually within 10 minutes, then emails the owner. Export anything you want to keep before then.</p>
+    <p>The trial lasts 7 days. About 3 days before it ends, the workspace's activity history shows a warning and Embra emails the owner; about 24 hours before, Embra sends another email. When it expires you can no longer sign in or export, and the system <strong>automatically deletes the whole workspace and all its environments</strong> as above, usually within 10 minutes, then emails the owner. Deleting the backup copy at Cloudfly may finish after that email, within 7 days at most as above. Export anything you want to keep before the trial expires.</p>
     <p>Exceptions: the workspace is not deleted automatically if you have transferred money (even an underpayment) for a plan that has not been activated yet, or if the workspace has a suspended environment.</p>
     <h3 id="xoa-tam-ngung">When suspended for abuse</h3>
     <p>Apps are taken off the Internet and stopped, and the workspace becomes read-only, but data and backups are preserved. Embra does not automatically delete data of a suspended workspace.</p>
@@ -456,6 +465,7 @@
     <p>When the content changes, Embra updates the "Version" line at the top of the page, adds an entry to the history below and updates this translation. Changes that are less favourable to you (collecting more data, adding recipients, keeping data longer, using it for a new purpose) are announced by email to workspace owners before they take effect.</p>
     <h3 id="lich-su">Version history</h3>
     <ol class="history">
+      <li><span class="v">2026-11-13</span>Corrected how long backups take to delete when an environment or workspace is deleted: the Cloudfly copy within 7 days at most, usually minutes to a few hours (the page previously said deletion "usually finishes within minutes" for everything, which was wrong); the server copy usually within about 1 minute. Added: expired or replaced backup files at Cloudfly are deleted automatically after 7 days; confirmation of deletion by email on request.</li>
       <li><span class="v">2026-11-13</span>Filled in the publication date, the status of the cross-border transfer impact assessment (being prepared) and the retention of billing records (per accounting and tax law). No change to how Embra processes data.</li>
       <li><span class="v">2026-11-05</span>Added Cloudfly: off-server copy of app database backups in Hanoi. Backup section updated to match.</li>
       <li><span class="v">2026-11-01</span>Full rewrite: legal basis per purpose, full English translation, processor table with locations, Resend, international transfers, retention table, deadlines for exercising rights, automated decisions, breach notification. Corrected: CLI sign-in does not store country; default payer name; who can see the member list; operator access through admin commands; deleting staging and preview environments with tokens. A 2026-10-31 draft (adding Resend) was never published and is merged into this version.</li>
