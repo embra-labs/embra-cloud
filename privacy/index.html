@@ -197,6 +197,8 @@
     <ul>
       <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất. Bản sao lưu nằm trên máy chủ Embra tại Việt Nam và được chép khoảng mỗi phút sang object storage của Cloudfly tại Hà Nội.</li>
       <li>Sau khi khôi phục về một thời điểm, bản database cũ được giữ thêm 72 giờ để có thể quay lại.</li>
+      <li>Ở Cloudfly, file sao lưu đã hết hạn hoặc bị thay thế được chuyển vào một vùng riêng và tự xoá sau 7 ngày.</li>
+      <li>Khi bạn xoá environment, bản sao lưu bị xoá cả trên máy chủ lẫn ở Cloudfly, kể cả vùng riêng nói trên. Bản ở Cloudfly bị xoá chậm nhất 7 ngày (<a href="#xoa-env">mục 11</a>).</li>
     </ul>
     <h3 id="backup-bucket">File trong bucket</h3>
     <p>File trong bucket hiện chưa có bản sao lưu. Hãy giữ bản gốc của file quan trọng ở nơi khác.</p>
@@ -346,7 +348,7 @@
         <tr><td data-k="Dữ liệu">Nhật ký hệ thống của máy chủ (gồm dòng lỗi của edge)</td><td data-k="Thời hạn">Không có hạn theo ngày; dòng cũ nhất bị xoá khi nhật ký chạm giới hạn dung lượng trên máy chủ</td></tr>
         <tr><td data-k="Dữ liệu">Metrics</td><td data-k="Thời hạn">30 ngày; không xoá ngay khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Secret</td><td data-k="Thời hạn">Giá trị xoá khi xoá environment; tên và phiên bản được giữ</td></tr>
-        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; xoá khi xoá environment</td></tr>
+        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; ở Cloudfly, file đã hết hạn hoặc bị thay thế được giữ thêm 7 ngày. Khi xoá environment: bản trên máy chủ thường xoá trong khoảng 1 phút, bản ở Cloudfly chậm nhất 7 ngày</td></tr>
         <tr><td data-k="Dữ liệu">Bản export</td><td data-k="Thời hạn">24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Fork</td><td data-k="Thời hạn">Tối đa 24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Bản dump import</td><td data-k="Thời hạn">Tới khi import xong (24 giờ nếu chưa dùng); tóm tắt bảng và số dòng chưa có lịch tự xoá</td></tr>
@@ -360,11 +362,18 @@
     </table>
 
     <h3 id="xoa-env">Khi bạn xoá một environment</h3>
-    <p>Embra xoá database Postgres và ổ đĩa của nó, bản sao lưu, bucket, tên miền riêng, mã nguồn đã upload, lịch sử log, file log thô và log build. Giá trị secret bị xoá, chỉ giữ tên và phiên bản. Việc xoá chạy nền và thường xong trong vài phút. Những gì còn lại sau đó: metrics (tới 30 ngày), image, bộ nhớ đệm build (tới 14 ngày), bản ghi build và lịch sử hoạt động.</p>
+    <p>Embra xoá database Postgres và ổ đĩa của nó, bucket, tên miền riêng, mã nguồn đã upload, lịch sử log, file log thô và log build. Giá trị secret bị xoá, chỉ giữ tên và phiên bản. Phần này chạy nền và thường xong trong vài phút.</p>
+    <p>Bản sao lưu database:</p>
+    <ul>
+      <li><strong>Trên máy chủ:</strong> thường bị xoá trong khoảng 1 phút. Embra chỉ xoá bản này sau khi đã ghi yêu cầu xoá lên nơi lưu trữ thứ hai; nếu nơi đó tạm thời không truy cập được, bản trên máy chủ được giữ tới khi ghi được.</li>
+      <li><strong>Ở nơi lưu trữ thứ hai</strong> (object storage Cloudfly tại Hà Nội, <a href="#backup">mục 6</a>): được xoá bằng một hàng đợi chạy nền, thử lại tới khi xong. Thường mất vài phút tới vài giờ, <strong>chậm nhất 7 ngày</strong>. Nếu vì sự cố không xoá được bản này trong 7 ngày, Embra báo owner lý do và thời điểm dự kiến xoá xong.</li>
+    </ul>
+    <p>Từ lúc bạn xoá, các bản sao lưu này không còn được dùng để khôi phục. Những gì còn lại sau khi xoá: metrics (tới 30 ngày), image, bộ nhớ đệm build (tới 14 ngày), bản ghi build và lịch sử hoạt động.</p>
+    <p>Nếu bạn cần xác nhận đã xoá, gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>. Embra kiểm tra và trả lời bằng email: dữ liệu nào đã xoá, xoá lúc nào, và phần nào còn giữ cùng lý do.</p>
     <h3 id="xoa-workspace">Khi owner xoá workspace</h3>
-    <p>Mọi token và phiên đăng nhập của workspace bị thu hồi ngay, và mọi environment bị xoá như trên. Những gì vẫn được giữ: tài khoản của các thành viên, tên workspace, danh sách thành viên, lời mời (email được mời), kết nối GitHub App (tên tài khoản GitHub), lịch sử hoạt động, nhật ký thao tác, bản ghi build và hồ sơ thanh toán. Muốn xoá thêm, gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>.</p>
+    <p>Mọi token và phiên đăng nhập của workspace bị thu hồi ngay, và mọi environment bị xoá như trên, kể cả bản sao lưu ở Cloudfly (chậm nhất 7 ngày). Những gì vẫn được giữ: tài khoản của các thành viên, tên workspace, danh sách thành viên, lời mời (email được mời), kết nối GitHub App (tên tài khoản GitHub), lịch sử hoạt động, nhật ký thao tác, bản ghi build và hồ sơ thanh toán (giữ theo thời hạn pháp luật kế toán và thuế yêu cầu). Muốn xoá thêm, gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>.</p>
     <h3 id="xoa-trial">Khi hết hạn dùng thử</h3>
-    <p>Gói dùng thử kéo dài 7 ngày. Khoảng 3 ngày trước khi hết hạn, lịch sử hoạt động của workspace hiện cảnh báo và Embra gửi email cho owner; khoảng 24 giờ trước, Embra gửi thêm một email. Khi hết hạn, bạn không đăng nhập hay export được nữa, và hệ thống <strong>tự xoá cả workspace cùng toàn bộ environment</strong> như trên, thường trong vòng 10 phút, rồi gửi email báo cho owner. Hãy export dữ liệu cần giữ trước thời điểm đó.</p>
+    <p>Gói dùng thử kéo dài 7 ngày. Khoảng 3 ngày trước khi hết hạn, lịch sử hoạt động của workspace hiện cảnh báo và Embra gửi email cho owner; khoảng 24 giờ trước, Embra gửi thêm một email. Khi hết hạn, bạn không đăng nhập hay export được nữa, và hệ thống <strong>tự xoá cả workspace cùng toàn bộ environment</strong> như trên, thường trong vòng 10 phút, rồi gửi email báo cho owner. Việc xoá bản sao lưu ở Cloudfly có thể xong sau email này, chậm nhất 7 ngày như trên. Hãy export dữ liệu cần giữ trước khi hết hạn.</p>
     <p>Ngoại lệ: workspace không bị tự xoá nếu bạn đã chuyển tiền (kể cả chuyển thiếu) cho một gói chưa được kích hoạt, hoặc nếu workspace có environment đang bị tạm ngưng.</p>
     <h3 id="xoa-tam-ngung">Khi bị tạm ngưng vì lạm dụng</h3>
     <p>App bị gỡ khỏi Internet và dừng chạy, workspace chỉ đọc được, nhưng dữ liệu và bản sao lưu được giữ nguyên. Embra không tự xoá dữ liệu của workspace bị tạm ngưng.</p>
@@ -458,6 +467,7 @@
     <p>Khi đổi nội dung, Embra cập nhật dòng "Phiên bản" ở đầu trang, thêm một dòng vào lịch sử dưới đây và sửa bản tiếng Anh cho khớp. Thay đổi bất lợi cho bạn (thu thêm dữ liệu, thêm bên nhận, giữ lâu hơn, dùng cho mục đích mới) được báo qua email cho owner các workspace trước khi áp dụng.</p>
     <h3 id="lich-su">Lịch sử phiên bản</h3>
     <ol class="history">
+      <li><span class="v">2026-11-13</span>Sửa thời hạn xoá bản sao lưu khi xoá environment hoặc workspace: bản ở Cloudfly chậm nhất 7 ngày, thường vài phút tới vài giờ (trước đây trang ghi toàn bộ việc xoá "thường xong trong vài phút", không đúng với bản ở Cloudfly); bản trên máy chủ thường trong khoảng 1 phút. Thêm: file sao lưu đã hết hạn hoặc bị thay thế ở Cloudfly tự xoá sau 7 ngày; xác nhận đã xoá bằng email khi bạn yêu cầu.</li>
       <li><span class="v">2026-11-13</span>Điền ngày công bố, trạng thái hồ sơ đánh giá tác động chuyển dữ liệu ra nước ngoài (đang lập) và thời hạn lưu hồ sơ thanh toán (theo pháp luật kế toán và thuế). Không đổi cách Embra xử lý dữ liệu.</li>
       <li><span class="v">2026-11-05</span>Thêm Cloudfly: bản sao backup database của app tại Hà Nội. Sửa mục Bản sao lưu cho khớp.</li>
       <li><span class="v">2026-11-01</span>Viết lại toàn bộ: thêm cơ sở xử lý theo từng mục đích, bản tiếng Anh đầy đủ, bảng bên xử lý có nơi xử lý, Resend, chuyển dữ liệu ra nước ngoài, bảng thời hạn lưu trữ, thời hạn thực hiện quyền, quyết định tự động, thông báo vi phạm. Sửa: đăng nhập CLI không lưu quốc gia; tên người trả mặc định; ai xem được danh sách thành viên; truy cập của người vận hành qua lệnh quản trị; xoá staging và preview bằng token. Bản nháp 2026-10-31 (thêm Resend) chưa từng được công bố và được gộp vào phiên bản này.</li>
