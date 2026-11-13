@@ -203,9 +203,9 @@
     <h3 id="backup-bucket">File trong bucket</h3>
     <p>File trong bucket hiện chưa có bản sao lưu. Hãy giữ bản gốc của file quan trọng ở nơi khác.</p>
     <h3 id="backup-control">Database điều khiển của Embra</h3>
-    <p>Database điều khiển chứa dữ liệu ở mục 3 và 4 (tài khoản, email, lịch sử hoạt động, thanh toán, nội dung chuyển khoản, IP đăng nhập CLI, thư đã gửi, báo cáo lạm dụng). Database này hiện chưa có bản sao lưu ra ngoài máy chủ.</p>
+    <p>Database điều khiển chứa dữ liệu ở mục 3 và 4 (tài khoản, email, lịch sử hoạt động, thanh toán, nội dung chuyển khoản, IP đăng nhập CLI, thư đã gửi, báo cáo lạm dụng). Từ 2026-11-13, database này được sao lưu mỗi giờ: bản sao được mã hoá ngay trên máy chủ rồi chép sang object storage của Cloudfly tại Hà Nội. Khoá giải mã không nằm trên máy chủ, Cloudfly cũng không có. Mỗi bản bị khoá 7 ngày: trong thời gian đó không ai xoá hay sửa được, kể cả Embra. Sau đó bản sao tự xoá, chậm nhất 10 ngày sau khi tạo.</p>
     <div class="note">
-      <p><strong>Giới hạn hiện tại.</strong> Bản sao ngoài máy chủ mới có cho database của app. File trong bucket và database điều khiển chưa có bản sao ngoài máy chủ; khi máy chủ hỏng nặng, phần này có thể mất. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
+      <p><strong>Giới hạn hiện tại.</strong> Bản sao ngoài máy chủ có cho database của app và database điều khiển. File trong bucket chưa có bản sao ngoài máy chủ; khi máy chủ hỏng nặng, phần này có thể mất. Hãy giữ bản export của riêng bạn cho dữ liệu quan trọng.</p>
     </div>
   </section>
 
@@ -282,7 +282,7 @@
       <thead><tr><th scope="col">Bên</th><th scope="col">Mục đích</th><th scope="col">Dữ liệu</th><th scope="col">Nơi xử lý</th></tr></thead>
       <tbody>
         <tr><td data-k="Bên">GenCloud (nhà cung cấp máy chủ)</td><td data-k="Mục đích">Thuê máy chủ chạy Embra</td><td data-k="Dữ liệu">Mọi dữ liệu nằm trên máy chủ: database điều khiển, app, database và file của app, sao lưu tại chỗ, log, metrics</td><td data-k="Nơi xử lý">Việt Nam</td></tr>
-        <tr><td data-k="Bên">Cloudfly (object storage)</td><td data-k="Mục đích">Lưu bản sao backup database của app ngoài máy chủ chạy Embra</td><td data-k="Dữ liệu">Bản sao backup Postgres của app (toàn bộ dữ liệu trong database)</td><td data-k="Nơi xử lý">Hà Nội, Việt Nam</td></tr>
+        <tr><td data-k="Bên">Cloudfly (object storage)</td><td data-k="Mục đích">Lưu bản sao backup database của app và database điều khiển ngoài máy chủ chạy Embra</td><td data-k="Dữ liệu">Bản sao backup Postgres của app (toàn bộ dữ liệu trong database); bản sao lưu database điều khiển (dữ liệu ở mục 3 và 4), đã mã hoá, Cloudfly không giải mã được</td><td data-k="Nơi xử lý">Hà Nội, Việt Nam</td></tr>
         <tr><td data-k="Bên">GitHub</td><td data-k="Mục đích">Đăng nhập bằng GitHub; GitHub App đọc repo; ảnh đại diện trong console; phục vụ website embra.cloud</td><td data-k="Dữ liệu">Embra nhận ID, tên đăng nhập, email; GitHub nhận IP của người xem console và website</td><td data-k="Nơi xử lý">Hoa Kỳ</td></tr>
         <tr><td data-k="Bên">Google</td><td data-k="Mục đích">Đăng nhập bằng Google cho người được mời; hộp thư hello@embra.cloud chạy trên Gmail</td><td data-k="Dữ liệu">Embra nhận mã tài khoản, email, tên; nội dung email bạn gửi cho Embra đi qua Google</td><td data-k="Nơi xử lý">Hoa Kỳ và các nơi Google đặt hạ tầng</td></tr>
         <tr><td data-k="Bên">Resend</td><td data-k="Mục đích">Gửi email giao dịch của Embra (danh sách ở dưới)</td><td data-k="Dữ liệu">Địa chỉ người nhận, tiêu đề và nội dung thư</td><td data-k="Nơi xử lý">Hoa Kỳ (nơi xử lý chính theo DPA của Resend); gửi thư qua hạ tầng Amazon Web Services tại Tokyo, Nhật Bản</td></tr>
@@ -349,6 +349,7 @@
         <tr><td data-k="Dữ liệu">Metrics</td><td data-k="Thời hạn">30 ngày; không xoá ngay khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Secret</td><td data-k="Thời hạn">Giá trị xoá khi xoá environment; tên và phiên bản được giữ</td></tr>
         <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; ở Cloudfly, file đã hết hạn hoặc bị thay thế được giữ thêm 7 ngày. Khi xoá environment: bản trên máy chủ thường xoá trong khoảng 1 phút, bản ở Cloudfly chậm nhất 7 ngày</td></tr>
+        <tr><td data-k="Dữ liệu">Sao lưu database điều khiển</td><td data-k="Thời hạn">Mỗi giờ một bản; mỗi bản bị khoá 7 ngày rồi tự xoá, chậm nhất 10 ngày sau khi tạo. Trong 7 ngày bị khoá, bản sao không xoá riêng được, kể cả khi bạn yêu cầu xoá tài khoản</td></tr>
         <tr><td data-k="Dữ liệu">Bản export</td><td data-k="Thời hạn">24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Fork</td><td data-k="Thời hạn">Tối đa 24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Bản dump import</td><td data-k="Thời hạn">Tới khi import xong (24 giờ nếu chưa dùng); tóm tắt bảng và số dòng chưa có lịch tự xoá</td></tr>
@@ -378,7 +379,7 @@
     <h3 id="xoa-tam-ngung">Khi bị tạm ngưng vì lạm dụng</h3>
     <p>App bị gỡ khỏi Internet và dừng chạy, workspace chỉ đọc được, nhưng dữ liệu và bản sao lưu được giữ nguyên. Embra không tự xoá dữ liệu của workspace bị tạm ngưng.</p>
     <h3 id="xoa-tai-khoan">Xoá tài khoản</h3>
-    <p>Hiện chưa có chức năng tự xoá tài khoản trong console. Gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>; người vận hành xoá hoặc ẩn danh dữ liệu tài khoản và báo bạn những gì phải giữ lại (ví dụ hồ sơ thanh toán) cùng lý do. Bản sao trong sao lưu database điều khiển tự hết hạn theo thời hạn ở bảng trên.</p>
+    <p>Hiện chưa có chức năng tự xoá tài khoản trong console. Gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>; người vận hành xoá hoặc ẩn danh dữ liệu tài khoản và báo bạn những gì phải giữ lại (ví dụ hồ sơ thanh toán) cùng lý do. Bản sao trong sao lưu database điều khiển không xoá riêng được; chúng tự xoá chậm nhất 10 ngày sau khi tạo (bảng trên). Nếu phải khôi phục database điều khiển từ bản sao lưu, Embra xoá lại dữ liệu bạn đã yêu cầu xoá trước khi cho hệ thống chạy lại.</p>
   </section>
 
   <section class="s" id="quyen" aria-labelledby="h-quyen">
@@ -467,6 +468,7 @@
     <p>Khi đổi nội dung, Embra cập nhật dòng "Phiên bản" ở đầu trang, thêm một dòng vào lịch sử dưới đây và sửa bản tiếng Anh cho khớp. Thay đổi bất lợi cho bạn (thu thêm dữ liệu, thêm bên nhận, giữ lâu hơn, dùng cho mục đích mới) được báo qua email cho owner các workspace trước khi áp dụng.</p>
     <h3 id="lich-su">Lịch sử phiên bản</h3>
     <ol class="history">
+      <li><span class="v">2026-11-13</span>Thêm sao lưu database điều khiển: mỗi giờ, mã hoá trên máy chủ, chép sang Cloudfly tại Hà Nội (Cloudfly không giải mã được), mỗi bản khoá 7 ngày và tự xoá chậm nhất 10 ngày sau khi tạo. Cloudfly nhận thêm bản sao đã mã hoá này. Sửa mục 6, bảng bên nhận dữ liệu, bảng thời hạn lưu và đoạn xoá tài khoản cho khớp.</li>
       <li><span class="v">2026-11-13</span>Sửa thời hạn xoá bản sao lưu khi xoá environment hoặc workspace: bản ở Cloudfly chậm nhất 7 ngày, thường vài phút tới vài giờ (trước đây trang ghi toàn bộ việc xoá "thường xong trong vài phút", không đúng với bản ở Cloudfly); bản trên máy chủ thường trong khoảng 1 phút. Thêm: file sao lưu đã hết hạn hoặc bị thay thế ở Cloudfly tự xoá sau 7 ngày; xác nhận đã xoá bằng email khi bạn yêu cầu.</li>
       <li><span class="v">2026-11-13</span>Điền ngày công bố, trạng thái hồ sơ đánh giá tác động chuyển dữ liệu ra nước ngoài (đang lập) và thời hạn lưu hồ sơ thanh toán (theo pháp luật kế toán và thuế). Không đổi cách Embra xử lý dữ liệu.</li>
       <li><span class="v">2026-11-05</span>Thêm Cloudfly: bản sao backup database của app tại Hà Nội. Sửa mục Bản sao lưu cho khớp.</li>
