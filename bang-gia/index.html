@@ -186,6 +186,30 @@ main section.wrap{padding-top:96px}
 </details>
 </section>
 
+<section class="wrap" aria-labelledby="goi-pool"><h2 class="sec-h px" id="goi-pool">Gói pool: mua đúng RAM và disk cần dùng</h2>
+<p class="sec-p">Mới từ 15/11/2026. Workspace mua một pool RAM và disk; mọi app, worker, PostgreSQL, bucket, staging và preview của workspace dùng chung pool đó. Mua từ workspace dùng thử, ở trang Thanh toán trong console.</p>
+<table class="specs">
+<caption>Giá gói pool (VND mỗi tháng, không cộng VAT)</caption>
+<thead><tr><th scope="col"></th><th scope="col">Giá</th><th scope="col">Ghi chú</th></tr></thead>
+<tbody>
+<tr><th scope="row">Khởi đầu</th><td>199.000đ</td><td>768 MiB RAM, 3 GB disk, đã gồm phí nền</td></tr>
+<tr><th scope="row">RAM</th><td>20.000đ / 128 MiB</td><td>Tối thiểu 512 MiB. CPU: 1 vCPU mỗi GiB RAM</td></tr>
+<tr><th scope="row">Disk</th><td>10.000đ / GB</td><td>Cho PostgreSQL và bucket, tối đa 50 GB mỗi workspace</td></tr>
+<tr><th scope="row">Phí nền</th><td>49.000đ</td><td>Một lần mỗi tài khoản thanh toán, dù có nhiều workspace gói pool</td></tr>
+</tbody>
+</table>
+<p class="note">Ví dụ Khởi đầu: 6 × 20.000đ (768 MiB) + 3 × 10.000đ (3 GB) + 49.000đ = 199.000đ. Worker, cron, domain riêng, preview: giới hạn như gói Build. Mỗi PostgreSQL mới nhận 1,5 GB, mỗi bucket 512 MiB, đều lấy từ disk của pool. Staging và preview không tính tiền riêng.</p>
+<details class="specs-wrap"><summary>Giới hạn hiện tại của gói pool</summary>
+<ul class="note">
+<li>Chỉ trả theo tháng. Chưa có trả trước 3, 6, 12 tháng.</li>
+<li>PostgreSQL đang chạy giữ RAM và dung lượng hiện có khi bạn mua hoặc tăng pool. RAM thêm dùng cho app (chỉnh cỡ app production trong console, áp dụng ở lần deploy sau); disk thêm dùng cho PostgreSQL và bucket tạo mới. Nới PostgreSQL đang chạy sẽ có sau.</li>
+<li>Workspace đang ở Start, Build, Grow hoặc do agency trả chưa chuyển được sang gói pool trong console.</li>
+<li>Số chỗ trên máy có hạn. Nếu tiền về lúc máy đã đầy, pool chưa kích hoạt, tiền nằm trong số dư và Embra tự thử lại; bạn cũng có thể yêu cầu hoàn.</li>
+</ul>
+<p class="note">Cách tính khi tăng, giảm pool hoặc xoá workspace: <a href="/terms/#goi-pool">Điều khoản, mục 4</a>.</p>
+</details>
+</section>
+
 <section class="wrap" aria-labelledby="h-inc"><h2 class="sec-h px" id="h-inc">Gói nào cũng có</h2>
 <div class="inc">
  <div><h3>Deploy từ GitHub</h3><p>Chọn repository, Embra tự build và chạy app. Mỗi lần push có thể deploy lại; bản trước vẫn giữ để quay lại.</p></div>
