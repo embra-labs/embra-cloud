@@ -34,8 +34,8 @@
       <button type="button" class="print" onclick="window.print()">In / Lưu PDF</button>
     </div>
     <dl class="meta">
-      <div><dt>Phiên bản</dt><dd>2026-11-13</dd></div>
-      <div><dt>Hiệu lực</dt><dd>Từ ngày công bố phiên bản này (2026-11-13)</dd></div>
+      <div><dt>Phiên bản</dt><dd>2026-11-16</dd></div>
+      <div><dt>Hiệu lực</dt><dd>Từ ngày công bố phiên bản này (2026-11-16)</dd></div>
       <div><dt>Áp dụng cho</dt><dd>Dịch vụ Embra: console, CLI, API, MCP và app chạy trên Embra</dd></div>
       <div><dt>Căn cứ pháp lý</dt><dd>Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15; Nghị định 356/2025/NĐ-CP (sửa đổi bởi Nghị định 392/2026/NĐ-CP); Luật Bảo vệ quyền lợi người tiêu dùng 19/2023/QH15</dd></div>
       <div><dt>Ngôn ngữ</dt><dd>Tiếng Việt (bản gốc). <a href="/privacy/en/" hreflang="en">Bản tiếng Anh</a> là bản dịch.</dd></div>
@@ -197,8 +197,9 @@
     <ul>
       <li>Postgres của mỗi environment được sao lưu liên tục (WAL) và có bản đầy đủ mỗi tuần. Embra giữ 2 bản đầy đủ gần nhất cùng WAL giữa chúng, nên bạn khôi phục được về một thời điểm trong khoảng 1 đến 2 tuần gần nhất. Bản sao lưu nằm trên máy chủ Embra tại Việt Nam và được chép khoảng mỗi phút sang object storage của Cloudfly tại Hà Nội.</li>
       <li>Sau khi khôi phục về một thời điểm, bản database cũ được giữ thêm 72 giờ để có thể quay lại.</li>
-      <li>Ở Cloudfly, file sao lưu đã hết hạn hoặc bị thay thế được chuyển vào một vùng riêng và tự xoá sau 7 ngày.</li>
-      <li>Khi bạn xoá environment, bản sao lưu bị xoá cả trên máy chủ lẫn ở Cloudfly, kể cả vùng riêng nói trên. Bản ở Cloudfly bị xoá chậm nhất 7 ngày (<a href="#xoa-env">mục 11</a>).</li>
+      <li>Với gói trả phí, từ 2026-11-15 bản sao lưu ở Cloudfly bị khoá 3 tới 4 ngày và được gia hạn liên tục: trong thời gian khoá không ai xoá hay sửa được, kể cả Embra. Gói dùng thử không khoá.</li>
+      <li>Ở Cloudfly, file sao lưu đã hết hạn hoặc bị thay thế không còn được dùng để khôi phục; file đó thôi được gia hạn khoá, rồi tự xoá sau khi hết khoá, chậm nhất 7 ngày.</li>
+      <li>Khi bạn xoá environment, bản sao lưu bị xoá cả trên máy chủ lẫn ở Cloudfly. Bản ở Cloudfly bị xoá chậm nhất 7 ngày (<a href="#xoa-env">mục 11</a>); với gói trả phí, phần đang khoá chỉ xoá được khi hết khoá, kể cả khi bạn yêu cầu xoá sớm.</li>
     </ul>
     <h3 id="backup-bucket">File trong bucket</h3>
     <p>File trong bucket hiện chưa có bản sao lưu. Hãy giữ bản gốc của file quan trọng ở nơi khác.</p>
@@ -348,7 +349,7 @@
         <tr><td data-k="Dữ liệu">Nhật ký hệ thống của máy chủ (gồm dòng lỗi của edge)</td><td data-k="Thời hạn">Không có hạn theo ngày; dòng cũ nhất bị xoá khi nhật ký chạm giới hạn dung lượng trên máy chủ</td></tr>
         <tr><td data-k="Dữ liệu">Metrics</td><td data-k="Thời hạn">30 ngày; không xoá ngay khi xoá environment</td></tr>
         <tr><td data-k="Dữ liệu">Secret</td><td data-k="Thời hạn">Giá trị xoá khi xoá environment; tên và phiên bản được giữ</td></tr>
-        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; ở Cloudfly, file đã hết hạn hoặc bị thay thế được giữ thêm 7 ngày. Khi xoá environment: bản trên máy chủ thường xoá trong khoảng 1 phút, bản ở Cloudfly chậm nhất 7 ngày</td></tr>
+        <tr><td data-k="Dữ liệu">Sao lưu Postgres của app</td><td data-k="Thời hạn">2 bản đầy đủ gần nhất cùng WAL (khoảng 1 đến 2 tuần); bản cũ sau khôi phục: 72 giờ; ở Cloudfly, file đã hết hạn hoặc bị thay thế tự xoá chậm nhất 7 ngày sau đó. Khi xoá environment: bản trên máy chủ thường xoá trong khoảng 1 phút, bản ở Cloudfly chậm nhất 7 ngày. Gói trả phí: bản ở Cloudfly bị khoá 3 tới 4 ngày, trong thời gian đó không xoá riêng được, kể cả khi bạn yêu cầu</td></tr>
         <tr><td data-k="Dữ liệu">Sao lưu database điều khiển</td><td data-k="Thời hạn">Mỗi giờ một bản; mỗi bản bị khoá 7 ngày rồi tự xoá, chậm nhất 10 ngày sau khi tạo. Trong 7 ngày bị khoá, bản sao không xoá riêng được, kể cả khi bạn yêu cầu xoá tài khoản</td></tr>
         <tr><td data-k="Dữ liệu">Bản export</td><td data-k="Thời hạn">24 giờ</td></tr>
         <tr><td data-k="Dữ liệu">Fork</td><td data-k="Thời hạn">Tối đa 24 giờ</td></tr>
@@ -367,7 +368,7 @@
     <p>Bản sao lưu database:</p>
     <ul>
       <li><strong>Trên máy chủ:</strong> thường bị xoá trong khoảng 1 phút. Embra chỉ xoá bản này sau khi đã ghi yêu cầu xoá lên nơi lưu trữ thứ hai; nếu nơi đó tạm thời không truy cập được, bản trên máy chủ được giữ tới khi ghi được.</li>
-      <li><strong>Ở nơi lưu trữ thứ hai</strong> (object storage Cloudfly tại Hà Nội, <a href="#backup">mục 6</a>): được xoá bằng một hàng đợi chạy nền, thử lại tới khi xong. Thường mất vài phút tới vài giờ, <strong>chậm nhất 7 ngày</strong>. Nếu vì sự cố không xoá được bản này trong 7 ngày, Embra báo owner lý do và thời điểm dự kiến xoá xong.</li>
+      <li><strong>Ở nơi lưu trữ thứ hai</strong> (object storage Cloudfly tại Hà Nội, <a href="#backup">mục 6</a>): được xoá bằng một hàng đợi chạy nền, thử lại tới khi xong. Thường mất vài phút tới vài giờ; với gói trả phí, phần đang khoá (<a href="#backup">mục 6</a>) chỉ xoá được sau khi hết khoá, thường 3 tới 5 ngày. Luôn <strong>chậm nhất 7 ngày</strong>. Nếu vì sự cố không xoá được bản này trong 7 ngày, Embra báo owner lý do và thời điểm dự kiến xoá xong.</li>
     </ul>
     <p>Từ lúc bạn xoá, các bản sao lưu này không còn được dùng để khôi phục. Những gì còn lại sau khi xoá: metrics (tới 30 ngày), image, bộ nhớ đệm build (tới 14 ngày), bản ghi build và lịch sử hoạt động.</p>
     <p>Nếu bạn cần xác nhận đã xoá, gửi yêu cầu theo <a href="#thuc-hien">mục 13</a>. Embra kiểm tra và trả lời bằng email: dữ liệu nào đã xoá, xoá lúc nào, và phần nào còn giữ cùng lý do.</p>
@@ -468,6 +469,7 @@
     <p>Khi đổi nội dung, Embra cập nhật dòng "Phiên bản" ở đầu trang, thêm một dòng vào lịch sử dưới đây và sửa bản tiếng Anh cho khớp. Thay đổi bất lợi cho bạn (thu thêm dữ liệu, thêm bên nhận, giữ lâu hơn, dùng cho mục đích mới) được báo qua email cho owner các workspace trước khi áp dụng.</p>
     <h3 id="lich-su">Lịch sử phiên bản</h3>
     <ol class="history">
+      <li><span class="v">2026-11-16</span>Bản sao lưu database của app ở Cloudfly (gói trả phí) được khoá 3 tới 4 ngày, gia hạn liên tục, từ 2026-11-15: trong thời gian khoá không ai xoá hay sửa được, kể cả Embra, và không xoá sớm được theo yêu cầu. Bỏ "vùng riêng" cho file hết hạn hoặc bị thay thế (không còn dùng); thời hạn xoá không đổi: chậm nhất 7 ngày, cả khi xoá environment. Sửa mục 6, mục 11 và bảng thời hạn lưu cho khớp.</li>
       <li><span class="v">2026-11-13</span>Thêm sao lưu database điều khiển: mỗi giờ, mã hoá trên máy chủ, chép sang Cloudfly tại Hà Nội (Cloudfly không giải mã được), mỗi bản khoá 7 ngày và tự xoá chậm nhất 10 ngày sau khi tạo. Cloudfly nhận thêm bản sao đã mã hoá này. Sửa mục 6, bảng bên nhận dữ liệu, bảng thời hạn lưu và đoạn xoá tài khoản cho khớp.</li>
       <li><span class="v">2026-11-13</span>Sửa thời hạn xoá bản sao lưu khi xoá environment hoặc workspace: bản ở Cloudfly chậm nhất 7 ngày, thường vài phút tới vài giờ (trước đây trang ghi toàn bộ việc xoá "thường xong trong vài phút", không đúng với bản ở Cloudfly); bản trên máy chủ thường trong khoảng 1 phút. Thêm: file sao lưu đã hết hạn hoặc bị thay thế ở Cloudfly tự xoá sau 7 ngày; xác nhận đã xoá bằng email khi bạn yêu cầu.</li>
       <li><span class="v">2026-11-13</span>Điền ngày công bố, trạng thái hồ sơ đánh giá tác động chuyển dữ liệu ra nước ngoài (đang lập) và thời hạn lưu hồ sơ thanh toán (theo pháp luật kế toán và thuế). Không đổi cách Embra xử lý dữ liệu.</li>
