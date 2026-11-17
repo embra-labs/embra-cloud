@@ -1,21 +1,22 @@
 # Embra
 
-> Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, hướng tới build, deploy và theo dõi app trong cùng một project. Cập nhật 05/11/2026: beta trả phí, nhận app production trong giới hạn từng gói; tự đăng ký được: đăng nhập console bằng GitHub (tài khoản từ 30 ngày tuổi) là có workspace dùng thử miễn phí 7 ngày. Giá từ 249.000đ mỗi project mỗi tháng.
+> Hosting app và PostgreSQL cho developer và team nhỏ tại Việt Nam, hướng tới build, deploy và theo dõi app trong cùng một project. Cập nhật 05/11/2026: beta trả phí, nhận app production trong giới hạn từng gói; tự đăng ký được: đăng nhập console bằng GitHub (tài khoản từ 30 ngày tuổi) là có workspace dùng thử miễn phí 7 ngày. Giá từ 199.000đ mỗi tháng cho cả workspace (gói pool).
 
 ## Tình huống phù hợp
 
 Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend. Beta nhận app production có người dùng thật trong giới hạn gói; chưa có SLA.
 
-## Bảng giá (beta, từ 25/10/2026)
+## Bảng giá (beta, gói pool, cập nhật 17/11/2026)
 
-Trả theo project mỗi tháng, VND, chuyển khoản VietQR. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT; giá niêm yết là số tiền chuyển, không cộng VAT. Chi tiết: https://embra.cloud/bang-gia/
+Một pool RAM và disk cho cả workspace; mọi app, PostgreSQL, staging, preview và bucket dùng chung pool. VND mỗi tháng, chuyển khoản VietQR. Embra chưa có pháp nhân nên chưa xuất hoá đơn VAT; giá niêm yết là số tiền chuyển, không cộng VAT. Chi tiết: https://embra.cloud/bang-gia/
 
-- Start 249.000đ: app 512 MiB / 0,5 vCPU, PostgreSQL 256 MiB / 2 GiB, worker 1, cron 2, 3 domain riêng, bucket 1 GiB, log/metrics 7 ngày, không có staging.
-- Build 399.000đ: app 1 GiB / 1 vCPU, PostgreSQL 512 MiB / 5 GiB, worker 2, cron 5, 5 domain, 1 preview theo PR, bucket 2 GiB, log/metrics 14 ngày; staging +149.000đ.
-- Grow 749.000đ: app 2 GiB / 2 vCPU, PostgreSQL 1 GiB / 10 GiB, worker 4, cron 10, 10 domain, 3 preview, bucket 5 GiB, log/metrics 30 ngày; staging +299.000đ.
-- Add-on mỗi tháng: RAM app 99.000đ / 512 MiB, PostgreSQL 9.800đ / GB, bucket 4.900đ / GB. Trả trước 3/6/12 tháng giảm 5/10/20%: chọn trong console khi chọn gói lần đầu (kèm RAM thêm); chuyển từ trả tháng sang trả trước, hoặc thêm PostgreSQL/file, làm qua email.
-- Gói pool (từ 15/11/2026, mua từ workspace dùng thử): RAM 20.000đ / 128 MiB (tối thiểu 512 MiB, 1 vCPU mỗi GiB), disk 10.000đ / GB (tối đa 50 GB), phí nền 49.000đ mỗi tài khoản thanh toán; mức Khởi đầu 768 MiB + 3 GB = 199.000đ gồm phí nền. Mọi app, PostgreSQL, bucket, staging, preview dùng chung pool; chỉ trả theo tháng; PostgreSQL đang chạy giữ cỡ hiện có khi mua hoặc tăng pool. Chi tiết: https://embra.cloud/bang-gia/#goi-pool
-- Hoá đơn theo ngày bắt đầu, lặp lại hằng tháng; nâng gói trả phần chênh lệch tới hết kỳ rồi mới đổi, hạ gói đổi từ đầu kỳ kế; xác nhận chuyển khoản tự động.
+- Khởi đầu 199.000đ: 768 MiB RAM + 3 GB disk, đã gồm phí nền.
+- Tăng trưởng 599.000đ: 2,5 GiB RAM + 15 GB disk, đã gồm phí nền.
+- Lớn (6 GiB RAM + 50 GB disk): liên hệ, chỉ bán khi máy còn chỗ.
+- Đơn giá: RAM 20.000đ / 128 MiB (tối thiểu 512 MiB, 1 vCPU mỗi GiB), disk 10.000đ / GB (1 GB = 1 GiB, tối đa 50 GB mỗi workspace), phí nền 49.000đ mỗi tài khoản thanh toán (một lần dù nhiều workspace gói pool). Chi tiết: https://embra.cloud/bang-gia/#goi-pool
+- PostgreSQL mới nhận 1,5 GB, mỗi bucket 512 MiB, lấy từ disk của pool. PostgreSQL đang chạy tăng được RAM và disk trong console hoặc API, không restart; chưa giảm được.
+- Chỉ trả theo tháng (chưa có trả trước cho gói pool). Mua từ workspace dùng thử; pool kích hoạt khi tiền về, app và dữ liệu giữ nguyên. Hoá đơn lặp lại hằng tháng, hạn 7 ngày; xác nhận chuyển khoản tự động. Tăng pool giữa kỳ trả phần theo ngày tới hết kỳ; giảm pool áp dụng ngay, phần chưa dùng thành số dư.
+- Gói cũ Start, Build, Grow (theo project) không mở cho khách mới.
 
 ## Tính năng và mức sẵn sàng
 
