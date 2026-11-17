@@ -47,7 +47,7 @@
 <main>
   <h1>Điều khoản sử dụng Embra</h1>
   <p>Đây là thoả thuận giữa bạn và Embra khi bạn dùng console, CLI, API hoặc chạy app trên Embra. Khi tạo workspace, chọn gói hoặc tiếp tục dùng dịch vụ, bạn đồng ý với các điều khoản này. Cách Embra xử lý dữ liệu nằm ở <a href="/privacy/">Chính sách quyền riêng tư</a>.</p>
-  <p class="meta">Phiên bản 2026-11-15 · Áp dụng pháp luật Việt Nam · Quy định đổi gói mới (mục 4) áp dụng từ 31/10/2026; quy định tạm ngưng khi chậm thanh toán (mục 4) áp dụng từ 14/11/2026; quy định credit khuyến mãi (mục 4) áp dụng từ 05/11/2026; quy định gói pool (mục 4) áp dụng từ 15/11/2026</p>
+  <p class="meta">Phiên bản 2026-11-17 · Áp dụng pháp luật Việt Nam · Quy định đổi gói mới (mục 4) áp dụng từ 31/10/2026; quy định tạm ngưng khi chậm thanh toán (mục 4) áp dụng từ 14/11/2026; quy định credit khuyến mãi (mục 4) áp dụng từ 05/11/2026; quy định gói pool (mục 4) áp dụng từ 15/11/2026; ngừng bán Start, Build, Grow cho workspace mới và tăng PostgreSQL đang chạy (mục 4) áp dụng từ 17/11/2026</p>
 
   <ol class="toc">
     <li><a href="#dich-vu">Embra là gì, giai đoạn beta</a></li>
@@ -88,7 +88,7 @@
 
   <h2 id="goi">4. Gói, giá và thanh toán</h2>
   <ul>
-    <li>Giá các gói Start, Build, Grow và phần mua thêm ở <a href="/bang-gia/">Bảng giá</a>. Giá chưa gồm VAT. Embra hiện <strong>không xuất hoá đơn VAT</strong>.</li>
+    <li>Giá gói pool ở <a href="/bang-gia/">Bảng giá</a>. Từ 17/11/2026 gói Start, Build, Grow không bán cho workspace mới; workspace đang dùng các gói này giữ nguyên gói và giá. Giá chưa gồm VAT. Embra hiện <strong>không xuất hoá đơn VAT</strong>.</li>
     <li><strong>Trả trước, theo tháng hoặc theo kỳ.</strong> Bạn chọn gói trong console, chọn trả 1 tháng hoặc trả trước 3, 6, 12 tháng (giảm 5%, 10%, 20%), rồi chuyển khoản qua VietQR kèm mã thanh toán. Gói chỉ có hiệu lực khi tiền về tài khoản của Embra.</li>
     <li><strong>Cách tính kỳ trả trước.</strong> Giá mỗi tháng của kỳ = giá tháng (gói, staging, phần mua thêm) sau khi giảm, làm tròn xuống 1.000đ; số tiền của kỳ = giá mỗi tháng đó × số tháng. Mọi khoản điều chỉnh hoặc hoàn trong kỳ đều tính trên giá mỗi tháng này.</li>
     <li><strong>Trả theo tháng:</strong> mỗi kỳ Embra tạo hoá đơn trả trước vào ngày đầu kỳ, hạn thanh toán 7 ngày. Thêm staging hoặc phần mua thêm có hiệu lực ngay, phần tính theo ngày tới hết kỳ vào hoá đơn sau; bỏ đi thì phần chưa dùng thành số dư.</li>
@@ -127,7 +127,7 @@
         <li><strong>Chưa kích hoạt được:</strong> nếu tiền về đủ mà pool chưa kích hoạt được (ví dụ máy đã đầy), tiền nằm trong số dư, console ghi lý do và Embra tự thử lại khi có thể. Bạn có thể yêu cầu hoàn số dư như quy định ở trên.</li>
         <li><strong>Tăng pool giữa kỳ:</strong> trả trước phần theo ngày từ hôm nay (tính cả hôm nay) tới hết kỳ, làm tròn xuống 1.000đ, phần lẻ vào hoá đơn sau; số dư được trừ trước. Pool tăng khi đã trả đủ. Mã thanh toán dùng được tới hết ngày cuối của kỳ hiện tại; tiền về sau ngày đó hoặc chưa đủ được ghi vào số dư và pool không đổi. Hoá đơn quá hạn không chặn việc tăng hay giảm pool. Tăng RAM có thể bị từ chối khi máy không đủ chỗ; nếu tiền đã về mà pool chưa tăng được, tiền nằm trong số dư.</li>
         <li><strong>Giảm pool giữa kỳ:</strong> áp dụng ngay. Phần chưa dùng, tính từ ngày mai tới hết kỳ và làm tròn lên, thành số dư; phần đã trả bằng credit khuyến mãi quay về credit khuyến mãi. Pool mới phải đủ cho cỡ đã cấp cho app và PostgreSQL; dung lượng một PostgreSQL đã tạo không giảm được.</li>
-        <li><strong>PostgreSQL đang chạy</strong> giữ RAM và dung lượng hiện có khi bạn mua hoặc tăng pool. RAM thêm dùng cho app; disk thêm dùng cho PostgreSQL và bucket tạo mới. Nới PostgreSQL đang chạy chưa có; khi có, mình công bố ở Bảng giá.</li>
+        <li><strong>PostgreSQL đang chạy</strong> giữ RAM và dung lượng hiện có khi bạn mua hoặc tăng pool. Bạn tăng được RAM và disk của PostgreSQL đang chạy trong phần còn trống của pool, không khởi động lại; tham số bộ nhớ của PostgreSQL (shared_buffers) áp ở lần PostgreSQL khởi động kế. Chưa giảm được.</li>
         <li><strong>Xoá workspace gói pool:</strong> phần chưa dùng của kỳ, tính từ ngày mai, thành số dư (phần trả bằng credit khuyến mãi quay về credit, credit khuyến mãi của workspace mất như quy định ở trên). Nếu đó là workspace gói pool cuối cùng của tài khoản, phí nền dừng và phần chưa dùng của phí nền cũng thành số dư.</li>
         <li>Gói pool chưa có trả trước 3, 6, 12 tháng. Workspace ở Start, Build, Grow hoặc do agency trả chưa chuyển được sang gói pool trong console.</li>
       </ul>

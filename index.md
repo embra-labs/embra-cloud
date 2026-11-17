@@ -6,7 +6,7 @@ Embra là hosting app và PostgreSQL cho developer và team nhỏ tại Việt N
 
 Bạn đang xây website, web app hoặc API; người viết code cũng là người cấu hình server và deploy. Embra hướng tới việc giảm phần vận hành bạn phải tự nối giữa app và database. Có thể bắt đầu từ frontend rồi thêm backend.
 
-**Cập nhật 05/11/2026:** beta trả phí, nhận app production trong giới hạn từng gói; tự đăng ký được: đăng nhập console bằng GitHub (tài khoản từ 30 ngày tuổi) là có workspace dùng thử miễn phí 7 ngày. Giá từ 249.000đ mỗi project mỗi tháng: [bảng giá](https://embra.cloud/bang-gia/).
+**Cập nhật 05/11/2026:** beta trả phí, nhận app production trong giới hạn từng gói; tự đăng ký được: đăng nhập console bằng GitHub (tài khoản từ 30 ngày tuổi) là có workspace dùng thử miễn phí 7 ngày. Giá từ 199.000đ mỗi tháng cho cả workspace (gói pool): [bảng giá](https://embra.cloud/bang-gia/).
 
 [Bắt đầu ở đây](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/) · [Tài liệu](https://docs.embra.cloud/) · [Trạng thái hệ thống](https://status.embra.cloud/) · [Đăng nhập console](https://console.embra.cloud/) · [Engineering](https://embra.cloud/engineering/) · [Bảng giá](https://embra.cloud/bang-gia/) · [Đăng ký](https://embra.cloud/#join) · [Hỗ trợ](https://github.com/embra-labs/.github/blob/main/SUPPORT.md)
 
@@ -59,6 +59,6 @@ Bạn chịu trách nhiệm code và logic ứng dụng. Hoàng Xuân trực ti�
 2. Deploy theo [Bắt đầu nhanh](https://docs.embra.cloud/bat-dau/bat-dau-nhanh/).
 3. Chọn gói ([bảng giá](https://embra.cloud/bang-gia/)) và trả bằng VietQR khi muốn giữ app.
 
-Backup PostgreSQL có bản sao ngoài máy chủ, trên object storage tại Hà Nội. Beta nhận app production trong giới hạn từng gói. Giá: Start 249.000đ, Build 399.000đ, Grow 749.000đ mỗi project mỗi tháng ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
+Backup PostgreSQL có bản sao ngoài máy chủ, trên object storage tại Hà Nội. Beta nhận app production trong giới hạn từng gói. Giá: một pool RAM và disk cho cả workspace, Khởi đầu 199.000đ (768 MiB + 3 GB), Tăng trưởng 599.000đ (2,5 GiB + 15 GB) mỗi tháng, đã gồm phí nền ([bảng giá](https://embra.cloud/bang-gia/)); chưa xuất hoá đơn VAT vì chưa có pháp nhân. Máy chủ đặt tại Việt Nam.
 
 [Changelog](https://github.com/embra-labs/.github/blob/main/docs/changelog.md) · [Hỗ trợ / báo lỗi](https://github.com/embra-labs/.github/blob/main/SUPPORT.md) · [hello@embra.cloud](mailto:hello@embra.cloud) · [Thông báo xử lý dữ liệu](https://embra.cloud/chinh-sach-du-lieu.html) · [Thông tin cho agent](https://embra.cloud/llms.txt)
